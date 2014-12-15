@@ -47,6 +47,6 @@ m = wire({
 m.then(function(c) {
     winston = c.winston;
     bunyan  = c.bunyan;
-}).otherwise(function(error){
+}).otherwise(function(error) {
     err = error;
 });
