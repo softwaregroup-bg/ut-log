@@ -28,10 +28,10 @@
      * For more info: [Bunyan streams]{@link https://github.com/trentm/node-bunyan#user-content-streams} 
      */
     function Logger(options){
-        expose.call(this, require('./modules/' + (options.type || 'winston')).init(options));
+        this.init(require('./modules/' + (options.type || 'winston')).init(options));
     }
 
-    function expose(logger){
+    Logger.prototype.init = function Logger__init(logger){
         /**
          * @method trace
          * @description logLevel = 10
@@ -77,12 +77,12 @@
             var     levels = ['trace', 'debug', 'info','warn','error','fatal'];
             return  levels
                     .slice(levels.indexOf(level),levels.length)
-                    .reduce(function(prev,cur){
-                        prev[cur]=true;
-                        return prev;
+                    .reduce(function(levels,level){
+                        levels[level]=true;
+                        return levels;
                     },{});
         };
-    }
+    };
 
     return Logger;
 
