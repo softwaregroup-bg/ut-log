@@ -10,11 +10,11 @@
         });
     }
     
-    // args: name, streams
-    function Bunyan(args){
+    // options: name, streams
+    function Bunyan(options){
         var log = null;
-        var streams = fixStreams(args.streams);
-        var name = args.name;
+        var streams = fixStreams(options.streams);
+        var name = options.name;
         return {
             init   : function(){
                 log = bunyan.createLogger({
@@ -34,8 +34,8 @@
     }
 
     return {
-        init: function(args){
-            var log = new Bunyan(args);
+        init: function(options){
+            var log = new Bunyan(options);
             return log.init();
         }
     };

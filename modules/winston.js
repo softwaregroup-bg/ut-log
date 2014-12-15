@@ -3,13 +3,13 @@
     var winston = require('winston');
     winston.addColors({trace:'cyan',debug:'blue',info:'green',warn:'yellow',error:'magenta',fatal:'red'});
 
-    // args: name, transports, dependencies
-    function Winston(args){
+    // options: name, transports, dependencies
+    function Winston(options){
         var container       = null;
         var log             = null;
-        var name            = args.name;
-        var transports      = args.transports;
-        var dependencies    = args.dependencies;
+        var name            = options.name;
+        var transports      = options.transports;
+        var dependencies    = options.dependencies;
         return {
             init : function(){
                 if(dependencies && dependencies.length){
@@ -33,8 +33,8 @@
     }
 
     return {
-        init: function(args){
-            var log = new Winston(args);
+        init: function(options){
+            var log = new Winston(options);
             return log.init();
         }
     };

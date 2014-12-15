@@ -1,4 +1,4 @@
-require('repl').start({useGlobal:true})
+//require('repl').start({useGlobal:true})
 
 var wire = require('wire');
 
