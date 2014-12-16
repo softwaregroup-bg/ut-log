@@ -11,13 +11,18 @@ m = wire({
                 name : 'winston_test',
                 dependencies : [],
                 transports : {
-                    'file' : {
-                        filename: './winstonTest.log',
-                        level: 'trace'
-                    },
                     'console' : {
                         colorize: 'true',
                         level: 'trace'
+                    },
+                    'file' : {
+                        filename: './winstonTest.log',
+                        level: 'info'
+                    },
+                    'webhook' : {
+                        host: '127.0.0.1',
+                        port: 80,
+                        level: 'debug'
                     }
                 }
             }

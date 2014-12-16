@@ -2,6 +2,9 @@
     var bunyan = require('bunyan');
 
     function fixStreams(streams) {
+        if (!streams || !streams.length) {
+            return [];
+        }
         return streams.map(function(stream) {
             if (stream.stream == 'process.stdout') {stream.stream = process.stdout;}
             if (stream.stream == 'process.stderr') {stream.stream = process.stderr;}
@@ -12,13 +15,10 @@
     function Bunyan(options) {
         var log = null;
         var streams = fixStreams(options.streams);
-        var name = options.name;
+        var name = options.name || 'bunyan_default_name';
         return {
-            init   : function() {
-                log = bunyan.createLogger({
-                    name    :   name        || 'bunyan_default_name',
-                    streams :   streams     || []
-                });
+            init : function() {
+                log = bunyan.createLogger({name : name, streams : streams});
                 return {
                     trace   :   log.trace.bind(log),
                     debug   :   log.debug.bind(log),
