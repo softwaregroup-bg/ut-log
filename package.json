@@ -2,6 +2,7 @@
   "name": "ut-log",
   "version": "5.0.0",
   "dependencies": {
-    "ut-bus": "~5.0.0"
+    "winston": "~0.8.3",
+    "bunyan": "~1.2.3"
   }
 }
