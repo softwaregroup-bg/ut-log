@@ -28,60 +28,23 @@
      * For more info: [Bunyan streams]{@link https://github.com/trentm/node-bunyan#user-content-streams}
      **/
     function Logger(options) {
-        this.init(require('./modules/' + (options.type || 'winston')).init(options));
+        this.init(require('./modules/' + (options.type || 'winston'))(options));
     }
 
     Logger.prototype.init = function LoggerInit(logger) {
-        /**
-         * @method trace
-         * @description logLevel = 10
-         * @param {string} message Message to be logged
-         */
-        this.trace  =   logger.trace;
-        /**
-         * @method debug
-         * @description logLevel = 20
-         * @param {string} message Message to be logged
-         */
-        this.debug  =   logger.debug;
-        /**
-         * @method info
-         * @description logLevel = 30
-         * @param {string} message Message to be logged
-         */
-        this.info   =   logger.info;
-        /**
-         * @method warn
-         * @description logLevel = 40
-         * @param {string} message Message to be logged
-         */
-        this.warn   =   logger.warn;
-        /**
-         * @method error
-         * @description logLevel = 50
-         * @param {string} message Message to be logged
-         */
-        this.error  =   logger.error;
-        /**
-         * @method fatal
-         * @description logLevel = 60
-         * @param {string} message Message to be logged
-         */
-        this.fatal  =   logger.fatal;
-        /**
-         * @method initLevels
-         * @param {string} level minimum logging level
-         * @returns {object} An object with the allowed logging levels
-         */
-        this.initLevels = function(level) {
-            var levels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'];
-            return levels
-                    .slice(levels.indexOf(level), levels.length)
-                    .reduce(function(levels, level) {
-                        levels[level] = true;
-                        return levels;
-                    }, {});
-        };
+        this.logger = logger;
+    };
+
+    Logger.prototype.initLevels = function LoggerInitLevels(level, params) {
+        var levels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'];
+        var log = this.logger ? this.logger(params) : null;
+        if (!log) {return {}}
+        return levels
+                .slice(levels.indexOf(level), levels.length)
+                .reduce(function(levels, level) {
+                    levels[level] = log[level].bind(log);
+                    return levels;
+                }, {});
     };
 
     return Logger;

@@ -13,29 +13,48 @@
     }
     // options: name, streams
     function Bunyan(options) {
-        var log = null;
         var streams = fixStreams(options.streams);
-        var name = options.name || 'bunyan_default_name';
-        return {
-            init : function() {
-                log = bunyan.createLogger({name : name, streams : streams});
-                return {
-                    trace   :   log.trace.bind(log),
-                    debug   :   log.debug.bind(log),
-                    info    :   log.info.bind(log),
-                    warn    :   log.warn.bind(log),
-                    error   :   log.error.bind(log),
-                    fatal   :   log.fatal.bind(log)
-                };
+        return function createLogger(params) {
+            params.streams = streams;
+            params.level = options.level || 'trace';
+            params.name = params.name || options.name;
+            var log = bunyan.createLogger(params);
+
+            function logHandler(level, data) {
+                if (data.length === 1) {
+                    data[0] = {message:data[0]};
+                }
+                if (data.length >= 2) {
+                    var x = data[0];
+                    data[0] = data[1];
+                    data[1] = x;
+                }
+                log[level].apply(log, data);
+            }
+
+            return {
+                trace: function() {
+                    logHandler('trace', arguments);
+                },
+                debug: function() {
+                    logHandler('debug', arguments);
+                },
+                info: function() {
+                    logHandler('info', arguments);
+                },
+                warn: function() {
+                    logHandler('warn', arguments);
+                },
+                error: function() {
+                    logHandler('error', arguments);
+                },
+                fatal: function() {
+                    logHandler('fatal', arguments);
+                }
             }
         }
     }
 
-    return {
-        init: function(options) {
-            var log = new Bunyan(options);
-            return log.init();
-        }
-    };
+    return Bunyan;
 
-});})(typeof define === 'function' && define.amd ?  define : function(factory) { module.exports = factory(require); });
+});})(typeof define === 'function' && define.amd ?  define : function(factory) {module.exports = factory(require);});
