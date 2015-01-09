@@ -35,7 +35,7 @@
         this.logger = logger;
     };
 
-    Logger.prototype.initLevels = function LoggerInitLevels(level, params) {
+    Logger.prototype.createLog = function createLog(level, params) {
         var levels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'];
         var log = this.logger ? this.logger(params) : null;
         if (!log) {return {}}
