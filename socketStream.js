@@ -17,7 +17,7 @@ function SocketStream(opt) {
 util.inherits(SocketStream, stream.Transform);
 
 SocketStream.prototype._transform = function(obj, encoding, done) {
-    if (this.socket.connected) {
+    if (this.socket.sendBuffer.length <= 50) {
         this.socket.emit(this._eventName, obj);
         this.push(obj);
         done();
