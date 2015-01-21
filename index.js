@@ -17,7 +17,7 @@
             function bufToAscii(buf) {
                 for (var i = 0, n = buf.length; i < n; i += 1) {
                     if (buf[i] < 32 || buf[i] > 127) {
-                        buf[i] = 42;
+                        buf[i] = 32;
                     }
                 }
                 return buf.toString('ascii');
