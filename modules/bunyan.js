@@ -29,8 +29,8 @@
                     var x = data[0];
                     data[0] = data[1];
                     data[1] = x;
-                    lib.transformData(data);
                 }
+                lib.transformData(data);
                 log[level].apply(log, data);
             }
 
