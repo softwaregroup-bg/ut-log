@@ -7,6 +7,7 @@
 
     // options: name, transports, dependencies
     function Winston(options) {
+        var lib = options.lib;
         var transports = options.transports || {};
         var dependencies = options.dependencies;
         if (dependencies && dependencies.length) {
@@ -25,6 +26,7 @@
             });
             function logHandler(level, data) {
                 if (typeof data[0] !== 'string') {
+                    lib.transformData(data);
                     try { // stringify if object literal
                         data[0] = JSON.stringify(data[0], null, 2);
                     } catch (e) {// inspect if complex structure

@@ -5,6 +5,35 @@
      * @author UT Route Team
      * @description Logging module
      */
+    // helper methods
+    var lib = {
+        transformData : (function() {
+            var chunkLength = 16;
+            var maxLength = 1024;
+            function bufToHex(buf) {
+                var str = buf.toString('hex');
+                return (str.length < chunkLength * 2) ? (str + new Array(chunkLength * 2 - str.length + 1).join(' ')) : str;
+            }
+            function bufToAscii(buf) {
+                for (var i = 0, n = buf.length; i < n; i += 1) {
+                    if (buf[i] < 32 || buf[i] > 127) {
+                        buf[i] = 42;
+                    }
+                }
+                return buf.toString('ascii');
+            }
+            return function transformData(data) {
+                if (data && data[0] && data[0].$$ && data[0].$$.frame) {
+                    var buf = data[0].$$.frame;
+                    var bufArr = [];
+                    for (var i = 0, n = (buf.length < maxLength) ? buf.length : maxLength; i < n; i += chunkLength) {
+                        bufArr.push(bufToHex(buf.slice(i, i + chunkLength)) + ' | ' + bufToAscii(buf.slice(i, i + chunkLength)));
+                    }
+                    data[0].$$.frame = bufArr;
+                }
+            }
+        })()
+    };
     /**
      * @class Logger
      *
@@ -28,6 +57,7 @@
      * For more info: [Bunyan streams]{@link https://github.com/trentm/node-bunyan#user-content-streams}
      **/
     function Logger(options) {
+        options.lib = lib;
         this.init(require('./modules/' + (options.type || 'winston'))(options));
     }
 

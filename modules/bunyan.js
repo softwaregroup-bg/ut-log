@@ -13,6 +13,7 @@
     }
     // options: name, streams
     function Bunyan(options) {
+        var lib = options.lib;
         var streams = fixStreams(options.streams);
         return function createLogger(params) {
             params.streams = streams;
@@ -28,6 +29,7 @@
                     var x = data[0];
                     data[0] = data[1];
                     data[1] = x;
+                    lib.transformData(data);
                 }
                 log[level].apply(log, data);
             }
