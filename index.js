@@ -8,11 +8,10 @@
     // helper methods
     var lib = {
         transformData : (function() {
-            var chunkLength = 16;
+            var chunkLength = 32;
             var maxLength = 1024;
             function bufToHex(buf) {
-                var str = buf.toString('hex');
-                return (str.length < chunkLength * 2) ? (str + new Array(chunkLength * 2 - str.length + 1).join(' ')) : str;
+                return buf.toString('hex').toUpperCase();
             }
             function bufToAscii(buf) {
                 for (var i = 0, n = buf.length; i < n; i += 1) {
@@ -20,16 +19,21 @@
                         buf[i] = 32;
                     }
                 }
-                return buf.toString('ascii');
+                var str = buf.toString('ascii');
+                return (str.length < chunkLength) ? (str + new Array(chunkLength - str.length + 1).join(' ')) : str;
             }
             return function transformData(data) {
-                if (data && data[0] && data[0].$$ && data[0].$$.frame) {
-                    var buf = data[0].$$.frame;
+                var _1; var _2; var _3; var buf;
+                if (data && (_1 = data[0]) && (_2 = _1.message) && (_3 = _2.$$) && (buf = _3.frame) && (buf.constructor.name === 'Buffer')) {
                     var bufArr = [];
-                    for (var i = 0, n = (buf.length < maxLength) ? buf.length : maxLength; i < n; i += chunkLength) {
-                        bufArr.push(bufToHex(buf.slice(i, i + chunkLength)) + ' | ' + bufToAscii(buf.slice(i, i + chunkLength)));
+                    var size = (buf.length > maxLength) ? maxLength : buf.length;
+                    var bufCopy = new Buffer(size);
+                    buf.copy(bufCopy, 0, 0, size);
+                    for (var i = 0, n = (bufCopy.length < maxLength) ? bufCopy.length : maxLength; i < n; i += chunkLength) {
+                        var hex = bufToHex(bufCopy.slice(i, i + chunkLength));
+                        bufArr.push(bufToAscii(bufCopy.slice(i, i + chunkLength)) + ' | ' + hex);
                     }
-                    data[0].$$.frame = bufArr;
+                    _3.frame = bufArr;
                 }
             }
         })()
