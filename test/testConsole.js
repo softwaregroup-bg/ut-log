@@ -1,4 +1,4 @@
-var repl = require('repl').start('> ');
+var repl = require('repl').start({prompt: '> '});
 var wire = require('wire');
 var m = wire({
     consoleHost: '127.0.0.1',
@@ -81,8 +81,8 @@ var m = wire({
     }
 }, {require: require})
 .then(function contextLoaded(context) {
-    repl.context.w  = context.winston.createLog('trace', {name: 'winston log', context: 'winston log context'});
-    repl.context.b  = context.bunyan.createLog('trace', {name: 'bunyan log', context: 'bunyan log context'});
+    w = repl.context.w  = context.winston.createLog('trace', {name: 'winston log', context: 'winston log context'});
+    b = repl.context.b  = context.bunyan.createLog('trace', {name: 'bunyan log', context: 'bunyan log context'});
 })
 .otherwise(function(error) {
     err = error;
