@@ -6,7 +6,7 @@ var m = wire({
     leveldb : {
         create: {
             module: 'level',
-            args: ['../leveldb/logs']
+            args: ['./leveldb/logs']
         }
     },
     leveldbStream : {
