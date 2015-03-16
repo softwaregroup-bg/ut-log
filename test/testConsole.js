@@ -84,6 +84,6 @@ var m = wire({
     w = repl.context.w  = context.winston.createLog('trace', {name: 'winston log', context: 'winston log context'});
     b = repl.context.b  = context.bunyan.createLog('trace', {name: 'bunyan log', context: 'bunyan log context'});
 })
-.otherwise(function(error) {
-    err = error;
+.otherwise(function(er) {
+    err = repl.context.err = er
 });
