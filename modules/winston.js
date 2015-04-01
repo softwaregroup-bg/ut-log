@@ -16,8 +16,14 @@
             transports.transports = [];
             var type;
             options.streams.forEach(function(stream){
-                if((type = lib.capitalize(stream.type)) == 'Raw') {
-                    type = 'File';
+                switch(type = lib.capitalize(stream.type)) {
+                    case 'Raw' :
+                        type = 'File';
+                        break;
+                    case 'Process.stdout':
+                        type = 'Console';
+                        stream.colorize = 'true';
+                        break;
                 }
                 if (!winston.transports[type]) {
                     throw new Error('Cannot add unknown transport: ' + type);

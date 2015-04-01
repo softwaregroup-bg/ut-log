@@ -41,6 +41,10 @@ var m = wire({
                         level: 'trace',
                         stream: {$ref:'leveldbStream'},
                         type: 'raw'
+                    },
+                    {
+                        level: 'trace',
+                        type: 'process.stdout'
                     }
                 ]
             }
@@ -62,6 +66,10 @@ var m = wire({
                         level: 'trace',
                         stream: {$ref:'leveldbStream'},
                         type: 'raw'
+                    },
+                    {
+                        level: 'trace',
+                        type: 'process.stdout'
                     }
                 ]
             }
