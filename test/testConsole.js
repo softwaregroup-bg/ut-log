@@ -69,7 +69,7 @@ var m = wire({
                     },
                     {
                         level: 'trace',
-                        type: 'process.stdout'
+                        stream: 'process.stdout'
                     }
                 ]
             }

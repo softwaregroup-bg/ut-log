@@ -24,6 +24,9 @@
                         type = 'Console';
                         stream.colorize = 'true';
                         break;
+                    case 'Console':
+                        stream.colorize = 'true';
+                        break;
                 }
                 if (!winston.transports[type]) {
                     throw new Error('Cannot add unknown transport: ' + type);
