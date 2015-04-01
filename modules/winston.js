@@ -8,7 +8,25 @@
     // options: name, transports, dependencies
     function Winston(options) {
         var lib = options.lib;
-        var transports = options.transports || {};
+        var transports = {};
+        if(options.transports) {
+            transports = options.transports;
+        }
+        else if(options.streams && options.streams.length) { // bunyan-like streams
+            transports.transports = [];
+            var type;
+            options.streams.forEach(function(stream){
+                if((type = lib.capitalize(stream.type)) == 'Raw') {
+                    type = 'File';
+                }
+                if (!winston.transports[type]) {
+                    throw new Error('Cannot add unknown transport: ' + type);
+                }
+                delete stream.type;
+                stream.name = '' + type + '_' + Math.random().toString(36).substring(12);
+                transports.transports.push(new (winston.transports[type])(stream))
+            });
+        }
         var dependencies = options.dependencies;
         if (dependencies && dependencies.length) {
             dependencies.forEach(function(element, index, array) {

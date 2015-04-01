@@ -7,6 +7,9 @@
      */
     // helper methods
     var lib = {
+        capitalize: function(str){
+            return (str && str[0].toUpperCase() + str.slice(1)) || 'unknown';
+        },
         transformData : (function() {
             var chunkLength = 32;
             var maxLength = 1024;

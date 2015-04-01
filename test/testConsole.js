@@ -31,17 +31,18 @@ var m = wire({
             args    : {
                 type : 'winston',
                 name : 'winston_console_test',
-                transports : {
-                    'webhook' : {
-                        host: {$ref: 'consoleHost'},
-                        port: {$ref: 'consolePort'},
-                        level: 'trace'
+                streams :  [
+                    {
+                        level: 'trace',
+                        stream: {$ref:'socketStream'},
+                        type: 'raw'
                     },
-                    'file' : {
-                        stream: {$ref: 'leveldbStream'},
-                        level: 'trace'
+                    {
+                        level: 'trace',
+                        stream: {$ref:'leveldbStream'},
+                        type: 'raw'
                     }
-                }
+                ]
             }
         }
     },
