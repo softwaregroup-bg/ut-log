@@ -15,9 +15,10 @@ function SocketStream(opt) {
 
 util.inherits(SocketStream, stream.Writable);
 
-SocketStream.prototype._write = function (obj, encoding, done) {
+SocketStream.prototype._write = function (logMessage, encoding, done) {
     if (this.socket.sendBuffer.length <= 50) {
-        this.socket.emit(this._eventName, obj);
+        try {logMessage = JSON.parse(logMessage)} catch(e) {} // winston pipes stringified JSONs
+        this.socket.emit(this._eventName, logMessage);
         done();
     } else {
         done();
