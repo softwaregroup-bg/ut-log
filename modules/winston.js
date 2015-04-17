@@ -39,7 +39,7 @@
             transports = options.transports;
         }
         else if (options.streams && options.streams.length) { // bunyan-like streams
-            options.streams.map(function(stream){
+            options.streams.map(function(stream) {
                 stream.type = lib.capitalize(stream.type);
                 return stream;
             });
