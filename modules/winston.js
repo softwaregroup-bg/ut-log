@@ -5,36 +5,45 @@
     var container = new winston.Container();
     winston.addColors({trace: 'cyan', debug: 'blue', info: 'green', warn: 'yellow', error: 'magenta', fatal: 'red'});
 
+    function fixStreams(streams) {
+        var type;
+        var transports = [];
+        streams.forEach(function(stream) {
+            switch (type = stream.type) {
+                case 'Raw' :
+                    type = 'File';
+                    break;
+                case 'Process.stdout':
+                    type = 'Console';
+                    stream.colorize = 'true';
+                    break;
+                case 'Console':
+                    stream.colorize = 'true';
+                    break;
+            }
+            if (!winston.transports[type]) {
+                throw new Error('Cannot add unknown transport: ' + type);
+            }
+            delete stream.type;
+            stream.name = '' + type + '_' + Math.random().toString(36).substring(12);
+            transports.push(new (winston.transports[type])(stream))
+        });
+        return {transports: transports};
+    }
+
     // options: name, transports, dependencies
     function Winston(options) {
         var lib = options.lib;
         var transports = {};
-        if(options.transports) {
+        if (options.transports) {
             transports = options.transports;
         }
-        else if(options.streams && options.streams.length) { // bunyan-like streams
-            transports.transports = [];
-            var type;
-            options.streams.forEach(function(stream){
-                switch(type = lib.capitalize(stream.type)) {
-                    case 'Raw' :
-                        type = 'File';
-                        break;
-                    case 'Process.stdout':
-                        type = 'Console';
-                        stream.colorize = 'true';
-                        break;
-                    case 'Console':
-                        stream.colorize = 'true';
-                        break;
-                }
-                if (!winston.transports[type]) {
-                    throw new Error('Cannot add unknown transport: ' + type);
-                }
-                delete stream.type;
-                stream.name = '' + type + '_' + Math.random().toString(36).substring(12);
-                transports.transports.push(new (winston.transports[type])(stream))
+        else if (options.streams && options.streams.length) { // bunyan-like streams
+            options.streams.map(function(stream){
+                stream.type = lib.capitalize(stream.type);
+                return stream;
             });
+            transports = fixStreams(options.streams);
         }
         var dependencies = options.dependencies;
         if (dependencies && dependencies.length) {

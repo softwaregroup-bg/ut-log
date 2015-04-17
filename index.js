@@ -8,7 +8,7 @@
     // helper methods
     var lib = {
         capitalize: function(str){
-            return (str && str[0].toUpperCase() + str.slice(1)) || 'unknown';
+            return (str && str[0].toUpperCase() + str.slice(1)) || null;
         },
         transformData : (function() {
             var chunkLength = 32;
@@ -23,6 +23,7 @@
                     }
                 }
                 var str = buf.toString('ascii');
+                console.log('################################',str);
                 return (str.length < chunkLength) ? (str + new Array(chunkLength - str.length + 1).join(' ')) : str;
             }
             return function transformData(data) {
