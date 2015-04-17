@@ -23,7 +23,6 @@
                     }
                 }
                 var str = buf.toString('ascii');
-                console.log('################################',str);
                 return (str.length < chunkLength) ? (str + new Array(chunkLength - str.length + 1).join(' ')) : str;
             }
             return function transformData(data) {

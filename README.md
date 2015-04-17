@@ -22,19 +22,19 @@ var log = logFactory.createLog('info', {name: 'a', context: 'b'});
 - **ut-log** module exposes a constructor for creating logFactory objects 
 
 - The configuration object that the **ut-log** constructor accepts as an argument has to have properties **type** and **streams** where:
-	-  **type** is a string specifying which vendor node module will be used for logging. The possible values are: [bunyan](https://github.com/trentm/node-bunyan) or [winston](https://github.com/winstonjs/winston)
-	- **streams** is an array of objects where each object specifies a single logging transport. See the [streams](#streams) section for more information.
+    -  **type** is a string specifying which vendor node module will be used for logging. The possible values are: [bunyan](https://github.com/trentm/node-bunyan) or [winston](https://github.com/winstonjs/winston)
+    - **streams** is an array of objects where each object specifies a single logging transport. See the [streams](#streams) section for more information.
 
 - The logFactory object has a single method (**createLog**) which has to be called in order for a log instance to get obtained. logFactory.createLog method has 2 arguments: **level** and **params**
-	-  **level** is a string specifying the minimum logging level the logger will be able to log to.  The possible values for this argument are: ***<font color="#666666">trace</font>*, *<font color="green">debug</font>*, *<font color="#000099">info</font>*, *<font color="#999900">warn</font>*, *<font color="crimson">error</font>*, *<font color="red">fatal</font>***
-	Each log level has a weight and the priority of the levels is as listed above.
+    -  **level** is a string specifying the minimum logging level the logger will be able to log to.  The possible values for this argument are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`
+    Each log level has a weight and the priority of the levels is as listed above.
 
 Once having the **log** instantiated it can be used to log data across all specified streams simultaneously (in this case only the NodeJS console through *process.stdout*). Logging itself happens by calling one of the log's methods (logFactory.createLog returns an object with each logging level assigned as a method). In our case, because we set 'info' as a minimum logging level,  the 'log' object will be equipped with 4 methods: 
 
-	log.info
-	log.warn
-	log.error
-	log.fatal
+    log.info
+    log.warn
+    log.error
+    log.fatal
 To log something, pass the data that needs to be log as an argument to some of the functions listed above. E.g:
 ```js
 log.info('log message');
@@ -47,3 +47,4 @@ log.info && log.info('log message');
 ```
 
 ## **Streams**
+-- Not explained (to do)
