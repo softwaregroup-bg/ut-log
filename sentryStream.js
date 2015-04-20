@@ -2,8 +2,9 @@ var stream = require('stream');
 var util = require('util');
 var raven = require('raven');
 
-// settings.dsn - mandatory
-// settings.patchGlobal - optional
+// settings.dsn (string) mandatory
+// settings.patchGlobal (boolean) optional (dafault: false) - if global exceptions should be handled
+// settings.logger (string) optional (default: 'root') - if the sentry logger should have an unique identity. i.e. 'impl-name'
 function SentryStream(settings) {
     stream.Writable.call(this, {objectMode: true});
     this.raven = new raven.Client(settings.dsn, {

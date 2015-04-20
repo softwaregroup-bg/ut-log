@@ -47,3 +47,48 @@ I.e. logging should always happen like:
 ```js
 log.info && log.info('log message');
 ```
+
+Multiple streams example:
+```js
+var utLog = require('ut-log');
+var level = require('level');
+// stream constuctors
+var SocketStream = require('ut-log/socketStream');
+var LevelDBStream = require('ut-log/leveldbStream');
+var SentryStream = require('ut-log/sentryStream');
+
+var utLogConfig = {
+    type: 'bunyan',
+    streams: [
+        {
+            level: 'trace',
+            stream: 'process.stdout'
+        },
+        {
+		    level: 'trace',
+		    stream: new SocketStream({
+                host: '127.0.0.1',
+                port: '30001',
+                objectMode: true
+            }),
+		    type: 'raw'
+		},
+		{
+		    level: 'trace',
+		    stream: new LevelDBStream(level('./logs')),
+		    type: 'raw'
+		},
+		{
+		    level: 'error',
+		    stream: new SentryStream({
+                dsn : 'http://b62b47864e93466cbb16a2b4a1d749b1:05968d770cdf4f8f8f09985d95ea9911@sentry.softwaregroup-bg.com:49161/2',
+                patchGlobal: true,
+                logger: 'impl-test'
+            }),
+		    type: 'raw'
+		}
+    ]
+};
+var logFactory = new utLog(utLogConfig);
+var log = logFactory.createLog('info', {name: 'a', context: 'b'});
+```
