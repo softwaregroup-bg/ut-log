@@ -10,12 +10,26 @@ function SentryStream(settings) {
     if (settings.patchGlobal) {
         this.raven.patchGlobal();
     }
+    this.raven.on('logged', function(){
+        console.log('SENTRY WORKS!');
+    });
+    this.raven.on('error', function(e){
+        console.log('SENTRY ERROR : ');
+        console.dir(e);
+    })
 }
 
 util.inherits(SentryStream, stream.Writable);
 
-SentryStream.prototype._write = function(obj, encoding, done) {
-    this.raven.captureMessage(JSON.stringify(obj));
+SentryStream.prototype._write = function(logMessage, encoding, done) {
+    if (typeof logMessage !== 'string' ) {
+        try {
+            logMessage = JSON.stringify(logMessage);
+        } catch (e) {
+            logMessage = 'unknonw error';
+        };
+    }
+    this.raven.captureMessage(logMessage);
     done();
 };
 

@@ -15,6 +15,14 @@ var m = wire({
             args: [{$ref: 'leveldb'}]
         }
     },
+    sentryStream: {
+        create: {
+            module:'ut-log/sentryStream',
+            args: {
+                dsn : 'http://b62b47864e93466cbb16a2b4a1d749b1:05968d770cdf4f8f8f09985d95ea9911@sentry.softwaregroup-bg.com:49161/2'
+            }
+        }
+    },
     socketStream:{
         create: {
             module:'ut-log/socketStream',
@@ -43,6 +51,11 @@ var m = wire({
                         type: 'raw'
                     },
                     {
+                        level: 'error',
+                        stream: {$ref:'sentryStream'},
+                        type: 'raw'
+                    },
+                    {
                         level: 'trace',
                         type: 'process.stdout'
                     }
@@ -65,6 +78,11 @@ var m = wire({
                     {
                         level: 'trace',
                         stream: {$ref:'leveldbStream'},
+                        type: 'raw'
+                    },
+                    {
+                        level: 'error',
+                        stream: {$ref:'sentryStream'},
                         type: 'raw'
                     },
                     {
