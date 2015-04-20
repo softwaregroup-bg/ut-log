@@ -10,7 +10,10 @@ function SentryStream(settings) {
         logger: settings.logger || 'root'
     });
     if (settings.patchGlobal) {
-        this.raven.patchGlobal();
+        this.raven.patchGlobal(function(){
+            console.log('Uncaught exception occured. Exitting proces...');
+            process.exit(1);
+        });
     }
     this.raven.on('logged', function(){
         console.log('SENTRY WORKS!');
@@ -29,7 +32,7 @@ SentryStream.prototype._write = function(logMessage, encoding, done) {
             logMessage = JSON.stringify(logMessage);
         } catch (e) {
             logMessage = 'unknonw error';
-        };
+        }
     }
     this.raven.captureMessage(logMessage);
     done();
