@@ -6,7 +6,9 @@ var raven = require('raven');
 // settings.patchGlobal - optional
 function SentryStream(settings) {
     stream.Writable.call(this, {objectMode: true});
-    this.raven = new raven.Client(settings.dsn);
+    this.raven = new raven.Client(settings.dsn, {
+        logger: settings.logger || 'root'
+    });
     if (settings.patchGlobal) {
         this.raven.patchGlobal();
     }
