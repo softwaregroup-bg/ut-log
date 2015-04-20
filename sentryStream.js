@@ -16,10 +16,10 @@ function SentryStream(settings) {
         });
     }
     this.raven.on('logged', function(){
-        console.log('SENTRY WORKS!');
+        console.log('A message has been logged to Sentry');
     });
     this.raven.on('error', function(e){
-        console.log('SENTRY ERROR : ');
+        console.log('Sentry error : ');
         console.dir(e);
     })
 }

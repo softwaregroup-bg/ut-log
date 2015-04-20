@@ -111,7 +111,7 @@ var m = wire({
 }, {require: require})
 .then(function contextLoaded(context) {
     w = repl.context.w  = context.winston.createLog('trace', {name: 'winston log', context: 'winston log context'});
-    b = repl.context.b  = context.bunyan.createLog('trace', {name: 'bunyan log', context: 'bunyan log context'});setTimeout(function(){test()}, 3000);
+    b = repl.context.b  = context.bunyan.createLog('trace', {name: 'bunyan log', context: 'bunyan log context'});
         var test = JSON.stringify([
             {
                 "_id": "552e5b10f3da22fcf1cc9a76",
