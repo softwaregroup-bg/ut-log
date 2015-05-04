@@ -19,8 +19,8 @@ var m = wire({
         create: {
             module:'ut-log/sentryStream',
             args: {
-                dsn : 'http://b62b47864e93466cbb16a2b4a1d749b1:05968d770cdf4f8f8f09985d95ea9911@sentry.softwaregroup-bg.com:49161/2',
-                patchGlobal: true,
+                dsn : 'http://b62b47864e93466cbb16a2b4a1d749b1:05968d770cdf4f8f8f09985d95ea9911@sentry.softwaregroup-bg.com:5002/2',
+                patchGlobal: false,
                 logger: 'impl-test'
             }
         }
@@ -112,6 +112,12 @@ var m = wire({
 .then(function contextLoaded(context) {
     w = repl.context.w  = context.winston.createLog('trace', {name: 'winston log', context: 'winston log context'});
     b = repl.context.b  = context.bunyan.createLog('trace', {name: 'bunyan log', context: 'bunyan log context'});
+        /*setTimeout(function(){
+            var e = new Error();
+            e.name = 'Sentry_Error_Test';
+            e.message = 'Testing Sentry Error Stack';
+            throw e;
+        }, 5000);*/
         var test = JSON.stringify([
             {
                 "_id": "552e5b10f3da22fcf1cc9a76",
