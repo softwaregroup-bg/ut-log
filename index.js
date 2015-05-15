@@ -5,6 +5,17 @@
  */
 // helper methods
 var lib = {
+    extractErrorData: function(err){
+        return {
+            error: {
+                code: err.code,
+                message: err.message,
+                stack: err.stack
+            },
+            message: 'JS Error: ' + err.message,
+            jsException: err
+        };
+    },
     capitalize: function(str){
         return (str && str[0].toUpperCase() + str.slice(1)) || null;
     },

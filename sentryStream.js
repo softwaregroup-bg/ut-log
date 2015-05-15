@@ -11,15 +11,15 @@ function SentryStream(settings) {
         logger: settings.logger || 'root'
     });
     if (settings.patchGlobal) {
-        this.raven.patchGlobal(function(){
+        this.raven.patchGlobal(function() {
             console.log('Sentry: Uncaught exception occured...');
             //process.exit(1);
         });
     }
-    this.raven.on('logged', function(){
+    this.raven.on('logged', function() {
         console.log('A message has been logged to Sentry');
     });
-    this.raven.on('error', function(e){
+    this.raven.on('error', function(e) {
         console.log('Sentry error : ');
         console.dir(e);
     })
@@ -28,14 +28,20 @@ function SentryStream(settings) {
 util.inherits(SentryStream, stream.Writable);
 
 SentryStream.prototype._write = function(logMessage, encoding, done) {
-    if (typeof logMessage !== 'string' ) {
-        try {
-            logMessage = JSON.stringify(logMessage);
-        } catch (e) {
-            logMessage = 'unknonw error';
+    if(logMessage.jsException) {
+        this.raven.captureError(logMessage.exception);
+    } else {
+        if (typeof logMessage == 'string' && logMessage.indexOf('jsException') !== -1) { // error already sent through winston logger
+            return done();
+        } else {
+            try {
+                logMessage = JSON.stringify(logMessage);
+            } catch (e) {
+                logMessage = 'unknown error';
+            }
         }
+        this.raven.captureMessage(logMessage);
     }
-    this.raven.captureMessage(logMessage);
     done();
 };
 

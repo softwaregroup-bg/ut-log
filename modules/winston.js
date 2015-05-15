@@ -60,16 +60,31 @@
                 meta.context = params.context || options.context;
                 return meta;
             });
-            function logHandler(level, data) {
+            function logHandler(level, data) {console.log('inside')
+                var logData = [];
                 if (typeof data[0] !== 'string') {
-                    lib.transformData(data);
-                    try { // stringify if object literal
-                        data[0] = JSON.stringify(data[0], null, 2);
-                    } catch (e) {// inspect if complex structure
-                        data[0] = util.inspect(data[0]);
+                    if(data[0] instanceof Error) {
+                        var transports = log.transports, stream, raven;
+                        for (var transport in transports) {
+                            if (transports.hasOwnProperty(transport)) {
+                                if((stream = transports[transport]._stream) && (raven = stream.raven)) {
+                                    raven.captureError(data[0]);
+                                }
+                            }
+                        }
+                        logData.push(lib.extractErrorData(data[0]));
+                    } else {
+                        lib.transformData(logData);
                     }
+                    try { // stringify if object literal
+                        logData.push(JSON.stringify(data[0], null, 2));
+                    } catch (e) {// inspect if complex structure
+                       logData.push(util.inspect(data[0]));
+                    }
+                } else {
+                    logData = data;
                 }
-                log[level].apply(log, data);
+                log[level].apply(log, logData);
             }
 
             return {

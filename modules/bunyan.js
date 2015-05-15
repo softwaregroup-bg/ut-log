@@ -22,16 +22,19 @@
             var log = bunyan.createLogger(params);
 
             function logHandler(level, data) {
+                var logData = [];
                 if (data.length === 1) {
-                    data[0] = {message:data[0]};
+                    if(data[0] instanceof Error) {
+                        logData.push(lib.extractErrorData(data[0]));
+                    } else {
+                        logData.push({message:data[0]});
+                    }
+                } else if (data.length > 1) {
+                    logData.push(data[1]);
+                    logData.push(data[0]);
                 }
-                if (data.length >= 2) {
-                    var x = data[0];
-                    data[0] = data[1];
-                    data[1] = x;
-                }
-                lib.transformData(data);
-                log[level].apply(log, data);
+                lib.transformData(logData);
+                log[level].apply(log, logData);
             }
 
             return {

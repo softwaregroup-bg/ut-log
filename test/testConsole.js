@@ -113,11 +113,12 @@ var m = wire({
     w = repl.context.w  = context.winston.createLog('trace', {name: 'winston log', context: 'winston log context'});
     b = repl.context.b  = context.bunyan.createLog('trace', {name: 'bunyan log', context: 'bunyan log context'});
         /*setTimeout(function(){
-            var e = new Error();
-            e.name = 'Sentry_Error_Test';
-            e.message = 'Testing Sentry Error Stack';
-            throw e;
-        }, 5000);*/
+            try {
+                b.asdf();
+            } catch(e) {
+                b.error(e);
+            }
+        }, 3000);*/
         var test = JSON.stringify([
             {
                 "_id": "552e5b10f3da22fcf1cc9a76",
