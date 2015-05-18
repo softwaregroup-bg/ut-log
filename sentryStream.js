@@ -28,8 +28,8 @@ function SentryStream(settings) {
 util.inherits(SentryStream, stream.Writable);
 
 SentryStream.prototype._write = function(logMessage, encoding, done) {
-    if(logMessage.jsException) {
-        this.raven.captureError(logMessage.exception);
+    if (logMessage.jsException) {
+        this.raven.captureError(logMessage.jsException);
     } else {
         if (typeof logMessage == 'string' && logMessage.indexOf('jsException') !== -1) { // error already sent through winston logger
             return done();
