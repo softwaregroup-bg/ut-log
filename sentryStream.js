@@ -42,13 +42,15 @@ SentryStream.prototype._write = function(logMessage, encoding, done) {
     } else if (logMessage.jsException) {
         this.raven.captureError(logMessage.jsException);
     } else {
-        if (typeof logMessage == 'string' && logMessage.indexOf('jsException') !== -1) { // error already sent through winston logger
-            return done();
+        if (typeof logMessage === 'string') {
+            if (logMessage.indexOf('jsException') !== -1) { // error already sent through winston logger
+                return done();
+            }
         } else {
             try {
                 logMessage = JSON.stringify(logMessage);
             } catch (e) {
-                logMessage = 'unknown error';
+                logMessage = 'logMessage stringify error';
             }
         }
         this.raven.captureMessage(logMessage);
