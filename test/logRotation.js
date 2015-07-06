@@ -2,6 +2,16 @@ var repl = require('repl').start({prompt: '> '});
 var wire = require('wire');
 var path = require('path');
 var m = wire({
+    logRotateStream : {
+        create: {
+            module: 'ut-log/logRotateStream',
+            args: {
+                path : path.join('logs', 'ut5_%Y-%m-%d_%h-%M.log'),
+                symlink: path.join('logs', 'ut5.log'),
+                compress: true
+            }
+        }
+    },
     bunyan : {
         create : {
             module  : 'ut-log',
@@ -14,10 +24,8 @@ var m = wire({
                         stream: 'process.stdout'
                     },
                     {
-                        type: 'rotating-file',
-                        path: path.join(__dirname, 'logs', 'test.log'),
-                        period: '20000ms', // 20 seconds
-                        count: 10          // keep 10 back copies
+                        level: 'trace',
+                        stream: {$ref:'logRotateStream'}
                     }
                 ]
             }
@@ -25,14 +33,14 @@ var m = wire({
     }
 }, {require: require})
 .then(function contextLoaded(context) {
-        var loggers = [
-                context.bunyan.createLog('info', {name: 'bunyan log 1', context: 'bunyan log 1 context'}),
-                context.bunyan.createLog('info', {name: 'bunyan log 2', context: 'bunyan log 2 context'}),
-                context.bunyan.createLog('info', {name: 'bunyan log 3', context: 'bunyan log 3 context'}),
-                context.bunyan.createLog('info', {name: 'bunyan log 4', context: 'bunyan log 4 context'}),
-                context.bunyan.createLog('info', {name: 'bunyan log 5', context: 'bunyan log 5 context'})
-            ]
-        ;
+    c = repl.context.c = context;
+    var loggers = [
+        context.bunyan.createLog('info', {name: 'bunyan log 1', context: 'bunyan log 1 context'}),
+        context.bunyan.createLog('info', {name: 'bunyan log 2', context: 'bunyan log 2 context'}),
+        context.bunyan.createLog('info', {name: 'bunyan log 3', context: 'bunyan log 3 context'}),
+        context.bunyan.createLog('info', {name: 'bunyan log 4', context: 'bunyan log 4 context'}),
+        context.bunyan.createLog('info', {name: 'bunyan log 5', context: 'bunyan log 5 context'})
+    ];
     setInterval(function() {
         loggers[Math.floor(Math.random()*loggers.length)].info('test');
     }, 9000);

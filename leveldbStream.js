@@ -13,7 +13,7 @@ function LeveldbStream(db) {
 util.inherits(LeveldbStream, stream.Transform);
 
 LeveldbStream.prototype._transform = function(logMessage, encoding, done) {
-    try {logMessage = JSON.parse(logMessage)} catch(e) {} // winston pipes stringified JSONs
+    try {logMessage = JSON.parse(logMessage)} catch (e) {} // winston pipes stringified JSONs
     this.push({
         key: this.getKey(new Date(logMessage.timestamp || logMessage.time)),
         value: logMessage
@@ -22,7 +22,7 @@ LeveldbStream.prototype._transform = function(logMessage, encoding, done) {
 };
 
 LeveldbStream.prototype.getKey = function(date) {
-    if(this.logTime == (date = date.getTime())) {
+    if (this.logTime == (date = date.getTime())) {
         this.counter++
     } else {
         this.counter = 0;

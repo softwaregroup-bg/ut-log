@@ -37,7 +37,7 @@ function SentryStream(settings) {
 util.inherits(SentryStream, stream.Writable);
 
 SentryStream.prototype._write = function(logMessage, encoding, done) {
-    if(!this.raven){
+    if (!this.raven) {
         //
     } else if (logMessage.jsException) {
         this.raven.captureError(logMessage.jsException);
