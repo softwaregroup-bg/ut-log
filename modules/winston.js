@@ -63,11 +63,11 @@
             function logHandler(level, data) {console.log('inside')
                 var logData = [];
                 if (typeof data[0] !== 'string') {
-                    if(data[0] instanceof Error) {
+                    if (data[0] instanceof Error) {
                         var transports = log.transports, stream, raven;
                         for (var transport in transports) {
                             if (transports.hasOwnProperty(transport)) {
-                                if((stream = transports[transport]._stream) && (raven = stream.raven)) {
+                                if ((stream = transports[transport]._stream) && (raven = stream.raven)) {
                                     raven.captureError(data[0]);
                                 }
                             }
@@ -79,7 +79,7 @@
                     try { // stringify if object literal
                         logData.push(JSON.stringify(data[0], null, 2));
                     } catch (e) {// inspect if complex structure
-                       logData.push(util.inspect(data[0]));
+                        logData.push(util.inspect(data[0]));
                     }
                 } else {
                     logData = data;

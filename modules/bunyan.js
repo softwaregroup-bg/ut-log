@@ -24,7 +24,7 @@
             function logHandler(level, data) {
                 var logData = [];
                 if (data.length === 1) {
-                    if(data[0] instanceof Error) {
+                    if (data[0] instanceof Error) {
                         logData.push(lib.extractErrorData(data[0]));
                     } else {
                         logData.push({message:data[0]});
