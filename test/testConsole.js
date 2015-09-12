@@ -5,8 +5,8 @@ var m = wire({
     consolePort: 30001,
     leveldb : {
         create: {
-            module: 'level',
-            args: ['./leveldb/logs']
+            module: 'levelup',
+            args: ['./leveldb/logs', {db: require('leveldown')}]
         }
     },
     leveldbStream : {
@@ -112,6 +112,7 @@ var m = wire({
 .then(function contextLoaded(context) {
     w = repl.context.w  = context.winston.createLog('trace', {name: 'winston log', context: 'winston log context'});
     b = repl.context.b  = context.bunyan.createLog('trace', {name: 'bunyan log', context: 'bunyan log context'});
+    l = repl.context.l = context.leveldb;
         setTimeout(function(){
             try {
                 b.asdf();
