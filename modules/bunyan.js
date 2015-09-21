@@ -6,8 +6,16 @@
             return [];
         }
         return streams.map(function(stream) {
-            if (stream.stream == 'process.stdout') {stream.stream = process.stdout;}
-            if (stream.stream == 'process.stderr') {stream.stream = process.stderr;}
+            if (stream.stream == 'process.stdout') {
+                stream.stream = process.stdout;
+            }
+            else if (stream.stream == 'process.stderr') {
+                stream.stream = process.stderr;
+            } else if (typeof stream.stream === 'string') {
+                var Stream = require(stream.stream);
+                stream.stream = new Stream(stream.streamConfig);
+                delete stream.streamConfig;
+            }
             return stream;
         });
     }
