@@ -5,7 +5,7 @@
         if (!streams || !streams.length) {
             return [];
         }
-        return streams.map(function(stream) {
+        return streams.reduce(function(prev, stream){
             if (stream.stream == 'process.stdout') {
                 stream.stream = process.stdout;
             }
@@ -16,8 +16,9 @@
                 stream.stream = new Stream(stream.streamConfig);
                 delete stream.streamConfig;
             }
-            return stream;
-        });
+            stream.stream && prev.push(stream);
+            return prev;
+        },[])
     }
     // options: name, streams
     function Bunyan(options) {

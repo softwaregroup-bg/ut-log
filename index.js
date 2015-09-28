@@ -69,4 +69,4 @@ Logger.prototype.createLog = function createLog(level, params) {
             }, {});
 };
 
-return module.exports = Logger;
+module.exports = Logger;
