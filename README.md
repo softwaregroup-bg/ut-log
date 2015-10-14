@@ -77,7 +77,9 @@ var utLogConfig = {
 		},
 		{
 		    level: 'trace',
-		    stream: new LevelDBStream(level('./logs')),
+		    stream: new LevelDBStream({
+				dbPath: './leveldbLogs'
+			}),
 		    type: 'raw'
 		},
 		{
