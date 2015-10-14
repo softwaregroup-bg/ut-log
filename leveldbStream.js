@@ -1,8 +1,13 @@
 var stream = require('stream');
 var util = require('util');
 var LevelWriteStream = require('level-writestream');
-
-function LeveldbStream(db) {
+var levelup = require('levelup');
+var leveldown = require('leveldown');
+function LeveldbStream(config) {
+    var db = levelup(config.dbPath || 'leveldbLogs', {
+        db: leveldown,
+        valueEncoding: 'json'
+    });
     stream.Transform.call(this, {objectMode: true});
     this.counter = 0;
     this.logTime = (new Date()).getTime();

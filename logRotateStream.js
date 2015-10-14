@@ -1,14 +1,14 @@
 var stream = require('stream');
 var util = require('util');
 var logRotateStream = require('stream-file-archive');
-// settings : file, size, keep, compress
+// config : file, size, keep, compress
 // refer to: https://www.npmjs.com/package/logrotate-stream
-function logRotate(settings) {
+function logRotate(config) {
     stream.Transform.call(this);
     this.pipe(logRotateStream({
-        path: settings.path || './logs/ut5-%Y-%m-%d.log',  // Write logs rotated by the day
-        symlink: settings.symlink || './logs/ut5.log',    // Maintain a symlink called ut5.log
-        compress: settings.compress || false
+        path: config.path || './logs/ut5-%Y-%m-%d.log',  // Write logs rotated by the day
+        symlink: config.symlink || './logs/ut5.log',    // Maintain a symlink called ut5.log
+        compress: config.compress || false
     }));
 }
 

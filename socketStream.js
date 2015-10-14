@@ -2,14 +2,14 @@ var io = require('socket.io-client');
 var stream = require('stream');
 var util = require('util');
 
-function SocketStream(opt) {
-    opt = opt || {};
-    stream.Writable.call(this, opt);
+function SocketStream(config) {
+    config = config || {};
+    stream.Writable.call(this, config);
 
-    this._host = opt.host || 'localhost';
-    this._port = opt.port || 30001;
-    this._namespace = opt.namespace || 'log';
-    this._eventName = opt.eventName || 'log';
+    this._host = config.host || 'localhost';
+    this._port = config.port || 30001;
+    this._namespace = config.namespace || 'log';
+    this._eventName = config.eventName || 'log';
     this.socket = io(util.format('http://%s:%s/%s', this._host, this._port, this._namespace));
 }
 

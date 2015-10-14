@@ -2,20 +2,20 @@ var stream = require('stream');
 var util = require('util');
 var raven = require('raven');
 
-// settings.dsn (string) mandatory
-// settings.patchGlobal (boolean) optional (dafault: false) - if global exceptions should be handled
-// settings.logger (string) optional (default: 'root') - if the sentry logger should have an unique identity. i.e. 'impl-name'
-function SentryStream(settings) {
+// config.dsn (string) mandatory
+// config.patchGlobal (boolean) optional (dafault: false) - if global exceptions should be handled
+// config.logger (string) optional (default: 'root') - if the sentry logger should have an unique identity. i.e. 'impl-name'
+function SentryStream(config) {
     stream.Writable.call(this, {objectMode: true});
     try {
-        this.raven = new raven.Client(settings.dsn, {
-            logger: settings.logger || 'root',
+        this.raven = new raven.Client(config.dsn, {
+            logger: config.logger || 'root',
             dataCallback: function(data) {
                 // modify data if needed
                 return data;
             }
         });
-        if (settings.patchGlobal) {
+        if (config.patchGlobal) {
             this.raven.patchGlobal(function() {
                 console.log('Sentry: Uncaught exception occured...');
                 //process.exit(1);
