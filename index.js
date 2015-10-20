@@ -20,9 +20,9 @@ var lib = {
         return (str && str[0].toUpperCase() + str.slice(1)) || null;
     },
     transformData : function transformData(data) {
-        var _1; var _2; var _3; var buf;
-        if (data && (_1 = data[0]) && (_2 = _1.message) && (_3 = _2.$$) && (buf = _3.frame) && (buf.constructor.name === 'Buffer')) {
-            _3.frame = buf.toString('hex', 0, (buf.length > 1024) ? 1024 : buf.length).toUpperCase();
+        var _1; var buf;
+        if (data && (_1 = data[0]) && (buf = _1.message)  && (buf.constructor.name === 'Buffer')) {
+            _1.message = buf.toString('hex', 0, (buf.length > 1024) ? 1024 : buf.length).toUpperCase();
         }
     }
 };

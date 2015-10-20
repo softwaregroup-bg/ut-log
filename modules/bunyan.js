@@ -36,7 +36,7 @@
                     if (data[0] instanceof Error) {
                         logData.push(lib.extractErrorData(data[0]));
                     } else {
-                        logData.push({message:data[0]});
+                        logData.push(data[0]);
                     }
                 } else if (data.length > 1) {
                     logData.push(data[1]);
