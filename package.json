@@ -8,15 +8,13 @@
     "stream-file-archive": "~1.1.2"
   },
   "peerDependencies": {
+    "leveldown": "~1.4.2",
+    "levelup": "~1.2.1",
+    "raven": "~0.7.3",
     "ut-bus": "~5.3.0"
   },
   "devDependencies": {
     "wire": "~0.10.10"
-  },
-  "optionalDependencies": {
-    "leveldown": "~1.4.1",
-    "levelup": "~1.2.1",
-    "raven": "~0.7.3"
   },
   "publishConfig": {
     "registry": "http://npm.softwaregroup-bg.com:5001"
