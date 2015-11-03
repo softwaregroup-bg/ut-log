@@ -1,15 +1,14 @@
 {
   "name": "ut-log",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "dependencies": {
     "bunyan": "~1.5.1",
     "leveldown": "~1.4.1",
     "levelup": "~1.2.1",
     "socket.io-client": "~1.3.7",
     "winston": "~0.8.3",
-    "raven" : "~0.7.3",
-    "stream-file-archive" : "~1.1.2",
-    "winston": "~0.8.3"
+    "raven": "~0.7.3",
+    "stream-file-archive": "~1.1.2"
   },
   "devDependencies": {
     "wire": "~0.10.10"
