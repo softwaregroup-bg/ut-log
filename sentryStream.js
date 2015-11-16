@@ -27,9 +27,9 @@ function SentryStream(config) {
         this.raven.on('error', function(e) {
             console.error('Sentry error : ', e.message);
             // console.dir(e);
-        })
+        });
     } catch (e) {
-        console.error(e)
+        console.error(e);
         this.raven = null;
     }
 }
@@ -37,25 +37,27 @@ function SentryStream(config) {
 util.inherits(SentryStream, stream.Writable);
 
 SentryStream.prototype._write = function(logMessage, encoding, done) {
-    if (!this.raven) {
-        //
-    } else if (logMessage.jsException) {
-        this.raven.captureError(logMessage.jsException);
-    } else {
-        if (typeof logMessage === 'string') {
-            if (logMessage.indexOf('jsException') !== -1) { // error already sent through winston logger
-                return done();
-            }
+    if (this.raven) {
+        if (logMessage.jsException) {
+            this.raven.captureError(logMessage.jsException);
         } else {
-            try {
-                logMessage = JSON.stringify(logMessage);
-            } catch (e) {
-                logMessage = 'logMessage stringify error';
+            if (typeof logMessage === 'string') {
+                if (logMessage.indexOf('jsException') !== -1) { // error already sent through winston logger
+                    return done();
+                }
+            } else {
+                try {
+                    logMessage = JSON.stringify(logMessage);
+                } catch (e) {
+                    logMessage = 'logMessage stringify error';
+                }
             }
+            this.raven.captureMessage(logMessage);
         }
-        this.raven.captureMessage(logMessage);
     }
     done();
 };
 
-module.exports = SentryStream;
+module.exports = function(config) {
+    return new SentryStream(config);
+};

@@ -20,4 +20,6 @@ LogRotate.prototype._transform = function(data, encoding, callback) {
     callback();
 };
 
-module.exports = LogRotate;
+module.exports = function(config) {
+    return new LogRotate(config);
+};

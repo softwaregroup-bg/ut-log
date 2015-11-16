@@ -38,4 +38,6 @@ LeveldbStream.prototype.getKey = function(date) {
     return ('' + date + ('0000' + this.counter).slice(-4));
 };
 
-module.exports = LeveldbStream;
+module.exports = function(config) {
+    return new LeveldbStream(config);
+};

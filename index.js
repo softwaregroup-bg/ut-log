@@ -5,23 +5,28 @@
  */
 // helper methods
 var lib = {
-    extractErrorData: function(err){
+    extractErrorData: function(err) {
         return {
             error: {
+                type: err.type,
+                opcode: err.opcode,
                 code: err.code,
-                message: err.message,
-                stack: err.stack
+                print: err.print,
+                stack: err.stack.split('\n')
             },
-            message: 'JS Error: ' + err.message,
+            $meta: {
+                opcode: err.type || err.opcode || 'error'
+            },
             jsException: err
         };
     },
-    capitalize: function(str){
+    capitalize: function(str) {
         return (str && str[0].toUpperCase() + str.slice(1)) || null;
     },
-    transformData : function transformData(data) {
-        var _1; var buf;
-        if (data && (_1 = data[0]) && (buf = _1.message)  && (buf.constructor.name === 'Buffer')) {
+    transformData: function transformData(data) {
+        var _1;
+        var buf;
+        if (data && (_1 = data[0]) && (buf = _1.message) && (buf.constructor.name === 'Buffer')) {
             _1.message = buf.toString('hex', 0, (buf.length > 1024) ? 1024 : buf.length).toUpperCase();
         }
     }
@@ -60,13 +65,15 @@ Logger.prototype.init = function LoggerInit(logger) {
 Logger.prototype.createLog = function createLog(level, params) {
     var levels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'];
     var log = this.logger ? this.logger(params) : null;
-    if (!log) {return {}}
+    if (!log) {
+        return {};
+    }
     return levels
-            .slice(levels.indexOf(level), levels.length)
-            .reduce(function(levels, level) {
-                levels[level] = log[level].bind(log);
-                return levels;
-            }, {});
+        .slice(levels.indexOf(level), levels.length)
+        .reduce(function(levels, level) {
+            levels[level] = log[level].bind(log);
+            return levels;
+        }, {});
 };
 
 module.exports = Logger;

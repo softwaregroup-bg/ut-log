@@ -11,9 +11,9 @@ function fixStreams(streams, workDir) {
         else if (stream.stream === 'process.stderr') {
             stream.stream = process.stderr;
         } else if (typeof stream.stream === 'string') {
-            var Stream = require(stream.stream);
+            var createStream = require(stream.stream);
             stream.streamConfig.workDir = workDir;
-            stream.stream = new Stream(stream.streamConfig);
+            stream.stream = createStream(stream.streamConfig);
             delete stream.streamConfig;
         }
         stream.stream && prev.push(stream);
@@ -35,8 +35,10 @@ function Bunyan(options) {
             if (data.length === 1) {
                 if (data[0] instanceof Error) {
                     logData.push(lib.extractErrorData(data[0]));
+                    logData.push(data[0].message);
                 } else {
                     logData.push(data[0]);
+                    data[0] && data[0].$meta && data[0].$meta.opcode && logData.push(data[0].$meta.opcode);
                 }
             } else if (data.length > 1) {
                 logData.push(data[1]);

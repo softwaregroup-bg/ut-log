@@ -25,4 +25,6 @@ SocketStream.prototype._write = function(logMessage, encoding, done) {
     }
 };
 
-module.exports = SocketStream;
+module.exports = function(config) {
+    return new SocketStream(config);
+};
