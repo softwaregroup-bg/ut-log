@@ -6,7 +6,7 @@ function SocketStream(config) {
     config = config || {};
     stream.Writable.call(this, config);
 
-    this._host = config.host || 'localhost';
+    this._host = config.host || (process.browser ? window.location.hostname : 'localhost');
     this._port = config.port || 30001;
     this._namespace = config.namespace || 'log';
     this._eventName = config.eventName || 'log';
