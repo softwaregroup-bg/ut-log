@@ -37,8 +37,7 @@ function Winston(options) {
     var transports = {};
     if (options.transports) {
         transports = options.transports;
-    }
-    else if (options.streams && options.streams.length) { // bunyan-like streams
+    } else if (options.streams && options.streams.length) { // bunyan-like streams
         options.streams.map(function(stream) {
             stream.type = lib.capitalize(stream.type);
             return stream;
@@ -80,7 +79,7 @@ function Winston(options) {
                 }
                 try { // stringify if object literal
                     logData.push(JSON.stringify(data[0], null, 2));
-                } catch (e) {// inspect if complex structure
+                } catch (e) { // inspect if complex structure
                     logData.push(util.inspect(data[0]));
                 }
             } else {

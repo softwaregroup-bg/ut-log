@@ -18,7 +18,7 @@ function SentryStream(config) {
         if (config.patchGlobal) {
             this.raven.patchGlobal(function() {
                 console.log('Sentry: Uncaught exception occured...');
-                //process.exit(1);
+                // process.exit(1);
             });
         }
         this.raven.on('logged', function() {

@@ -1,5 +1,5 @@
-require('repl').start({useGlobal:true});
-var utLog = require('ut-log');
+require('repl').start({useGlobal: true});
+var UtLog = require('ut-log');
 var utLogConfig = {
     type: 'bunyan',
     streams: [
@@ -9,5 +9,5 @@ var utLogConfig = {
         }
     ]
 };
-var logFactory = new utLog(utLogConfig);
-var log = logFactory.createLog('error', {name: 'test name', context: 'test context'});
+var logFactory = new UtLog(utLogConfig);
+logFactory.createLog('error', {name: 'test name', context: 'test context'});

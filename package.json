@@ -14,7 +14,8 @@
     "ut-bus": "~5.3.9"
   },
   "devDependencies": {
-    "wire": "~0.10.10"
+    "wire": "~0.10.10",
+    "ut-tools": "~0.5.1"
   },
   "optionalDependencies": {
     "leveldown": "~1.4.1",
@@ -24,6 +25,10 @@
     "registry": "http://npm.softwaregroup-bg.com:5001"
   },
   "description": "UT log module",
+  "scripts": {
+    "lint": "ut-lint .",
+    "test": "npm run lint"
+  },
   "repository": {
     "type": "git",
     "url": "git@git.softwaregroup-bg.com:ut5/ut-log.git"

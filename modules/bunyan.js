@@ -7,8 +7,7 @@ function fixStreams(streams, workDir) {
     return streams.reduce(function(prev, stream) {
         if (stream.stream === 'process.stdout') {
             stream.stream = process.stdout;
-        }
-        else if (stream.stream === 'process.stderr') {
+        } else if (stream.stream === 'process.stderr') {
             stream.stream = process.stderr;
         } else if (typeof stream.stream === 'string') {
             var createStream = require(stream.stream);
@@ -72,4 +71,3 @@ function Bunyan(options) {
 }
 
 module.exports = Bunyan;
-
