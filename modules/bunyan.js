@@ -5,12 +5,27 @@ function fixStreams(streams, workDir) {
         return [];
     }
     return streams.reduce(function(prev, stream) {
+        var createStream;
         if (stream.stream === 'process.stdout') {
-            stream.stream = process.stdout;
+            if (stream.streamConfig){
+                createStream = require('../colorStream');
+                stream.stream = createStream(stream.streamConfig);
+                stream.stream.pipe(process.stdout);
+                delete stream.streamConfig;
+            } else {
+                stream.stream = process.stdout;
+            }
         } else if (stream.stream === 'process.stderr') {
-            stream.stream = process.stderr;
+            if (stream.streamConfig){
+                createStream = require('../colorStream');
+                stream.stream = createStream(stream.streamConfig);
+                stream.stream.pipe(process.stderr);
+                delete stream.streamConfig;
+            } else {
+                stream.stream = process.stdout;
+            }
         } else if (typeof stream.stream === 'string') {
-            var createStream = require(stream.stream);
+            createStream = require(stream.stream);
             stream.streamConfig.workDir = workDir;
             stream.stream = createStream(stream.streamConfig);
             delete stream.streamConfig;
