@@ -12,7 +12,8 @@ var lib = {
                 opcode: err.opcode,
                 code: err.code,
                 print: err.print,
-                stack: err.stack && err.stack.split('\n')
+                stack: err.stack && err.stack.split('\n'),
+                cause: err.cause
             },
             $meta: {
                 opcode: err.type || err.opcode || 'error'
