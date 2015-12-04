@@ -1,4 +1,5 @@
 var bunyan = require('bunyan');
+var serverRequire = require;
 
 function fixStreams(streams, workDir) {
     if (!streams || !streams.length) {
@@ -7,8 +8,8 @@ function fixStreams(streams, workDir) {
     return streams.reduce(function(prev, stream) {
         var createStream;
         if (stream.stream === 'process.stdout') {
-            if (stream.streamConfig){
-                createStream = require('../colorStream');
+            if (stream.streamConfig) {
+                createStream = serverRequire('../colorStream');
                 stream.stream = createStream(stream.streamConfig);
                 stream.stream.pipe(process.stdout);
                 delete stream.streamConfig;
@@ -16,8 +17,8 @@ function fixStreams(streams, workDir) {
                 stream.stream = process.stdout;
             }
         } else if (stream.stream === 'process.stderr') {
-            if (stream.streamConfig){
-                createStream = require('../colorStream');
+            if (stream.streamConfig) {
+                createStream = serverRequire('../colorStream');
                 stream.stream = createStream(stream.streamConfig);
                 stream.stream.pipe(process.stderr);
                 delete stream.streamConfig;
