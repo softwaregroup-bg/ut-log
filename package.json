@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "wire": "~0.10.10",
-    "ut-tools": "~0.5.1"
+    "ut-tools": "~1.0.0"
   },
   "optionalDependencies": {
     "leveldown": "~1.4.1",
@@ -27,7 +27,10 @@
   "description": "UT log module",
   "scripts": {
     "lint": "ut-lint .",
-    "test": "npm run lint"
+    "pre-commit": "npm run lint",
+    "pre-release": "ut-pre-release",
+    "release": "ut-release",
+    "post-release": "ut-post-release"
   },
   "repository": {
     "type": "git",
