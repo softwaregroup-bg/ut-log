@@ -53,7 +53,7 @@ function Bunyan(options) {
                     logData.push(data[0].message);
                 } else {
                     logData.push(data[0]);
-                    data[0] && data[0].$meta && data[0].$meta.opcode && logData.push(data[0].$meta.opcode);
+                    data[0] && data[0].$meta && (data[0].$meta.method || data[0].$meta.opcode) && logData.push(data[0].$meta.method || data[0].$meta.opcode);
                 }
             } else if (data.length > 1) {
                 logData.push(data[1]);
