@@ -1,3 +1,4 @@
+var cloneDeep = require('lodash/lang/cloneDeep');
 /**
  * @module ut-log
  * @author UT Route Team
@@ -29,6 +30,17 @@ var lib = {
         var buf;
         if (data && (_1 = data[0]) && (buf = _1.message) && (buf.constructor.name === 'Buffer')) {
             _1.message = buf.toString('hex', 0, (buf.length > 1024) ? 1024 : buf.length).toUpperCase();
+        }
+        if (typeof _1 === 'object') {
+            data[0] = cloneDeep(data[0], function(value, key) {
+                if (typeof key === 'string') {
+                    if (key.match(/password/i)) {
+                        return '*****';
+                    } else if (key === 'cookie' || key === 'utSessionId') {
+                        return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
+                    }
+                }
+            });
         }
     }
 };
