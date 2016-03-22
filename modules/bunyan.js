@@ -30,6 +30,12 @@ function fixStreams(streams, workDir) {
             stream.streamConfig.workDir = workDir;
             stream.stream = createStream(stream.streamConfig);
             delete stream.streamConfig;
+        } else if (typeof stream.stream === 'function') {
+            createStream = stream.stream;
+            stream.stream = null;
+            stream.streamConfig.workDir = workDir;
+            stream.stream = createStream(stream.streamConfig);
+            delete stream.streamConfig;
         }
         stream.stream && prev.push(stream);
         return prev;
