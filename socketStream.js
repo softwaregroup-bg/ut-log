@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var stream = require('stream');
+var stream = require('readable-stream');
 var util = require('util');
 
 function SocketStream(config) {

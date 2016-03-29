@@ -1,4 +1,4 @@
-var Stream = require('stream').Stream;
+var Stream = require('readable-stream').Stream;
 var util = require('util');
 var format = util.format;
 var http = require('http');

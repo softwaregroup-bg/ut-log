@@ -1,4 +1,5 @@
-var stream = require('stream');
+/* eslint no-console:0 */
+var stream = require('readable-stream');
 var util = require('util');
 var raven = require('raven');
 
@@ -21,9 +22,9 @@ function SentryStream(config) {
                 // process.exit(1);
             });
         }
-        this.raven.on('logged', function() {
-            console.log('A message has been logged to Sentry');
-        });
+        // this.raven.on('logged', function() {
+        //     console.log('A message has been logged to Sentry');
+        // });
         this.raven.on('error', function(e) {
             console.error('Sentry error : ', e.message);
             // console.dir(e);

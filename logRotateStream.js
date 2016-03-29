@@ -1,4 +1,4 @@
-var stream = require('stream');
+var stream = require('readable-stream');
 var util = require('util');
 var logRotateStream = require('stream-file-archive');
 var path = require('path');

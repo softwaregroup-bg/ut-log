@@ -2,4 +2,4 @@
 docs
 test/*.log
 leveldb
-test/logs/*
+test/log/*
