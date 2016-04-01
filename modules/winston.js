@@ -54,7 +54,7 @@ function Winston(options) {
     return function createLogger(params) {
         var log = container.add(params.name || options.name, transports);
         log.setLevels(levels);
-        log.addRewriter(function(level, msg, meta) {
+        log.rewriters.push(function(level, msg, meta) {
             meta.name = params.name || options.name;
             meta.context = params.context || options.context;
             return meta;
