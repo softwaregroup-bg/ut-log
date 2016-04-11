@@ -1,3 +1,13 @@
+<a name="5.3.24"></a>
+## [5.3.24](https://git.softwaregroup-bg.com/ut5/ut-log/compare/v5.3.23...v5.3.24) (2016-04-11)
+
+
+### Bug Fixes
+
+* downgrade socket.io-client ([9e3e841](https://git.softwaregroup-bg.com/ut5/ut-log/commit/9e3e841))
+
+
+
 <a name="5.3.23"></a>
 ## [5.3.23](https://git.softwaregroup-bg.com/ut5/ut-log/compare/v5.3.22...v5.3.23) (2016-04-11)
 
