@@ -1,3 +1,13 @@
+<a name="5.3.23"></a>
+## [5.3.23](https://git.softwaregroup-bg.com/ut5/ut-log/compare/v5.3.22...v5.3.23) (2016-04-11)
+
+
+### Features
+
+* upgrade bunyan and socket.io client ([148e16e](https://git.softwaregroup-bg.com/ut5/ut-log/commit/148e16e))
+
+
+
 <a name="5.3.22"></a>
 ## [5.3.22](https://git.softwaregroup-bg.com/ut5/ut-log/compare/v5.3.20...v5.3.22) (2016-04-01)
 
