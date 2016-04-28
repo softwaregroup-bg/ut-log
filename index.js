@@ -70,18 +70,28 @@ var lib = {
  **/
 function Logger(options) {
     options.lib = lib;
-    var workDir = '';
+    var logDir = '';
     if (options.workDir) {
-        workDir = path.join(options.workDir, 'ut-log');
+        logDir = path.join(options.workDir, 'ut-log');
         try {
-            fs.mkdirSync(workDir);
+            fs.accessSync(logDir, fs.R_OK | fs.W_OK);
         } catch (e) {
-            if (e.code !== 'EEXIST') {
+            if (e.code === 'ENOENT') {
+                try {
+                    fs.mkdirSync(logDir);
+                } catch (e) {
+                    if (e.code !== 'EEXIST') {
+                        throw e;
+                    }
+                }
+            } else {
                 throw e;
             }
         }
-        options.workDir = workDir;
+    } else {
+        throw new Error('workDir is a required property in ut-log Logger options');
     }
+    options.logDir = logDir;
     this.init(require('./modules/' + (options.type || 'winston'))(options));
 }
 
