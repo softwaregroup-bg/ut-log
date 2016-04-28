@@ -2,9 +2,11 @@ var stream = require('readable-stream');
 var util = require('util');
 var logRotateStream = require('stream-file-archive');
 var path = require('path');
+var fs = require('fs');
 // config : file, size, keep, compress
 // refer to: https://www.npmjs.com/package/logrotate-stream
 function LogRotate(config) {
+    fs.accessSync(config.logDir, fs.R_OK | fs.W_OK);
     stream.Transform.call(this);
     this.pipe(logRotateStream({
         path: path.resolve(config.logDir, config.path || 'ut5-%Y-%m-%d.log'),  // Write logs rotated by the day

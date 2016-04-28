@@ -4,8 +4,10 @@ var LevelWriteStream = require('level-writestream');
 var levelup = require('levelup');
 var leveldown = require('leveldown');
 var path = require('path');
+var fs = require('fs');
 
 function LeveldbStream(config) {
+    fs.accessSync(config.logDir, fs.R_OK | fs.W_OK);
     var db = levelup(path.resolve(config.logDir, config.dbPath || 'leveldb'), {
         db: leveldown,
         valueEncoding: 'json'
