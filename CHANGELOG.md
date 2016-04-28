@@ -1,3 +1,15 @@
+<a name="5.3.26"></a>
+## [5.3.26](https://git.softwaregroup-bg.com/ut5/ut-log/compare/v5.3.25...v5.3.26) (2016-04-28)
+
+
+### Bug Fixes
+
+* fix ut-log for browser([61b7d4f](https://git.softwaregroup-bg.com/ut5/ut-log/commit/61b7d4f))
+* use logDir instead of overriding implementation's default config.workDir property([ff36062](https://git.softwaregroup-bg.com/ut5/ut-log/commit/ff36062))
+* workdir([cd28a9f](https://git.softwaregroup-bg.com/ut5/ut-log/commit/cd28a9f))
+
+
+
 <a name="5.3.25"></a>
 ## [5.3.25](https://git.softwaregroup-bg.com/ut5/ut-log/compare/v5.3.24...v5.3.25) (2016-04-15)
 
