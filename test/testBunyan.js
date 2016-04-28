@@ -1,6 +1,7 @@
 var UtLog = require('../index');
 var utLogConfig = {
     type: 'bunyan',
+    workDir: __dirname,
     streams: [
         {
             level: 'trace',
