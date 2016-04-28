@@ -6,7 +6,7 @@ var leveldown = require('leveldown');
 var path = require('path');
 
 function LeveldbStream(config) {
-    var db = levelup(path.resolve(config.workDir, 'log', config.dbPath || 'leveldb'), {
+    var db = levelup(path.resolve(config.workDir, config.dbPath || 'leveldb'), {
         db: leveldown,
         valueEncoding: 'json'
     });
