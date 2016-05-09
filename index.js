@@ -1,5 +1,5 @@
 var cloneDeep = require('lodash/lang/cloneDeep');
-var fs = require('fs');
+var fs = require('fs-plus');
 var path = require('path');
 /**
  * @module ut-log
@@ -77,7 +77,7 @@ function Logger(options) {
         } catch (e) {
             if (e.code === 'ENOENT') {
                 try {
-                    fs.mkdirSync(options.logDir);
+                    fs.makeTreeSync(options.logDir);
                 } catch (e) {
                     if (e.code !== 'EEXIST') {
                         throw e;
