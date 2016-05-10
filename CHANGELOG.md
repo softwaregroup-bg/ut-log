@@ -1,3 +1,13 @@
+<a name="5.3.28"></a>
+## [5.3.28](https://git.softwaregroup-bg.com/ut5/ut-log/compare/v5.3.27...v5.3.28) (2016-05-10)
+
+
+### Bug Fixes
+
+* create logDir on demand only([f01ec75](https://git.softwaregroup-bg.com/ut5/ut-log/commit/f01ec75))
+
+
+
 <a name="5.3.27"></a>
 ## [5.3.27](https://git.softwaregroup-bg.com/ut5/ut-log/compare/v5.3.26...v5.3.27) (2016-05-10)
 
