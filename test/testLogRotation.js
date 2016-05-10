@@ -1,5 +1,5 @@
 var path = require('path');
-var logRotateStream = require('../logRotateStream')({logDir: path.resolve(__dirname)});
+var logRotateStream = require('../logRotateStream')({workDir: path.resolve(__dirname)});
 var Log = require('../index');
 var bunyan = new Log({
     type: 'bunyan',
