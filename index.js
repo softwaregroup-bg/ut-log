@@ -1,6 +1,4 @@
 var cloneDeep = require('lodash/lang/cloneDeep');
-var fs = require('fs-plus');
-var path = require('path');
 /**
  * @module ut-log
  * @author UT Route Team
@@ -70,24 +68,6 @@ var lib = {
  **/
 function Logger(options) {
     options.lib = lib;
-    if (options.workDir) {
-        options.logDir = path.join(options.workDir, 'ut-log');
-        try {
-            fs.accessSync(options.logDir, fs.R_OK | fs.W_OK);
-        } catch (e) {
-            if (e.code === 'ENOENT') {
-                try {
-                    fs.makeTreeSync(options.logDir);
-                } catch (e) {
-                    if (e.code !== 'EEXIST') {
-                        throw e;
-                    }
-                }
-            } else {
-                throw e;
-            }
-        }
-    }
     this.init(require('./modules/' + (options.type || 'winston'))(options));
 }
 

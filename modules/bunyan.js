@@ -1,7 +1,7 @@
 var bunyan = require('bunyan');
 var serverRequire = require;
 
-function fixStreams(streams, logDir) {
+function fixStreams(streams, workDir) {
     if (!streams || !streams.length) {
         return [];
     }
@@ -27,13 +27,13 @@ function fixStreams(streams, logDir) {
             }
         } else if (typeof stream.stream === 'string') {
             createStream = require(stream.stream);
-            stream.streamConfig.logDir = logDir;
+            stream.streamConfig.workDir = workDir;
             stream.stream = createStream(stream.streamConfig);
             delete stream.streamConfig;
         } else if (typeof stream.stream === 'function') {
             createStream = stream.stream;
             stream.stream = null;
-            stream.streamConfig.logDir = logDir;
+            stream.streamConfig.workDir = workDir;
             stream.stream = createStream(stream.streamConfig);
             delete stream.streamConfig;
         }
@@ -44,7 +44,7 @@ function fixStreams(streams, logDir) {
 // options: name, streams
 function Bunyan(options) {
     var lib = options.lib;
-    var streams = fixStreams(options.streams, options.logDir);
+    var streams = fixStreams(options.streams, options.workDir);
     return function createLogger(params) {
         params.streams = streams;
         params.level = options.level || 'trace';
