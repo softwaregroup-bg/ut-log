@@ -308,11 +308,15 @@ function PrettyStream(opts) {
                 if (typeof value === 'undefined') { value = ''; }
                 var stringified = false;
                 if (typeof value !== 'string') {
-                    value = JSON.stringify(value, null, 2);
+                    value = JSON.stringify(value);
                     stringified = true;
+                } else {
+                    if (value.length > 130 && value.match(/[0-9a-fA-F]+/)) {
+                        value = value.substr(0, 128) + '..';
+                    }
                 }
-                if (value.indexOf('\n') !== -1 || value.length > 50) {
-                    details.push(key + ': ' + value);
+                if (value.indexOf('\n') !== -1 || value.length > 130) {
+                    details.push('\n' + stylize(key, 'green') + ': ' + stylize(value, 'grey'));
                 } else if (!stringified && (value.indexOf(' ') !== -1 || value.length === 0)) {
                     extras[key] = JSON.stringify(value);
                 } else {
@@ -333,7 +337,7 @@ function PrettyStream(opts) {
                 details.push(indent(d));
             });
             Object.keys(results.extras).forEach(function(k) {
-                extras.push(k + '=' + results.extras[k]);
+                extras.push(stylize(k, 'green') + '=' + results.extras[k]);
             });
         }
     }
@@ -373,8 +377,8 @@ function PrettyStream(opts) {
 
         applyDetails(extractCustomDetails(rec), details, extras);
 
-        extras = stylize((extras.length ? ' (' + extras.join(', ') + ')' : ''), 'grey');
-        details = stylize((details.length ? details.join('\n    --\n') + '\n' : ''), 'grey');
+        extras = (extras.length ? ' (' + extras.join(', ') + ')' : '');
+        details = (details.length ? details.join('\n    --\n') : '');
 
         if (config.mode === 'long') {
             return format('[%s] %s: %s on %s%s: %s%s\n%s',
@@ -397,7 +401,7 @@ function PrettyStream(opts) {
                 details);
         }
         if (config.mode === 'dev') {
-            return format('%s %s %s %s: %s%s\n%s',
+            return format('%s %s %s %s: %s%s %s\n',
                 time,
                 level,
                 name,
