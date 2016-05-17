@@ -1,3 +1,13 @@
+<a name="5.3.29"></a>
+## [5.3.29](https://git.softwaregroup-bg.com/ut5/ut-log/compare/v5.3.28...v5.3.29) (2016-05-17)
+
+
+### Features
+
+* improve format of console logging ([89c9950](https://git.softwaregroup-bg.com/ut5/ut-log/commit/89c9950))
+
+
+
 <a name="5.3.28"></a>
 ## [5.3.28](https://git.softwaregroup-bg.com/ut5/ut-log/compare/v5.3.27...v5.3.28) (2016-05-10)
 
