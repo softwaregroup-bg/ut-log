@@ -138,6 +138,13 @@ function PrettyStream(opts) {
         return stylize(src, 'green');
     }
 
+    function extractMtid(rec) {
+        if (rec.mtid) {
+            return ' ' + stylize(rec.mtid, 'magenta')
+        }
+        return '';
+    }
+
     function extractHost(rec) {
         return rec.hostname || '<no-hostname>';
     }
@@ -351,6 +358,7 @@ function PrettyStream(opts) {
         var name = extractName(rec);
         var host = extractHost(rec);
         var src = extractSrc(rec);
+        var mtid = extractMtid(rec);
 
         var msg = isSingleLineMsg(rec) ? extractMsg(rec) : '';
         if (!msg) {
@@ -381,31 +389,34 @@ function PrettyStream(opts) {
         details = (details.length ? details.join('\n    --\n') : '');
 
         if (config.mode === 'long') {
-            return format('[%s] %s: %s on %s%s: %s%s\n%s',
+            return format('[%s] %s: %s on %s%s:%s %s%s\n%s',
                 time,
                 level,
                 name,
                 host,
                 src,
+                mtid,
                 msg,
                 extras,
                 details);
         }
         if (config.mode === 'short') {
-            return format('[%s] %s %s: %s%s\n%s',
+            return format('[%s] %s %s:%s %s%s\n%s',
                 time,
                 level,
                 name,
+                mtid,
                 msg,
                 extras,
                 details);
         }
         if (config.mode === 'dev') {
-            return format('%s %s %s %s: %s%s %s\n',
+            return format('%s %s %s %s:%s %s%s %s\n',
                 time,
                 level,
                 name,
                 src,
+                mtid,
                 msg,
                 extras,
                 details);

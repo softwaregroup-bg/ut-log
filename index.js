@@ -41,6 +41,9 @@ var lib = {
                     }
                 }
             });
+            if(data[0] && data[0].$meta && data[0].$meta.mtid) {
+                data[0].mtid = data[0].$meta.mtid;
+            }
         }
     }
 };
