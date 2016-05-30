@@ -1,4 +1,5 @@
 var cloneDeep = require('lodash/lang/cloneDeep');
+var defaultsDeep = require('lodash/object/defaultsDeep');
 /**
  * @module ut-log
  * @author UT Route Team
@@ -26,24 +27,36 @@ var lib = {
         return (str && str[0].toUpperCase() + str.slice(1)) || null;
     },
     transformData: function transformData(data) {
-        var _1;
-        var buf;
-        if (data && (_1 = data[0]) && (buf = _1.message) && (buf.constructor.name === 'Buffer')) {
-            _1.message = buf.toString('hex', 0, (buf.length > 1024) ? 1024 : buf.length).toUpperCase();
+        if (!data || data[0] == null || typeof data[0] !== 'object') {
+            return;
         }
-        if (typeof _1 === 'object') {
-            data[0] = cloneDeep(data[0], function(value, key) {
-                if (typeof key === 'string') {
-                    if (key.match(/password/i)) {
-                        return '*****';
-                    } else if (key === 'cookie' || key === 'utSessionId') {
-                        return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
-                    }
-                }
-            });
-            if(data[0] && data[0].$meta && data[0].$meta.mtid) {
-                data[0].mtid = data[0].$meta.mtid;
+        var context = {};
+        if (data[0].$meta) {
+            if (data[0].$meta.mtid != null) {
+                context.mtid = data[0].$meta.mtid;
             }
+            if (data[0].$meta.trace != null) {
+                context.trace = data[0].$meta.trace;
+            }
+        }
+        var message;
+        if (data[0].message && data[0].message.constructor.name === 'Buffer') {
+            message = data[0].message.toString('hex', 0, Math.min(data[0].message.length, 1024)).toUpperCase();
+        } else {
+            message = data[0].message;
+        }
+        data[0] = cloneDeep(defaultsDeep(data[0], context), function(value, key) {
+            if (typeof key === 'string') {
+                if (key.match(/password/i)) {
+                    return '*****';
+                } else if (key === 'cookie' || key === 'utSessionId') {
+                    return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
+                }
+            }
+            return value;
+        });
+        if ('message' in data[0]) {
+            data[0].message = message;
         }
     }
 };

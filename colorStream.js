@@ -140,7 +140,7 @@ function PrettyStream(opts) {
 
     function extractMtid(rec) {
         if (rec.mtid) {
-            return ' ' + stylize(rec.mtid, 'magenta')
+            return ' ' + stylize(rec.mtid, 'magenta');
         }
         return '';
     }
@@ -304,12 +304,35 @@ function PrettyStream(opts) {
 
     function extractCustomDetails(rec) {
         var skip = ['name', 'hostname', 'pid', 'level', 'component', 'msg', 'time', 'v', 'src', 'error', 'clientReq',
-            'clientRes', 'req', 'res', '$meta', 'jsException'];
+            'clientRes', 'req', 'res', '$meta', 'mtid', 'jsException'];
+
+        var sortedDetails = ['context', 'trace'];
+        var sortFn = function(a, b) {
+            var ia = sortedDetails.indexOf(a);
+            var ib = sortedDetails.indexOf(b);
+            var r;
+            if (ia < 0 && ib < 0) {
+                if (a < b) {
+                    r = -1;
+                } else if (a > b) {
+                    r = 1;
+                } else {
+                    r = 0;
+                }
+            } else if (ia < 0) {
+                r = 1;
+            } else if (ib < 0) {
+                r = -1;
+            } else {
+                r = ia - ib;
+            }
+            return r;
+        };
 
         var details = [];
         var extras = {};
 
-        Object.keys(rec).forEach(function(key) {
+        Object.keys(rec).sort(sortFn).forEach(function(key) {
             if (skip.indexOf(key) === -1) {
                 var value = rec[key];
                 if (typeof value === 'undefined') { value = ''; }
