@@ -1,3 +1,13 @@
+<a name="5.3.30"></a>
+## [5.3.30](https://git.softwaregroup-bg.com/ut5/ut-log/compare/v5.3.29...v5.3.30) (2016-06-06)
+
+
+### Bug Fixes
+
+* **eslint,trace,transform:** Fix ESLint errors, add trace to log when available in $meta, fix logic in transform to prevent modify the provided object. ([59dd111](https://git.softwaregroup-bg.com/ut5/ut-log/commit/59dd111))
+
+
+
 <a name="5.3.29"></a>
 ## [5.3.29](https://git.softwaregroup-bg.com/ut5/ut-log/compare/v5.3.28...v5.3.29) (2016-05-17)
 
