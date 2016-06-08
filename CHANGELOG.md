@@ -1,3 +1,13 @@
+<a name="5.3.31"></a>
+## [5.3.31](https://git.softwaregroup-bg.com/ut5/ut-log/compare/v5.3.30...v5.3.31) (2016-06-08)
+
+
+### Bug Fixes
+
+* upgrade lodash ([acb025f](https://git.softwaregroup-bg.com/ut5/ut-log/commit/acb025f))
+
+
+
 <a name="5.3.30"></a>
 ## [5.3.30](https://git.softwaregroup-bg.com/ut5/ut-log/compare/v5.3.29...v5.3.30) (2016-06-06)
 
