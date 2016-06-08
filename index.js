@@ -1,5 +1,5 @@
-var cloneDeep = require('lodash/lang/cloneDeep');
-var defaultsDeep = require('lodash/object/defaultsDeep');
+var cloneDeep = require('lodash.clonedeep');
+var defaultsDeep = require('lodash.defaultsdeep');
 /**
  * @module ut-log
  * @author UT Route Team
