@@ -10,7 +10,8 @@ function SocketStream(config) {
     this._port = config.port || 30001;
     this._namespace = config.namespace || 'log';
     this._eventName = config.eventName || 'log';
-    this.socket = io(util.format('http://%s:%s/%s', this._host, this._port, this._namespace));
+    this._protocol = config.protocol || 'http:';
+    this.socket = io(util.format('%s//%s:%s/%s', this._protocol, this._host, this._port, this._namespace));
 }
 
 util.inherits(SocketStream, stream.Writable);
