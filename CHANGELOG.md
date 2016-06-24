@@ -1,3 +1,13 @@
+<a name="5.3.32"></a>
+## [5.3.32](https://git.softwaregroup-bg.com/ut5/ut-log/compare/v5.3.31...v5.3.32) (2016-06-24)
+
+
+### Features
+
+* add support for https ([6d929ce](https://git.softwaregroup-bg.com/ut5/ut-log/commit/6d929ce))
+
+
+
 <a name="5.3.31"></a>
 ## [5.3.31](https://git.softwaregroup-bg.com/ut5/ut-log/compare/v5.3.30...v5.3.31) (2016-06-08)
 
