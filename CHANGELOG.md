@@ -1,3 +1,13 @@
+<a name="5.4.4"></a>
+## [5.4.4](https://github.com/softwaregroup-bg/ut-log/compare/v5.4.3...v5.4.4) (2016-08-12)
+
+
+### Bug Fixes
+
+* publish to npm ([fc06086](https://github.com/softwaregroup-bg/ut-log/commit/fc06086))
+
+
+
 <a name="5.4.3"></a>
 ## [5.4.3](https://git.softwaregroup-bg.com/ut5/ut-log/compare/v5.4.2...v5.4.3) (2016-08-02)
 
