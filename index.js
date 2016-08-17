@@ -1,5 +1,8 @@
-var cloneDeep = require('lodash.clonedeep');
-var defaultsDeep = require('lodash.defaultsdeep');
+var _ = {
+    defaultsDeep: require('lodash.defaultsdeep'),
+    cloneDeep: require('lodash.clonedeep'),
+    isObject: require('lodash.isObject')
+};
 /**
  * @module ut-log
  * @author UT Route Team
@@ -26,6 +29,21 @@ var lib = {
     capitalize: function(str) {
         return (str && str[0].toUpperCase() + str.slice(1)) || null;
     },
+    maskProps: function maskProps(obj) {
+        Object.keys(obj).forEach(function(key) {
+            var val = obj[key];
+            if (_.isObject(val)) {
+                obj[key] = maskProps(val);
+            } else if (typeof val === 'string') {
+                if (key.match(/password/i)) {
+                    obj[key] = '*****';
+                } else if (key === 'cookie' || key === 'utSessionId') {
+                    obj[key] = '*****' + ((typeof val === 'string') ? val.slice(-4) : '');
+                }
+            }
+        });
+        return obj;
+    },
     transformData: function transformData(data) {
         if (!data || data[0] == null || typeof data[0] !== 'object') {
             return;
@@ -45,16 +63,7 @@ var lib = {
         } else {
             message = data[0].message;
         }
-        data[0] = cloneDeep(defaultsDeep(data[0], context), function(value, key) {
-            if (typeof key === 'string') {
-                if (key.match(/password/i)) {
-                    return '*****';
-                } else if (key === 'cookie' || key === 'utSessionId') {
-                    return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
-                }
-            }
-            return value;
-        });
+        data[0] = this.maskProps(_.cloneDeep(_.defaultsDeep(data[0], context)));
         if ('message' in data[0]) {
             data[0].message = message;
         }
