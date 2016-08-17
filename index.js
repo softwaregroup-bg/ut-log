@@ -1,7 +1,6 @@
 var _ = {
     defaultsDeep: require('lodash.defaultsdeep'),
-    cloneDeep: require('lodash.clonedeep'),
-    isObject: require('lodash.isobject')
+    cloneDeepWith: require('lodash.clonedeepwith')
 };
 /**
  * @module ut-log
@@ -29,21 +28,6 @@ var lib = {
     capitalize: function(str) {
         return (str && str[0].toUpperCase() + str.slice(1)) || null;
     },
-    maskProps: function maskProps(obj) {
-        Object.keys(obj).forEach(function(key) {
-            var val = obj[key];
-            if (_.isObject(val)) {
-                obj[key] = maskProps(val);
-            } else if (typeof val === 'string') {
-                if (key.match(/password/i)) {
-                    obj[key] = '*****';
-                } else if (key === 'cookie' || key === 'utSessionId') {
-                    obj[key] = '*****' + ((typeof val === 'string') ? val.slice(-4) : '');
-                }
-            }
-        });
-        return obj;
-    },
     transformData: function transformData(data) {
         if (!data || data[0] == null || typeof data[0] !== 'object') {
             return;
@@ -63,7 +47,15 @@ var lib = {
         } else {
             message = data[0].message;
         }
-        data[0] = this.maskProps(_.cloneDeep(_.defaultsDeep(data[0], context)));
+        data[0] = _.cloneDeepWith(_.defaultsDeep(data[0], context), function(value, key) {
+            if (typeof key === 'string') {
+                if ((/password|(^otp$)|(^pass$)|(^token$)/i).test(key)) {
+                    return '*****';
+                } else if (key === 'cookie' || key === 'utSessionId') {
+                    return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
+                }
+            }
+        });
         if ('message' in data[0]) {
             data[0].message = message;
         }
