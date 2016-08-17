@@ -1,7 +1,7 @@
 var _ = {
     defaultsDeep: require('lodash.defaultsdeep'),
     cloneDeep: require('lodash.clonedeep'),
-    isObject: require('lodash.isObject')
+    isObject: require('lodash.isobject')
 };
 /**
  * @module ut-log
