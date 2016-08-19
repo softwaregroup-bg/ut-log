@@ -1,5 +1,7 @@
-var cloneDeep = require('lodash.clonedeep');
-var defaultsDeep = require('lodash.defaultsdeep');
+var _ = {
+    defaultsDeep: require('lodash.defaultsdeep'),
+    cloneDeepWith: require('lodash.clonedeepwith')
+};
 /**
  * @module ut-log
  * @author UT Route Team
@@ -45,15 +47,14 @@ var lib = {
         } else {
             message = data[0].message;
         }
-        data[0] = cloneDeep(defaultsDeep(data[0], context), function(value, key) {
+        data[0] = _.cloneDeepWith(_.defaultsDeep(data[0], context), function(value, key) {
             if (typeof key === 'string') {
-                if (key.match(/password/i)) {
+                if ((/password|(^otp$)|(^pass$)|(^token$)/i).test(key)) {
                     return '*****';
                 } else if (key === 'cookie' || key === 'utSessionId') {
                     return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
                 }
             }
-            return value;
         });
         if ('message' in data[0]) {
             data[0].message = message;
