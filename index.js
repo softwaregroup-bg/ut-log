@@ -44,8 +44,6 @@ var lib = {
         var message;
         if (data[0].message && data[0].message.constructor.name === 'Buffer') {
             message = data[0].message.toString('hex', 0, Math.min(data[0].message.length, 1024)).toUpperCase();
-        } else {
-            message = data[0].message;
         }
         data[0] = _.cloneDeepWith(_.defaultsDeep(data[0], context), function(value, key) {
             if (typeof key === 'string') {
@@ -56,7 +54,7 @@ var lib = {
                 }
             }
         });
-        if ('message' in data[0]) {
+        if (message && 'message' in data[0]) {
             data[0].message = message;
         }
     }
