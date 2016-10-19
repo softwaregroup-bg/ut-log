@@ -1,3 +1,13 @@
+<a name="5.4.8"></a>
+## [5.4.8](https://github.com/softwaregroup-bg/ut-log/compare/v5.4.7...v5.4.8) (2016-10-19)
+
+
+### Bug Fixes
+
+* fix dynamic requires ([33228c1](https://github.com/softwaregroup-bg/ut-log/commit/33228c1))
+
+
+
 <a name="5.4.7"></a>
 ## [5.4.7](https://github.com/softwaregroup-bg/ut-log/compare/v5.4.6...v5.4.7) (2016-10-18)
 
