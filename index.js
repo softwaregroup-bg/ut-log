@@ -83,7 +83,11 @@ var lib = {
  **/
 function Logger(options) {
     options.lib = lib;
-    this.init(require('./modules/' + (options.type || 'winston'))(options));
+    if (options.type === 'winston') {
+        this.init(require('./modules/winston')(options));
+    } else { // require bunyan by default
+        this.init(require('./modules/bunyan')(options));
+    }
 }
 
 Logger.prototype.init = function LoggerInit(logger) {

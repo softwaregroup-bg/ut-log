@@ -44,12 +44,6 @@ function Winston(options) {
         });
         transports = fixStreams(options.streams);
     }
-    var dependencies = options.dependencies;
-    if (dependencies && dependencies.length) {
-        dependencies.forEach(function(element) {
-            require(element); // try catch maybe
-        });
-    }
 
     return function createLogger(params) {
         var log = container.add(params.name || options.name, transports);

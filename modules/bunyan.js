@@ -26,7 +26,7 @@ function fixStreams(streams, workDir) {
                 stream.stream = process.stdout;
             }
         } else if (typeof stream.stream === 'string') {
-            createStream = require(stream.stream);
+            createStream = serverRequire(stream.stream);
             stream.streamConfig.workDir = workDir;
             stream.stream = createStream(stream.streamConfig);
             delete stream.streamConfig;
