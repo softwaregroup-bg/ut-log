@@ -51,6 +51,8 @@ var lib = {
                     return '*****';
                 } else if (key === 'cookie' || key === 'utSessionId') {
                     return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
+                } else if (key === 'url' && typeof value === 'string' && (/password|(^pass$)|(^token$)/i).test(value)) {
+                    return value.substring(0, value.search('?')) + '*****';
                 }
             }
         });
