@@ -1,3 +1,13 @@
+<a name="5.5.0"></a>
+# [5.5.0](https://github.com/softwaregroup-bg/ut-log/compare/v5.4.10...v5.5.0) (2016-11-23)
+
+
+### Features
+
+* UIS-285 mask urls which contain password or token query params ([f102876](https://github.com/softwaregroup-bg/ut-log/commit/f102876))
+
+
+
 <a name="5.4.10"></a>
 ## [5.4.10](https://github.com/softwaregroup-bg/ut-log/compare/v5.4.9...v5.4.10) (2016-11-17)
 
