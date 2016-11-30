@@ -49,9 +49,11 @@ var lib = {
             if (typeof key === 'string') {
                 if ((/password|(^otp$)|(^pass$)|(^token$)/i).test(key)) {
                     return '*****';
+                } else if ((/accountNumber|customerNumber|customerNo|documentId/i).test(key)) {
+                    return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
                 } else if (key === 'cookie' || key === 'utSessionId') {
                     return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
-                } else if (key === 'url' && typeof value === 'string' && (/password|(^pass$)|(^token$)/i).test(value)) {
+                } else if ((key === 'url' || key === 'uri') && typeof value === 'string' && (/password|(^pass$)|(^token$)/i).test(value)) {
                     return value.substring(0, value.search('?')) + '*****';
                 }
             }
