@@ -45,7 +45,7 @@ function fixStreams(streams, workDir) {
 function Bunyan(options) {
     var lib = options.lib;
     var streams = fixStreams(options.streams, options.workDir);
-    return function createLogger(params) {
+    return function createLogger(params, config) {
         params.streams = streams;
         params.level = options.level || 'trace';
         params.name = params.name || options.name;
@@ -65,7 +65,7 @@ function Bunyan(options) {
                 logData.push(data[1]);
                 logData.push(data[0]);
             }
-            lib.transformData(logData);
+            lib.transformData(logData, config && config.transform);
             log[level].apply(log, logData);
         }
 
