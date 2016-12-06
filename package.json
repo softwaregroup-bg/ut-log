@@ -1,6 +1,6 @@
 {
   "name": "ut-log",
-  "version": "5.6.0",
+  "version": "5.6.1",
   "dependencies": {
     "bunyan": "1.8.1",
     "bunyan-logstash": "0.3.4",
