@@ -1,3 +1,13 @@
+<a name="5.7.0"></a>
+# [5.7.0](https://github.com/softwaregroup-bg/ut-log/compare/v5.6.2...v5.7.0) (2016-12-07)
+
+
+### Features
+
+* mask query params passwords ([#6](https://github.com/softwaregroup-bg/ut-log/issues/6)) ([a88e2ff](https://github.com/softwaregroup-bg/ut-log/commit/a88e2ff))
+
+
+
 <a name="5.6.2"></a>
 ## [5.6.2](https://github.com/softwaregroup-bg/ut-log/compare/v5.6.1...v5.6.2) (2016-12-06)
 
