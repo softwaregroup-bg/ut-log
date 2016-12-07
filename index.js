@@ -53,8 +53,9 @@ var lib = {
                     return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
                 } else if (key === 'cookie' || key === 'utSessionId') {
                     return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
-                } else if ((key === 'url' || key === 'uri') && typeof value === 'string' && (/password|(^pass$)|(^token$)/i).test(value)) {
-                    return value.substring(0, value.search('?')) + '*****';
+                } else if ((['url', 'uri', 'href', 'path', 'search', 'query'].indexOf(key) > -1) && typeof value === 'string' && (/password|(^pass$)|(^token$)/i).test(value)) {
+                    var trimTo = value.indexOf('?') > -1 ? value.indexOf('?') : 4;
+                    return value.substring(0, trimTo) + '*****';
                 }
             }
         });
