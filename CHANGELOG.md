@@ -1,3 +1,28 @@
+<a name="5.6.2"></a>
+## [5.6.2](https://github.com/softwaregroup-bg/ut-log/compare/v5.6.1...v5.6.2) (2016-12-06)
+
+
+
+<a name="5.6.1"></a>
+## [5.6.1](https://github.com/softwaregroup-bg/ut-log/compare/v5.6.0...v5.6.1) (2016-12-06)
+
+
+
+<a name="5.6.0"></a>
+# [5.6.0](https://github.com/softwaregroup-bg/ut-log/compare/v5.5.1...v5.6.0) (2016-12-01)
+
+
+### Bug Fixes
+
+* UIS-285 mask sensitive data ([d777f0a](https://github.com/softwaregroup-bg/ut-log/commit/d777f0a))
+
+
+### Features
+
+* allow hiding fields through configuration ([f0adfe1](https://github.com/softwaregroup-bg/ut-log/commit/f0adfe1))
+
+
+
 <a name="5.5.1"></a>
 ## [5.5.1](https://github.com/softwaregroup-bg/ut-log/compare/v5.5.0...v5.5.1) (2016-11-23)
 

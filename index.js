@@ -28,7 +28,7 @@ var lib = {
     capitalize: function(str) {
         return (str && str[0].toUpperCase() + str.slice(1)) || null;
     },
-    transformData: function transformData(data) {
+    transformData: function transformData(data, options) {
         if (!data || data[0] == null || typeof data[0] !== 'object') {
             return;
         }
@@ -47,7 +47,7 @@ var lib = {
         }
         data[0] = _.cloneDeepWith(_.defaultsDeep(data[0], context), function(value, key) {
             if (typeof key === 'string') {
-                if ((/password|(^otp$)|(^pass$)|(^token$)/i).test(key)) {
+                if ((options && options[key] === 'hide') || (/password|(^otp$)|(^pass$)|(^token$)|(\.routeConfig$)/i).test(key)) {
                     return '*****';
                 } else if ((/accountNumber|customerNumber|customerNo|documentId/i).test(key)) {
                     return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
@@ -99,9 +99,9 @@ Logger.prototype.init = function LoggerInit(logger) {
     this.logger = logger;
 };
 
-Logger.prototype.createLog = function createLog(level, params) {
+Logger.prototype.createLog = function createLog(level, params, config) {
     var levels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'];
-    var log = this.logger ? this.logger(params) : null;
+    var log = this.logger ? this.logger(params, config) : null;
     if (!log) {
         return {};
     }
