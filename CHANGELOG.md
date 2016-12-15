@@ -1,3 +1,13 @@
+<a name="5.7.1"></a>
+## [5.7.1](https://github.com/softwaregroup-bg/ut-log/compare/v5.7.0...v5.7.1) (2016-12-15)
+
+
+### Bug Fixes
+
+* deps versions bump ([8d7b602](https://github.com/softwaregroup-bg/ut-log/commit/8d7b602))
+
+
+
 <a name="5.7.0"></a>
 # [5.7.0](https://github.com/softwaregroup-bg/ut-log/compare/v5.6.2...v5.7.0) (2016-12-07)
 
