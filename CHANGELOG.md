@@ -1,3 +1,13 @@
+<a name="5.8.0"></a>
+# [5.8.0](https://github.com/softwaregroup-bg/ut-log/compare/v5.7.1...v5.8.0) (2016-12-20)
+
+
+### Features
+
+* update dependencies ([6e12210](https://github.com/softwaregroup-bg/ut-log/commit/6e12210))
+
+
+
 <a name="5.7.1"></a>
 ## [5.7.1](https://github.com/softwaregroup-bg/ut-log/compare/v5.7.0...v5.7.1) (2016-12-15)
 
