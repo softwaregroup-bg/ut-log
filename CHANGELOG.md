@@ -1,3 +1,14 @@
+<a name="5.8.1"></a>
+## [5.8.1](https://github.com/softwaregroup-bg/ut-log/compare/v5.8.0...v5.8.1) (2017-03-08)
+
+
+### Bug Fixes
+
+* dependencies ([8ca80bc](https://github.com/softwaregroup-bg/ut-log/commit/8ca80bc))
+* dependencies ([103d345](https://github.com/softwaregroup-bg/ut-log/commit/103d345))
+
+
+
 <a name="5.8.0"></a>
 # [5.8.0](https://github.com/softwaregroup-bg/ut-log/compare/v5.7.1...v5.8.0) (2016-12-20)
 
