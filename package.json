@@ -16,7 +16,7 @@
     "fs-plus": "2.9.3"
   },
   "peerDependencies": {
-    "ut-bus": "~5.9.0"
+    "ut-bus": "^5.9.0"
   },
   "devDependencies": {
     "ut-tools": "^5.13.5"
