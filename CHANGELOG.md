@@ -1,3 +1,13 @@
+<a name="5.9.0"></a>
+# [5.9.0](https://github.com/softwaregroup-bg/ut-log/compare/v5.8.1...v5.9.0) (2017-04-23)
+
+
+### Features
+
+* show RPC stack ([8ef64f8](https://github.com/softwaregroup-bg/ut-log/commit/8ef64f8))
+
+
+
 <a name="5.8.1"></a>
 ## [5.8.1](https://github.com/softwaregroup-bg/ut-log/compare/v5.8.0...v5.8.1) (2017-03-08)
 
