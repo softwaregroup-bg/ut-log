@@ -17,6 +17,7 @@ var lib = {
                 code: err.code,
                 print: err.print,
                 stack: err.stack && err.stack.split('\n'),
+                remoteStack: err.stackInfo,
                 cause: err.cause
             },
             $meta: {

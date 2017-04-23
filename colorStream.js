@@ -298,7 +298,7 @@ function PrettyStream(opts) {
 
     function extractError(rec) {
         if (rec.error && rec.error.stack) {
-            return rec.error.stack;
+            return rec.error.remoteStack ? rec.error.stack.concat(['-- remote stack --']).concat(rec.error.remoteStack) : rec.error.stack;
         }
     }
 
