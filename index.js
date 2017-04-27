@@ -18,7 +18,13 @@ var lib = {
                 print: err.print,
                 stack: err.stack && err.stack.split('\n'),
                 remoteStack: err.stackInfo,
-                cause: err.cause
+                cause: err.cause && {
+                    type: err.cause.type,
+                    code: err.cause.code,
+                    print: err.cause.print,
+                    stack: err.cause.stack && err.cause.stack.split('\n'),
+                    remoteStack: err.cause.stackInfo
+                }
             },
             $meta: {
                 opcode: err.type || err.opcode || 'error'
