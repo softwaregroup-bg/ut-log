@@ -298,17 +298,19 @@ function PrettyStream(opts) {
 
     function extractError(rec) {
         var result;
-        if (rec.error) {
-            var error = rec.error;
+        var error = rec.error;
+        while (error) {
             if (error.stack) {
-                result = error.remoteStack ? error.stack.concat(['-- remote stack --']).concat(error.remoteStack) : error.stack;
-            }
-            if (error.cause) {
-                var cause = error.cause;
                 result = result || [];
-                result.push('-- error cause --');
-                result = result.concat(cause.remoteStack ? cause.stack.concat(['-- cause remote stack --']).concat(cause.remoteStack) : cause.stack);
+                if (error.remoteStack) {
+                    result.push('-- remote stack --');
+                    result.push.apply(result, error.remoteStack);
+                } else {
+                    result.push.apply(result, error.stack);
+                }
             }
+            error = error.cause;
+            error && error.stack && result.push('-- error cause --');
         }
         return result;
     }
