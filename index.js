@@ -12,21 +12,24 @@ var MAX_ERROR_CAUSE_DEPTH = 5;
 var lib = {
     extractErrorData: function(err) {
         return {
-            error: getErrorTree(err, 0, new WeakSet()),
+            error: getErrorTree(err, new Set()),
             $meta: {
                 opcode: err.type || err.opcode || 'error'
             },
             jsException: err
         };
-        function getErrorTree(error, count, visited) {
-            if (count >= MAX_ERROR_CAUSE_DEPTH) {
-                return error;
+        function getErrorTree(error, visited) {
+            if (!error || visited.size >= MAX_ERROR_CAUSE_DEPTH) {
+                return;
             }
+            var cause = error.cause;
             if (visited.has(error)) {
-                // make this step last
-                count = MAX_ERROR_CAUSE_DEPTH;
+                cause = undefined; // make this step last
             }
             visited.add(error);
+            if (visited.has(cause)) {
+                error.cause = undefined; // break circular refs
+            }
             return {
                 type: error.type,
                 opcode: error.opcode,
@@ -34,7 +37,7 @@ var lib = {
                 print: error.print,
                 stack: error.stack && error.stack.split('\n'),
                 remoteStack: error.stackInfo,
-                cause: error.cause && getErrorTree(error.cause, count + 1, visited)
+                cause: cause && getErrorTree(cause, visited)
             };
         }
     },

@@ -299,7 +299,8 @@ function PrettyStream(opts) {
     function extractError(rec) {
         var result;
         var error = rec.error;
-        while (error) {
+        var count = 5;
+        while (error && count--) {
             if (error.stack) {
                 result = result || [];
                 if (error.remoteStack) {
@@ -310,7 +311,7 @@ function PrettyStream(opts) {
                 }
             }
             error = error.cause;
-            error && error.stack && result.push('-- error cause --');
+            count && error && error.stack && result.push('-- error cause --');
         }
         return result;
     }
