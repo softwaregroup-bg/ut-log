@@ -1,3 +1,13 @@
+<a name="5.10.0"></a>
+# [5.10.0](https://github.com/softwaregroup-bg/ut-log/compare/v5.9.0...v5.10.0) (2017-05-02)
+
+
+### Features
+
+* log error cause ([eb49035](https://github.com/softwaregroup-bg/ut-log/commit/eb49035))
+
+
+
 <a name="5.9.0"></a>
 # [5.9.0](https://github.com/softwaregroup-bg/ut-log/compare/v5.8.1...v5.9.0) (2017-04-23)
 
