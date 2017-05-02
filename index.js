@@ -2,6 +2,7 @@ var _ = {
     defaultsDeep: require('lodash.defaultsdeep'),
     cloneDeepWith: require('lodash.clonedeepwith')
 };
+var MAX_ERROR_CAUSE_DEPTH = 5;
 /**
  * @module ut-log
  * @author UT Route Team
@@ -11,20 +12,34 @@ var _ = {
 var lib = {
     extractErrorData: function(err) {
         return {
-            error: {
-                type: err.type,
-                opcode: err.opcode,
-                code: err.code,
-                print: err.print,
-                stack: err.stack && err.stack.split('\n'),
-                remoteStack: err.stackInfo,
-                cause: err.cause
-            },
+            error: getErrorTree(err, new Set()),
             $meta: {
                 opcode: err.type || err.opcode || 'error'
             },
             jsException: err
         };
+        function getErrorTree(error, visited) {
+            if (!error || visited.size >= MAX_ERROR_CAUSE_DEPTH) {
+                return;
+            }
+            var cause = error.cause;
+            if (visited.has(error)) {
+                cause = undefined; // make this step last
+            }
+            visited.add(error);
+            if (visited.has(cause)) {
+                error.cause = undefined; // break circular refs
+            }
+            return {
+                type: error.type,
+                opcode: error.opcode,
+                code: error.code,
+                print: error.print,
+                stack: error.stack && error.stack.split('\n'),
+                remoteStack: error.stackInfo,
+                cause: cause && getErrorTree(cause, visited)
+            };
+        }
     },
     capitalize: function(str) {
         return (str && str[0].toUpperCase() + str.slice(1)) || null;

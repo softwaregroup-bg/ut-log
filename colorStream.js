@@ -297,9 +297,23 @@ function PrettyStream(opts) {
     }
 
     function extractError(rec) {
-        if (rec.error && rec.error.stack) {
-            return rec.error.remoteStack ? rec.error.stack.concat(['-- remote stack --']).concat(rec.error.remoteStack) : rec.error.stack;
+        var result;
+        var error = rec.error;
+        var count = 5;
+        while (error && count--) {
+            if (error.stack) {
+                result = result || [];
+                if (error.remoteStack) {
+                    result.push('-- remote stack --');
+                    result.push.apply(result, error.remoteStack);
+                } else {
+                    result.push.apply(result, error.stack);
+                }
+            }
+            error = error.cause;
+            count && error && error.stack && result.push('-- error cause --');
         }
+        return result;
     }
 
     function extractCustomDetails(rec) {
