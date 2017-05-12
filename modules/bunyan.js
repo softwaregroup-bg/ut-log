@@ -1,41 +1,57 @@
 var bunyan = require('bunyan');
 var serverRequire = require;
-
+var path = require('path');
 function fixStreams(streams, workDir) {
     if (!streams || !streams.length) {
         return [];
     }
     return streams.reduce(function(prev, stream) {
-        var createStream;
+        var createStream = function(writableFactory, readable) {
+            var writable;
+            var transform;
+            if (writableFactory) {
+                writable = writableFactory(stream.streamConfig);
+            }
+            if (stream.transform) {
+                transform = require(path.join(process.cwd(), stream.transform))(stream.streamConfig);
+            }
+            if (writable) {
+                stream.stream = writable;
+            }
+            if (transform) {
+                if (writable) {
+                    stream.stream.pipe(transform);
+                } else {
+                    stream.stream = transform;
+                }
+            }
+            if (readable) {
+                if (writable || transform) {
+                    stream.stream.pipe(readable);
+                } else {
+                    stream.stream = readable;
+                }
+            }
+            delete stream.streamConfig;
+        }
         if (stream.stream === 'process.stdout') {
             if (stream.streamConfig) {
-                createStream = serverRequire('../colorStream');
-                stream.stream = createStream(stream.streamConfig);
-                stream.stream.pipe(process.stdout);
-                delete stream.streamConfig;
+                createStream(serverRequire('../colorStream'), process.stdout);
             } else {
-                stream.stream = process.stdout;
+                createStream(null, process.stdout);
             }
         } else if (stream.stream === 'process.stderr') {
             if (stream.streamConfig) {
-                createStream = serverRequire('../colorStream');
-                stream.stream = createStream(stream.streamConfig);
-                stream.stream.pipe(process.stderr);
-                delete stream.streamConfig;
+                createStream(serverRequire('../colorStream'), process.stderr);
             } else {
-                stream.stream = process.stdout;
+                createStream(null, process.stderr);
             }
         } else if (typeof stream.stream === 'string') {
-            createStream = serverRequire(stream.stream);
             stream.streamConfig.workDir = workDir;
-            stream.stream = createStream(stream.streamConfig);
-            delete stream.streamConfig;
+            createStream(serverRequire(stream.stream), null);
         } else if (typeof stream.stream === 'function') {
-            createStream = stream.stream;
-            stream.stream = null;
             stream.streamConfig.workDir = workDir;
-            stream.stream = createStream(stream.streamConfig);
-            delete stream.streamConfig;
+            createStream(stream.stream, null);
         }
         stream.stream && prev.push(stream);
         return prev;
