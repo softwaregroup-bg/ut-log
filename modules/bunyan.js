@@ -33,7 +33,7 @@ function fixStreams(streams, workDir) {
                 }
             }
             delete stream.streamConfig;
-        }
+        };
         if (stream.stream === 'process.stdout') {
             if (stream.streamConfig) {
                 createStream(serverRequire('../colorStream'), process.stdout);
