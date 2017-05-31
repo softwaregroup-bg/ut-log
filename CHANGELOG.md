@@ -1,3 +1,13 @@
+<a name="5.10.7"></a>
+## [5.10.7](https://github.com/softwaregroup-bg/ut-log/compare/v5.10.6...v5.10.7) (2017-05-31)
+
+
+### Bug Fixes
+
+* mask track2 when logging ([#10](https://github.com/softwaregroup-bg/ut-log/issues/10)) ([3cb4353](https://github.com/softwaregroup-bg/ut-log/commit/3cb4353))
+
+
+
 <a name="5.10.6"></a>
 ## [5.10.6](https://github.com/softwaregroup-bg/ut-log/compare/v5.10.5...v5.10.6) (2017-05-22)
 

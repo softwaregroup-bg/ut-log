@@ -1,6 +1,6 @@
 {
   "name": "ut-log",
-  "version": "5.10.7-mask-track2.0",
+  "version": "5.10.7",
   "dependencies": {
     "bunyan": "1.8.8",
     "bunyan-logstash": "0.3.4",
