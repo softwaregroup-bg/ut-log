@@ -1,3 +1,13 @@
+<a name="5.10.8"></a>
+## [5.10.8](https://github.com/softwaregroup-bg/ut-log/compare/v5.10.7...v5.10.8) (2017-06-30)
+
+
+### Bug Fixes
+
+* upgrade socket.io ([5173ca3](https://github.com/softwaregroup-bg/ut-log/commit/5173ca3))
+
+
+
 <a name="5.10.7"></a>
 ## [5.10.7](https://github.com/softwaregroup-bg/ut-log/compare/v5.10.6...v5.10.7) (2017-05-31)
 
