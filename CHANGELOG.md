@@ -1,3 +1,13 @@
+<a name="5.10.9"></a>
+## [5.10.9](https://github.com/softwaregroup-bg/ut-log/compare/v5.10.8...v5.10.9) (2017-07-17)
+
+
+### Bug Fixes
+
+* pass log config to transformData method ([#12](https://github.com/softwaregroup-bg/ut-log/issues/12)) ([51524ee](https://github.com/softwaregroup-bg/ut-log/commit/51524ee))
+
+
+
 <a name="5.10.8"></a>
 ## [5.10.8](https://github.com/softwaregroup-bg/ut-log/compare/v5.10.7...v5.10.8) (2017-06-30)
 
