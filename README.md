@@ -62,7 +62,7 @@ var LogRotateStream = require('ut-log/logRotateStream');
 var utLogConfig = {
     type: 'bunyan',
     transformData: {
-        id: hide // which field should be (hidden/overwritten with *) value from log
+        id: 'hide' // which field should be (hidden/overwritten with *) value from log
     },
     streams: [
         {
