@@ -63,7 +63,7 @@ var lib = {
         }
         data[0] = _.cloneDeepWith(_.defaultsDeep(data[0], context), function(value, key) {
             if (typeof key === 'string') {
-                if ((options && options[key] === 'hide') || (/password|(^otp$)|(^pass$)|(^token$)|(\.routeConfig$)|track2/i).test(key)) {
+                if ((options && options[key] === 'hide') || (/password|encryptionPass|(^otp$)|(^pass$)|(^token$)|(\.routeConfig$)|track2/i).test(key)) {
                     return '*****';
                 } else if ((/accountNumber|customerNumber|customerNo|documentId/i).test(key)) {
                     return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
