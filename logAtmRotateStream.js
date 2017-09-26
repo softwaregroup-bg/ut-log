@@ -1,22 +1,32 @@
 var stream = require('readable-stream');
 var util = require('util');
-var logRotateStream = require('stream-file-archive');
 var path = require('path');
+var fs = require('fs');
 var utils = require('./utils');
 // let exampleAtmMapping = {
 //     connId: {
 //         masterKvv: '.....',
-//         stream: 'stream object',
 //         queue: []
 //     }
 // };
 
 var atmMapping = {};
 
+function appendFile(dir, filePrefix) {
+    var prefix = [filePrefix];
+    return (file, data, cb) => {
+        var callback = cb || function() {};
+        fs.appendFile(path.join(dir, prefix.concat(file).join('-')), data, callback);
+    };
+}
+
 function LogFilterRotate(config) {
     stream.Transform.call(this);
     this.config = config;
-    this.logDir = utils.createLogDir(config.workDir);
+    this.appendToFile = appendFile(
+        utils.createLogDir(config.workDir),
+        (this.config.filePrefix ? this.config.filePrefix : '-')
+    );
 }
 
 util.inherits(LogFilterRotate, stream.Transform);
@@ -31,25 +41,20 @@ LogFilterRotate.prototype._transform = function(data, encoding, callback) {
             var conId = (j.context && j.context.conId) || j.$meta.conId;
             if (j.$meta && j.$meta.opcode && j.$meta.opcode.indexOf('.connected') >= 0) {
                 if (atmMapping[conId] && atmMapping[conId].stream) {
-                    atmMapping[conId].stream.end();
                 }
                 atmMapping[conId] = {stream: undefined, masterKvv: undefined, queue: [data]};
             } else {
-                if (!atmMapping[conId].stream) {
+                if (!atmMapping[conId].masterKvv) {
                     atmMapping[conId].queue.push(data);
                     if (j.$meta.opcode && j.$meta.opcode === 'keyReadKvv' && j.message.masterKvv) {
                         atmMapping[conId].masterKvv = j.message.masterKvv;
-                        atmMapping[conId].stream = logRotateStream({
-                            path: path.resolve(this.logDir, `atm-${atmMapping[conId].masterKvv}-%Y-%m-%d.log`),  // Write logs rotated by the day
-                            compress: this.config.compress || false
-                        });
                         atmMapping[conId].queue.map((val) => {
-                            atmMapping[conId].stream.write(val);
+                            this.appendToFile(`${atmMapping[conId].masterKvv}-%Y-%m-%d.log`, val);
                         });
                         atmMapping[conId].queue = [];
                     }
                 } else {
-                    atmMapping[conId].stream.write(data);
+                    this.appendToFile(`${atmMapping[conId].masterKvv}-%Y-%m-%d.log`, data);
                 }
             }
         }
