@@ -19,6 +19,7 @@ function UdpStream(config) {
     });
     this.host = config.host;
     this.port = config.port;
+    this.max = config.max;
     this.mtu = (config.mtu || 1400) - this.id.length;
 }
 
@@ -27,6 +28,10 @@ util.inherits(UdpStream, stream.Writable);
 UdpStream.prototype._write = function(message, encoding, done) {
     if (typeof message === 'string') {
         message = new Buffer(message, encoding);
+    }
+    if (this.max && message && message.length > this.max) {
+        done();
+        return;
     }
     let id = this.id.slice();
     let send = (start, length, cb) => {
