@@ -49,6 +49,7 @@ function Bunyan(options) {
         params.streams = streams;
         params.level = options.level || 'trace';
         params.name = params.name || options.name;
+        params.service = options.service;
         var log = bunyan.createLogger(params);
 
         function logHandler(level, data) {

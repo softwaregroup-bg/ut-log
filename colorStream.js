@@ -318,7 +318,7 @@ function PrettyStream(opts) {
 
     function extractCustomDetails(rec) {
         var skip = ['name', 'hostname', 'pid', 'level', 'component', 'msg', 'time', 'v', 'src', 'error', 'clientReq',
-            'clientRes', 'req', 'res', '$meta', 'mtid', 'jsException'];
+            'clientRes', 'req', 'res', '$meta', 'mtid', 'jsException', 'service'];
 
         var sortedDetails = ['context', 'trace'];
         var sortFn = function(a, b) {
@@ -392,6 +392,7 @@ function PrettyStream(opts) {
 
         var time = extractTime(rec);
         var level = extractLevel(rec);
+        var service = stylize(rec.service || '*', 'yellow');
         var name = extractName(rec);
         var host = extractHost(rec);
         var src = extractSrc(rec);
@@ -426,9 +427,10 @@ function PrettyStream(opts) {
         details = (details.length ? details.join('\n    --\n') : '');
 
         if (config.mode === 'long') {
-            return format('[%s] %s: %s on %s%s:%s %s%s\n%s',
+            return format('[%s] %s: %s %s on %s%s:%s %s%s\n%s',
                 time,
                 level,
+                service,
                 name,
                 host,
                 src,
@@ -438,9 +440,10 @@ function PrettyStream(opts) {
                 details);
         }
         if (config.mode === 'short') {
-            return format('[%s] %s %s:%s %s%s\n%s',
+            return format('[%s] %s %s %s:%s %s%s\n%s',
                 time,
                 level,
+                service,
                 name,
                 mtid,
                 msg,
@@ -448,9 +451,10 @@ function PrettyStream(opts) {
                 details);
         }
         if (config.mode === 'dev') {
-            return format('%s %s %s %s:%s %s%s %s\n',
+            return format('%s %s %s %s %s:%s %s%s %s\n',
                 time,
                 level,
+                service,
                 name,
                 src,
                 mtid,
