@@ -8,10 +8,7 @@ var utils = require('./utils');
 
 function LeveldbStream(config) {
     var logDir = utils.createLogDir(config.workDir);
-    var db = levelup(path.resolve(logDir, config.dbPath || 'leveldb'), {
-        db: leveldown,
-        valueEncoding: 'json'
-    });
+    var db = levelup(leveldown(path.resolve(logDir, config.dbPath || 'leveldb')));
     stream.Transform.call(this, {objectMode: true});
     this.counter = 0;
     this.logTime = (new Date()).getTime();
