@@ -9,7 +9,11 @@ var utils = require('./utils');
 function LogRotate(config) {
     this.config = config;
     this.logDir = utils.createLogDir(config.workDir);
-    stream.Transform.call(this, {readableObjectMode: true, writableObjectMode: true});
+    if (this.config.type && this.config.type === 'raw') {
+        stream.Transform.call(this, {readableObjectMode: true, writableObjectMode: true});
+    } else {
+        stream.Transform.call(this);
+    }
     this.pipe(logRotateStream({
         path: path.resolve(this.logDir, config.path || 'ut5-%Y-%m-%d.log'),  // Write logs rotated by the day
         symlink: path.resolve(this.logDir, config.symlink || 'ut5.log'),    // Maintain a symlink called ut5.log
