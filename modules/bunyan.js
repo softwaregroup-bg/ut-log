@@ -28,6 +28,7 @@ function fixStreams(streams, workDir) {
         } else if (typeof stream.stream === 'string') {
             createStream = serverRequire(stream.stream);
             stream.streamConfig.workDir = workDir;
+            stream.type = stream.streamConfig.type;
             stream.stream = createStream(stream.streamConfig);
             delete stream.streamConfig;
         } else if (typeof stream.stream === 'function') {
