@@ -7,8 +7,9 @@ var utils = require('./utils');
 // config : file, size, keep, compress
 // refer to: https://www.npmjs.com/package/logrotate-stream
 function LogRotate(config) {
+    this.config = config;
     this.logDir = utils.createLogDir(config.workDir);
-    stream.Transform.call(this);
+    stream.Transform.call(this, {readableObjectMode: true, writableObjectMode: true});
     this.pipe(logRotateStream({
         path: path.resolve(this.logDir, config.path || 'ut5-%Y-%m-%d.log'),  // Write logs rotated by the day
         symlink: path.resolve(this.logDir, config.symlink || 'ut5.log'),    // Maintain a symlink called ut5.log
@@ -19,16 +20,14 @@ function LogRotate(config) {
 util.inherits(LogRotate, stream.Transform);
 
 LogRotate.prototype._transform = function(data, encoding, callback) {
-    var d;
-    try {
-        d = JSON.parse(data.toString());
-    } catch (e) {}
-    if (d && d.log) {
-        var logName = path.join(this.logDir, `${d.log}.log`);
-        fs.appendFile(logName, data, () => (true));
+    if (this.config.type && this.config.type === 'raw') {
+        var d = JSON.stringify(data);
+        if (data && data.log) {
+            var logName = path.join(this.logDir, `${data.log}.log`);
+            fs.appendFile(logName, d, () => (true));
+        }
     }
-    this.push(data);
-    callback();
+    callback(null, d);
 };
 
 module.exports = function(config) {
