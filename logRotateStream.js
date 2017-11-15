@@ -36,7 +36,7 @@ util.inherits(LogRotate, stream.Transform);
 
 LogRotate.prototype._transform = function(data, encoding, callback) {
     if (this.config.type && this.config.type === 'raw') {
-        var d = JSON.stringify(data);
+        var d = JSON.stringify(data) + '\n';
         if (data && data.log) {
             var logName = path.join(this.logDir, `${data.log}-${todayAsDate()}.log`);
             fs.appendFile(logName, d, () => true);
