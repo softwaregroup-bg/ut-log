@@ -4,6 +4,17 @@ var logRotateStream = require('stream-file-archive');
 var path = require('path');
 var fs = require('fs');
 var utils = require('./utils');
+const todayAsDateInit = () => {
+    var current;
+    var updateCurrent = () => {
+        var d = new Date();
+        current = [d.getFullYear(), d.getMonth() + 1, d.getDate()].join('-');
+    };
+    updateCurrent();
+    setInterval(updateCurrent, 600000);
+    return () => (current);
+};
+const todayAsDate = todayAsDateInit();
 // config : file, size, keep, compress
 // refer to: https://www.npmjs.com/package/logrotate-stream
 function LogRotate(config) {
@@ -27,8 +38,8 @@ LogRotate.prototype._transform = function(data, encoding, callback) {
     if (this.config.type && this.config.type === 'raw') {
         var d = JSON.stringify(data);
         if (data && data.log) {
-            var logName = path.join(this.logDir, `${data.log}.log`);
-            fs.appendFile(logName, d, () => (true));
+            var logName = path.join(this.logDir, `${data.log}-${todayAsDate()}.log`);
+            fs.appendFile(logName, d, () => true);
         }
     }
     callback(null, d);
