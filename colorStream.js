@@ -34,7 +34,7 @@ var levelFromName = {
 };
 
 var colorFromLevel = {
-    10: 'greyk',     // TRACE
+    10: 'grey',     // TRACE
     20: 'blue',     // DEBUG
     30: 'cyan',     // INFO
     40: 'magenta',  // WARN
@@ -51,6 +51,24 @@ Object.keys(levelFromName).forEach(function(name) {
     upperNameFromLevel[lvl] = name.toUpperCase();
     upperPaddedNameFromLevel[lvl] = (name.length === 4 ? ' ' : '') + name.toUpperCase();
 });
+
+function prettyJson(json) {
+    return '\x1B[37m' + JSON.stringify(json).replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, function(match) {
+        var style = '1';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                style = '32';
+            } else {
+                style = '90';
+            }
+        } else if (/true|false/.test(match)) {
+            style = '34';
+        } else if (/null/.test(match)) {
+            style = '35';
+        }
+        return '\x1B[' + style + 'm' + match + '\x1B[37m';
+    }) + '\x1B[0m';
+}
 
 function PrettyStream(opts) {
     var options = {};
@@ -352,7 +370,7 @@ function PrettyStream(opts) {
                 if (typeof value === 'undefined') { value = ''; }
                 var stringified = false;
                 if (typeof value !== 'string') {
-                    value = JSON.stringify(value);
+                    value = prettyJson(value);
                     stringified = true;
                 } else {
                     if (value.length > 130 && value.match(/[0-9a-fA-F]+/)) {
@@ -360,9 +378,9 @@ function PrettyStream(opts) {
                     }
                 }
                 if (value.indexOf('\n') !== -1 || value.length > 130) {
-                    details.push('\n' + stylize(key, 'green') + ': ' + stylize(value, 'grey'));
+                    details.push('\n' + stylize(key, 'green') + ': ' + value);
                 } else if (!stringified && (value.indexOf(' ') !== -1 || value.length === 0)) {
-                    extras[key] = JSON.stringify(value);
+                    extras[key] = prettyJson(value);
                 } else {
                     extras[key] = value;
                 }
@@ -405,7 +423,7 @@ function PrettyStream(opts) {
 
         var error = extractError(rec);
         if (error) {
-            details.push(error.join('\n    '));
+            details.push(stylize(error.join('\n    \x1B[31m'), 'red'));
         }
 
         if (rec.req) {
