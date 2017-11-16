@@ -6,13 +6,16 @@ var fs = require('fs');
 var utils = require('./utils');
 const todayAsDateInit = () => {
     var current;
-    var updateCurrent = () => {
-        var d = new Date();
-        current = [d.getFullYear(), d.getMonth() + 1, d.getDate()].join('-');
+    var lastUpdated = Date.now() - 1;
+
+    return () => {
+        if (lastUpdated < Date.now()) {
+            var d = new Date();
+            current = [d.getFullYear(), d.getMonth() + 1, d.getDate()].join('-');
+            lastUpdated = Date.now() + 600000;
+        }
+        return current;
     };
-    updateCurrent();
-    setInterval(updateCurrent, 600000);
-    return () => (current);
 };
 const todayAsDate = todayAsDateInit();
 // config : file, size, keep, compress
