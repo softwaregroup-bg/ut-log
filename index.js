@@ -87,7 +87,7 @@ var lib = {
         if (data[0].message && data[0].message.constructor.name === 'Buffer') {
             message = data[0].message.toString('hex', 0, Math.min(data[0].message.length, 1024)).toUpperCase();
         }
-        var hideKeysConfig = Object.keys(options).filter(key => options[key] === 'hide').map(key => '(^' + key + '$)');
+        var hideKeysConfig = Object.keys(options).filter(key => options[key] === 'hide').map(key => '^' + key + '$');
         var hideRegex = new RegExp(HIDE_DATA.concat(hideKeysConfig).join('|'), 'i');
         var maskRegex = new RegExp(MASK_DATA.join('|'), 'i');
         data[0] = _.cloneDeepWith(_.defaultsDeep(data[0], context), function(value, key) {
