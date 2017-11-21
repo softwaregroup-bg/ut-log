@@ -2,6 +2,7 @@ var _ = {
     defaultsDeep: require('lodash.defaultsdeep'),
     cloneDeepWith: require('lodash.clonedeepwith')
 };
+/* eslint no-useless-escape: 0 */
 var HIDE_DATA = [
     'password',
     '^otp$',
@@ -18,7 +19,7 @@ var HIDE_DATA = [
     '^hashParams$',
     '^sessionId$',
     '^jwt$',
-    '^apiKey$',
+    '^apiKey$'
 ];
 var MASK_DATA = [
     'accountNumber',
