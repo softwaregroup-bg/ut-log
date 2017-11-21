@@ -2,6 +2,32 @@ var _ = {
     defaultsDeep: require('lodash.defaultsdeep'),
     cloneDeepWith: require('lodash.clonedeepwith')
 };
+var HIDE_DATA = [
+    'password',
+    '^otp$',
+    '^pass$',
+    '^token$',
+    '\.routeConfig$',
+    'track2',
+    '^encryptionPass$',
+    '^ut5-cookie$',
+    '^xsrf$',
+    '^xsrfToken$',
+    '^x-xsrf-token$',
+    '^salt$',
+    '^hashParams$',
+    '^sessionId$',
+    '^jwt$',
+    '^apiKey$',
+];
+var MASK_DATA = [
+    'accountNumber',
+    'customerNumber',
+    'customerNo',
+    'documentId',
+    'cookie',
+    'utSessionId'
+];
 var MAX_ERROR_CAUSE_DEPTH = 5;
 /**
  * @module ut-log
@@ -61,13 +87,14 @@ var lib = {
         if (data[0].message && data[0].message.constructor.name === 'Buffer') {
             message = data[0].message.toString('hex', 0, Math.min(data[0].message.length, 1024)).toUpperCase();
         }
+        var hideKeysConfig = Object.keys(options).filter(key => options[key] === 'hide').map(key => '(^' + key + '$)');
+        var hideRegex = new RegExp(HIDE_DATA.concat(hideKeysConfig).join('|'), 'i');
+        var maskRegex = new RegExp(MASK_DATA.join('|'), 'i');
         data[0] = _.cloneDeepWith(_.defaultsDeep(data[0], context), function(value, key) {
             if (typeof key === 'string') {
-                if ((options && options[key] === 'hide') || (/password|(^otp$)|(^pass$)|(^token$)|(\.routeConfig$)|track2/i).test(key)) {
+                if (hideRegex.test(key)) {
                     return '*****';
-                } else if ((/accountNumber|customerNumber|customerNo|documentId/i).test(key)) {
-                    return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
-                } else if (key === 'cookie' || key === 'utSessionId') {
+                } else if (maskRegex.test(key)) {
                     return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
                 } else if ((['url', 'uri', 'href', 'path', 'search', 'query'].indexOf(key) > -1) && typeof value === 'string' && (/password|(^pass$)|(^token$)/i).test(value)) {
                     var trimTo = value.indexOf('?') > -1 ? value.indexOf('?') : 4;
