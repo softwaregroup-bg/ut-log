@@ -11,7 +11,7 @@ const todayAsDateInit = () => {
     return () => {
         if (lastUpdated < Date.now()) {
             var d = new Date();
-            current = [d.getFullYear(), d.getMonth() + 1, d.getDate()].join('-');
+            current = [d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate()].join('-');
             lastUpdated = Date.now() + 600000;
         }
         return current;
