@@ -11,13 +11,46 @@ const todayAsDateInit = () => {
     return () => {
         if (lastUpdated < Date.now()) {
             var d = new Date();
-            current = [d.getFullYear(), d.getMonth() + 1, d.getDate()].join('-');
+            current = [d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate()].join('-');
             lastUpdated = Date.now() + 600000;
         }
         return current;
     };
 };
 const todayAsDate = todayAsDateInit();
+
+const hexMap = Buffer.from('0123456789ABCDEF');
+const asciiMap = Buffer.from(Array(256).fill(0).map((v, i) => ((i < 32) ? 32 : i)));
+
+function bufferLog(buffer, width = 16, separator = '|'.charCodeAt(0)) {
+    const nextAscii = 3 * width + 3;
+    const nextHex = width + 3;
+    const length = buffer.length;
+    const lineCount = Math.floor((length - 1) / width) + 1;
+    let result = Buffer.alloc(lineCount * (width * 4 + 3), ' ');
+    let ascii = -1;
+    let hex = -width - 3;
+    for (var i = 0; i < length; i += 1) {
+        if (i % width === 0) {
+            if (ascii > 0) {
+                result[ascii] = 10;
+            }
+            hex = hex + nextHex;
+            ascii = ascii + nextAscii;
+            result[ascii - 2] = separator;
+        }
+        let v = buffer[i];
+        result[ascii] = asciiMap[v];
+        result[hex] = hexMap[v >> 4];
+        result[hex + 1] = hexMap[v & 15];
+        hex++;
+        hex++;
+        hex++;
+        ascii++;
+    }
+    return result;
+}
+
 // config : file, size, keep, compress
 // refer to: https://www.npmjs.com/package/logrotate-stream
 function LogRotate(config) {
@@ -38,17 +71,23 @@ function LogRotate(config) {
 util.inherits(LogRotate, stream.Transform);
 
 LogRotate.prototype._transform = function(data, encoding, callback) {
+    var d = data;
+    var d2;
     if (this.config.type && this.config.type === 'raw' && data) {
-        let dataOrdered = Object.assign({time: data.time}, data); // put time prop first (most left)
-        let dataString = JSON.stringify(dataOrdered) + '\n';
-        if (dataOrdered.log) {
-            let logName = path.join(this.logDir, `${dataOrdered.log}-${todayAsDate()}.log`);
-            fs.appendFile(logName, dataString, () => true);
+        if ((this.config.individualFormat === 'hex/ascii') && data.mtid === 'frame' && typeof (data.message) === 'string') {
+            d2 = bufferLog(Buffer.from(data.message, 'hex')) + '\n';
         }
-        callback(null, dataString);
-    } else {
-        callback(null, data);
+        data = Object.assign({time: data.time}, data); // put time prop first (most left)
+        d = JSON.stringify(data) + '\n';
+        if (data && data.log) {
+            var logName = path.join(this.logDir, `${data.log}-${todayAsDate()}.log`);
+            fs.appendFile(logName, d, () => true);
+            if (d2) {
+                fs.appendFile(logName, d2, () => true);
+            }
+        }
     }
+    callback(null, d);
 };
 
 module.exports = function(config) {
