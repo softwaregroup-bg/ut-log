@@ -38,14 +38,17 @@ function LogRotate(config) {
 util.inherits(LogRotate, stream.Transform);
 
 LogRotate.prototype._transform = function(data, encoding, callback) {
-    if (this.config.type && this.config.type === 'raw') {
-        var d = JSON.stringify(data) + '\n';
-        if (data && data.log) {
-            var logName = path.join(this.logDir, `${data.log}-${todayAsDate()}.log`);
-            fs.appendFile(logName, d, () => true);
+    if (this.config.type && this.config.type === 'raw' && data) {
+        let dataOrdered = Object.assign({time: data.time}, data); // put time prop first (most left)
+        let dataString = JSON.stringify(dataOrdered) + '\n';
+        if (dataOrdered.log) {
+            let logName = path.join(this.logDir, `${dataOrdered.log}-${todayAsDate()}.log`);
+            fs.appendFile(logName, dataString, () => true);
         }
+        callback(null, dataString);
+    } else {
+        callback(null, data);
     }
-    callback(null, d);
 };
 
 module.exports = function(config) {
