@@ -22,7 +22,7 @@ const todayAsDate = todayAsDateInit();
 const hexMap = Buffer.from('0123456789ABCDEF');
 const asciiMap = Buffer.from(Array(256).fill(0).map((v, i) => ((i < 32) ? 32 : i)));
 
-function bufferLog(buffer, width = 16, separator = '|'.charCodeAt(0)) {
+function bufferLog(buffer, width = 32, separator = '|'.charCodeAt(0)) {
     const nextAscii = 3 * width + 3;
     const nextHex = width + 3;
     const length = buffer.length;
@@ -72,21 +72,33 @@ util.inherits(LogRotate, stream.Transform);
 
 LogRotate.prototype._transform = function(data, encoding, callback) {
     var d = data;
-    var d2;
-    if (this.config.type && this.config.type === 'raw') {
+    var d2 = '';
+    if (this.config.type && this.config.type === 'raw' && data) {
         if ((this.config.individualFormat === 'hex/ascii') && data.mtid === 'frame' && typeof (data.message) === 'string') {
             d2 = bufferLog(Buffer.from(data.message, 'hex')) + '\n';
         }
-        d = JSON.stringify(data) + '\n';
+        d = JSON.stringify(
+            Object.assign({
+                time: undefined,
+                level: undefined,
+                service: undefined,
+                name: undefined,
+                context: undefined,
+                mtid: undefined,
+                msg: undefined,
+                hostname: undefined,
+                pid: undefined
+            }, data)
+        ) + '\n';
         if (data && data.log) {
             var logName = path.join(this.logDir, `${data.log}-${todayAsDate()}.log`);
-            fs.appendFile(logName, d, () => true);
-            if (d2) {
-                fs.appendFile(logName, d2, () => true);
-            }
+            fs.appendFile(logName, d + d2, () => callback(null, d));
+        } else {
+            callback(null, d);
         }
+    } else {
+        callback(null, d);
     }
-    callback(null, d);
 };
 
 module.exports = function(config) {
