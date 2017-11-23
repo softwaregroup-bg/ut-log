@@ -77,7 +77,6 @@ LogRotate.prototype._transform = function(data, encoding, callback) {
         if ((this.config.individualFormat === 'hex/ascii') && data.mtid === 'frame' && typeof (data.message) === 'string') {
             d2 = bufferLog(Buffer.from(data.message, 'hex')) + '\n';
         }
-        data = Object.assign({time: data.time}, data); // put time prop first (most left)
         d = JSON.stringify(
             Object.assign({
                 time: undefined,
