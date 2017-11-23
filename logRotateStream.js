@@ -93,10 +93,13 @@ LogRotate.prototype._transform = function(data, encoding, callback) {
         ) + '\n';
         if (data && data.log) {
             var logName = path.join(this.logDir, `${data.log}-${todayAsDate()}.log`);
-            fs.appendFile(logName, d + d2, () => true);
+            fs.appendFile(logName, d + d2, () => callback(null, d));
+        } else {
+            callback(null, d);
         }
+    } else {
+        callback(null, d);
     }
-    callback(null, d);
 };
 
 module.exports = function(config) {
