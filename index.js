@@ -41,7 +41,8 @@ var lib = {
         return {
             error: getErrorTree(err, new Set()),
             $meta: {
-                opcode: err.type || err.opcode || 'error'
+                opcode: err.type || err.opcode || 'error',
+                mtid: 'error'
             },
             jsException: err
         };

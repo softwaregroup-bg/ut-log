@@ -17,7 +17,7 @@ function SentryStream(config) {
             }
         });
         if (config.patchGlobal) {
-            this.raven.patchGlobal(function() {
+            this.raven.install(function() {
                 console.log('Sentry: Uncaught exception occured...');
                 // process.exit(1);
             });
@@ -40,7 +40,7 @@ util.inherits(SentryStream, stream.Writable);
 SentryStream.prototype._write = function(logMessage, encoding, done) {
     if (this.raven) {
         if (logMessage.jsException) {
-            this.raven.captureError(logMessage.jsException);
+            this.raven.captureException(logMessage.jsException);
         } else {
             if (typeof logMessage === 'string') {
                 if (logMessage.indexOf('jsException') !== -1) { // error already sent through winston logger
