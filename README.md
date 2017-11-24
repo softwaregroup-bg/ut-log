@@ -137,3 +137,4 @@ compress
 --------
 
 Boolean value, whether to gzip the files once they aren't being written to.
+ 
