@@ -36,78 +36,86 @@ var MAX_ERROR_CAUSE_DEPTH = 5;
  * @description Logging module
  */
 // helper methods
-var lib = {
-    extractErrorData: function(err) {
-        return {
-            error: getErrorTree(err, new Set()),
-            $meta: {
-                opcode: err.type || err.opcode || 'error',
-                mtid: 'error'
-            },
-            jsException: err
-        };
-        function getErrorTree(error, visited) {
-            if (!error || visited.size >= MAX_ERROR_CAUSE_DEPTH) {
-                return;
-            }
-            var cause = error.cause;
-            if (visited.has(error)) {
-                cause = undefined; // make this step last
-            }
-            visited.add(error);
-            if (visited.has(cause)) {
-                error.cause = undefined; // break circular refs
+var LibFactory = function(options) {
+    var hideKeysConfig = Object.keys(options || {}).filter(key => options[key] === 'hide').map(key => '^' + key + '$');
+    var hideRegex = new RegExp(HIDE_DATA.concat(hideKeysConfig).join('|'), 'i');
+    var maskRegex = new RegExp(MASK_DATA.join('|'), 'i');
+    return {
+        extractErrorData: function(err) {
+            if (err['_object']) {
+                err._object = this.maskData(err._object, {});
             }
             return {
-                type: error.type,
-                opcode: error.opcode,
-                code: error.code,
-                print: error.print,
-                stack: error.stack && error.stack.split('\n'),
-                remoteStack: error.stackInfo,
-                cause: cause && getErrorTree(cause, visited)
+                error: getErrorTree(err, new Set()),
+                $meta: {
+                    opcode: err.type || err.opcode || 'error',
+                    mtid: 'error'
+                },
+                jsException: err
             };
-        }
-    },
-    capitalize: function(str) {
-        return (str && str[0].toUpperCase() + str.slice(1)) || null;
-    },
-    transformData: function transformData(data, options) {
-        if (!data || data[0] == null || typeof data[0] !== 'object') {
-            return;
-        }
-        var context = {};
-        if (data[0].$meta) {
-            if (data[0].$meta.mtid != null) {
-                context.mtid = data[0].$meta.mtid;
+            function getErrorTree(error, visited) {
+                if (!error || visited.size >= MAX_ERROR_CAUSE_DEPTH) {
+                    return;
+                }
+                var cause = error.cause;
+                if (visited.has(error)) {
+                    cause = undefined; // make this step last
+                }
+                visited.add(error);
+                if (visited.has(cause)) {
+                    error.cause = undefined; // break circular refs
+                }
+                return {
+                    type: error.type,
+                    opcode: error.opcode,
+                    code: error.code,
+                    print: error.print,
+                    stack: error.stack && error.stack.split('\n'),
+                    remoteStack: error.stackInfo,
+                    cause: cause && getErrorTree(cause, visited)
+                };
             }
-            if (data[0].$meta.trace != null) {
-                context.trace = data[0].$meta.trace;
+        },
+        capitalize: function(str) {
+            return (str && str[0].toUpperCase() + str.slice(1)) || null;
+        },
+        transformData: function transformData(data) {
+            if (!data || data[0] == null || typeof data[0] !== 'object') {
+                return;
             }
-        }
-        var message;
-        if (data[0].message && data[0].message.constructor.name === 'Buffer') {
-            message = data[0].message.toString('hex', 0, Math.min(data[0].message.length, 1024)).toUpperCase();
-        }
-        var hideKeysConfig = Object.keys(options || {}).filter(key => options[key] === 'hide').map(key => '^' + key + '$');
-        var hideRegex = new RegExp(HIDE_DATA.concat(hideKeysConfig).join('|'), 'i');
-        var maskRegex = new RegExp(MASK_DATA.join('|'), 'i');
-        data[0] = _.cloneDeepWith(_.defaultsDeep(data[0], context), function(value, key) {
-            if (typeof key === 'string') {
-                if (hideRegex.test(key)) {
-                    return '*****';
-                } else if (maskRegex.test(key)) {
-                    return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
-                } else if ((['url', 'uri', 'href', 'path', 'search', 'query'].indexOf(key) > -1) && typeof value === 'string' && (/password|(^pass$)|(^token$)/i).test(value)) {
-                    var trimTo = value.indexOf('?') > -1 ? value.indexOf('?') : 4;
-                    return value.substring(0, trimTo) + '*****';
+            var context = {};
+            if (data[0].$meta) {
+                if (data[0].$meta.mtid != null) {
+                    context.mtid = data[0].$meta.mtid;
+                }
+                if (data[0].$meta.trace != null) {
+                    context.trace = data[0].$meta.trace;
                 }
             }
-        });
-        if (message && 'message' in data[0]) {
-            data[0].message = message;
+            var message;
+            if (data[0].message && data[0].message.constructor.name === 'Buffer') {
+                message = data[0].message.toString('hex', 0, Math.min(data[0].message.length, 1024)).toUpperCase();
+            }
+            data[0] = this.maskData(data[0], context);
+            if (message && 'message' in data[0]) {
+                data[0].message = message;
+            }
+        },
+        maskData: function(data, context) {
+            return _.cloneDeepWith(_.defaultsDeep(data, context), function(value, key) {
+                if (typeof key === 'string') {
+                    if (hideRegex.test(key)) {
+                        return '*****';
+                    } else if (maskRegex.test(key)) {
+                        return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
+                    } else if ((['url', 'uri', 'href', 'path', 'search', 'query'].indexOf(key) > -1) && typeof value === 'string' && (/password|(^pass$)|(^token$)/i).test(value)) {
+                        var trimTo = value.indexOf('?') > -1 ? value.indexOf('?') : 4;
+                        return value.substring(0, trimTo) + '*****';
+                    }
+                }
+            });
         }
-    }
+    };
 };
 /**
  * @class Logger
@@ -132,7 +140,7 @@ var lib = {
  * For more info: [Bunyan streams]{@link https://github.com/trentm/node-bunyan#user-content-streams}
  **/
 function Logger(options) {
-    options.lib = lib;
+    options.lib = LibFactory(options && options.transformData);
     if (options.type === 'winston') {
         this.init(require('./modules/winston')(options));
     } else { // require bunyan by default
