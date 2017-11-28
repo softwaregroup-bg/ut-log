@@ -42,8 +42,8 @@ var LibFactory = function(options) {
     var maskRegex = new RegExp(MASK_DATA.join('|'), 'i');
     return {
         extractErrorData: function(err) {
-            if (err['_object']) {
-                err._object = this.maskData(err._object, {});
+            for (var key in err) {
+                err[key] = (typeof err[key] === 'object' ? this.maskData(err[key], {}) : err[key]);
             }
             return {
                 error: getErrorTree(err, new Set()),
@@ -102,18 +102,26 @@ var LibFactory = function(options) {
             }
         },
         maskData: function(data, context) {
-            return _.cloneDeepWith(_.defaultsDeep(data, context), function(value, key) {
+            var maskedKeys = [];
+            var masked = _.cloneDeepWith(_.defaultsDeep(data, context), function(value, key) {
                 if (typeof key === 'string') {
                     if (hideRegex.test(key)) {
+                        maskedKeys.push(key);
                         return '*****';
                     } else if (maskRegex.test(key)) {
+                        maskedKeys.push(key);
                         return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
                     } else if ((['url', 'uri', 'href', 'path', 'search', 'query'].indexOf(key) > -1) && typeof value === 'string' && (/password|(^pass$)|(^token$)/i).test(value)) {
+                        maskedKeys.push(key);
                         var trimTo = value.indexOf('?') > -1 ? value.indexOf('?') : 4;
                         return value.substring(0, trimTo) + '*****';
                     }
                 }
             });
+            if (maskedKeys.length > 0 && !masked['maskedKeys']) {
+                masked['maskedKeys'] = maskedKeys;
+            }
+            return masked;
         }
     };
 };
