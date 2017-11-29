@@ -67,7 +67,7 @@ function Bunyan(options) {
                 logData.push(data[1]);
                 logData.push(data[0]);
             }
-            lib.transformData(logData, ((config && config.transform) || (options && options.transformData)));
+            lib.transformData(logData);
             log[level].apply(log, logData);
         }
 
