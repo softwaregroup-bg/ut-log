@@ -368,7 +368,7 @@ function PrettyStream(opts) {
             if (skip.indexOf(key) === -1) {
                 var value = rec[key];
                 var stringified = false;
-                if (typeof value === 'undefined') {
+                if (typeof value === 'undefined' || typeof value === 'function') {
                     value = '';
                 } else if (typeof value !== 'string') {
                     value = prettyJson(value);
