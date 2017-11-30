@@ -367,9 +367,10 @@ function PrettyStream(opts) {
         Object.keys(rec).sort(sortFn).forEach(function(key) {
             if (skip.indexOf(key) === -1) {
                 var value = rec[key];
-                if (typeof value === 'undefined') { value = ''; }
                 var stringified = false;
-                if (typeof value !== 'string') {
+                if (typeof value === 'undefined') {
+                    value = '';
+                } else if (typeof value !== 'string') {
                     value = prettyJson(value);
                     stringified = true;
                 } else {
