@@ -1,3 +1,18 @@
+<a name="6.0.0"></a>
+# [6.0.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.0.0-ut6.10...v6.0.0) (2017-12-06)
+
+
+
+<a name="5.11.0"></a>
+# [5.11.0](https://github.com/softwaregroup-bg/ut-log/compare/v5.10.9...v5.11.0) (2017-09-29)
+
+
+### Features
+
+* add udp stream for easier sending to log console ([#14](https://github.com/softwaregroup-bg/ut-log/issues/14)) ([b3f8250](https://github.com/softwaregroup-bg/ut-log/commit/b3f8250))
+
+
+
 <a name="5.11.0"></a>
 # [5.11.0](https://github.com/softwaregroup-bg/ut-log/compare/v5.10.9...v5.11.0) (2017-09-29)
 
