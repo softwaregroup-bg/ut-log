@@ -28,6 +28,7 @@ function fixStreams(streams, workDir) {
         } else if (typeof stream.stream === 'string') {
             createStream = serverRequire(stream.stream);
             stream.streamConfig.workDir = workDir;
+            stream.type = stream.streamConfig.type;
             stream.stream = createStream(stream.streamConfig);
             delete stream.streamConfig;
         } else if (typeof stream.stream === 'function') {
@@ -49,6 +50,7 @@ function Bunyan(options) {
         params.streams = streams;
         params.level = options.level || 'trace';
         params.name = params.name || options.name;
+        params.service = options.service;
         var log = bunyan.createLogger(params);
 
         function logHandler(level, data) {
@@ -65,7 +67,7 @@ function Bunyan(options) {
                 logData.push(data[1]);
                 logData.push(data[0]);
             }
-            lib.transformData(logData, ((config && config.transform) || (options && options.transformData)));
+            lib.transformData(logData);
             log[level].apply(log, logData);
         }
 

@@ -34,7 +34,7 @@ var levelFromName = {
 };
 
 var colorFromLevel = {
-    10: 'greyk',     // TRACE
+    10: 'grey',     // TRACE
     20: 'blue',     // DEBUG
     30: 'cyan',     // INFO
     40: 'magenta',  // WARN
@@ -51,6 +51,24 @@ Object.keys(levelFromName).forEach(function(name) {
     upperNameFromLevel[lvl] = name.toUpperCase();
     upperPaddedNameFromLevel[lvl] = (name.length === 4 ? ' ' : '') + name.toUpperCase();
 });
+
+function prettyJson(json) {
+    return '\x1B[37m' + JSON.stringify(json).replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, function(match) {
+        var style = '1';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                style = '32';
+            } else {
+                style = '90';
+            }
+        } else if (/true|false/.test(match)) {
+            style = '34';
+        } else if (/null/.test(match)) {
+            style = '35';
+        }
+        return '\x1B[' + style + 'm' + match + '\x1B[37m';
+    }) + '\x1B[0m';
+}
 
 function PrettyStream(opts) {
     var options = {};
@@ -318,7 +336,7 @@ function PrettyStream(opts) {
 
     function extractCustomDetails(rec) {
         var skip = ['name', 'hostname', 'pid', 'level', 'component', 'msg', 'time', 'v', 'src', 'error', 'clientReq',
-            'clientRes', 'req', 'res', '$meta', 'mtid', 'jsException'];
+            'clientRes', 'req', 'res', '$meta', 'mtid', 'jsException', 'service'];
 
         var sortedDetails = ['context', 'trace'];
         var sortFn = function(a, b) {
@@ -349,10 +367,11 @@ function PrettyStream(opts) {
         Object.keys(rec).sort(sortFn).forEach(function(key) {
             if (skip.indexOf(key) === -1) {
                 var value = rec[key];
-                if (typeof value === 'undefined') { value = ''; }
                 var stringified = false;
-                if (typeof value !== 'string') {
-                    value = JSON.stringify(value);
+                if (typeof value === 'undefined' || typeof value === 'function') {
+                    value = '';
+                } else if (typeof value !== 'string') {
+                    value = prettyJson(value);
                     stringified = true;
                 } else {
                     if (value.length > 130 && value.match(/[0-9a-fA-F]+/)) {
@@ -360,9 +379,9 @@ function PrettyStream(opts) {
                     }
                 }
                 if (value.indexOf('\n') !== -1 || value.length > 130) {
-                    details.push('\n' + stylize(key, 'green') + ': ' + stylize(value, 'grey'));
+                    details.push('\n' + stylize(key, 'green') + ': ' + value);
                 } else if (!stringified && (value.indexOf(' ') !== -1 || value.length === 0)) {
-                    extras[key] = JSON.stringify(value);
+                    extras[key] = prettyJson(value);
                 } else {
                     extras[key] = value;
                 }
@@ -392,6 +411,7 @@ function PrettyStream(opts) {
 
         var time = extractTime(rec);
         var level = extractLevel(rec);
+        var service = stylize(rec.service || '*', 'yellow');
         var name = extractName(rec);
         var host = extractHost(rec);
         var src = extractSrc(rec);
@@ -404,7 +424,7 @@ function PrettyStream(opts) {
 
         var error = extractError(rec);
         if (error) {
-            details.push(error.join('\n    '));
+            details.push(stylize(error.join('\n    \x1B[31m'), 'red'));
         }
 
         if (rec.req) {
@@ -426,9 +446,10 @@ function PrettyStream(opts) {
         details = (details.length ? details.join('\n    --\n') : '');
 
         if (config.mode === 'long') {
-            return format('[%s] %s: %s on %s%s:%s %s%s\n%s',
+            return format('[%s] %s: %s %s on %s%s:%s %s%s\n%s',
                 time,
                 level,
+                service,
                 name,
                 host,
                 src,
@@ -438,9 +459,10 @@ function PrettyStream(opts) {
                 details);
         }
         if (config.mode === 'short') {
-            return format('[%s] %s %s:%s %s%s\n%s',
+            return format('[%s] %s %s %s:%s %s%s\n%s',
                 time,
                 level,
+                service,
                 name,
                 mtid,
                 msg,
@@ -448,9 +470,10 @@ function PrettyStream(opts) {
                 details);
         }
         if (config.mode === 'dev') {
-            return format('%s %s %s %s:%s %s%s %s\n',
+            return format('%s %s %s %s %s:%s %s%s %s\n',
                 time,
                 level,
+                service,
                 name,
                 src,
                 mtid,
