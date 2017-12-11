@@ -53,7 +53,7 @@ Object.keys(levelFromName).forEach(function(name) {
 });
 
 function prettyJson(json) {
-    return '\x1B[37m' + JSON.stringify(json).replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, function(match) {
+    return '\x1B[37m' + (JSON.stringify(json) || '').replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, function(match) {
         var style = '1';
         if (/^"/.test(match)) {
             if (/:$/.test(match)) {
@@ -370,6 +370,8 @@ function PrettyStream(opts) {
                 var stringified = false;
                 if (typeof value === 'undefined' || typeof value === 'function') {
                     value = '';
+                } else if (typeof value === 'symbol') {
+                    value = value.toString();
                 } else if (typeof value !== 'string') {
                     value = prettyJson(value);
                     stringified = true;
