@@ -1,3 +1,13 @@
+<a name="6.0.1"></a>
+## [6.0.1](https://github.com/softwaregroup-bg/ut-log/compare/v6.0.0...v6.0.1) (2017-12-11)
+
+
+### Bug Fixes
+
+* log symbols ([c964896](https://github.com/softwaregroup-bg/ut-log/commit/c964896))
+
+
+
 <a name="6.0.0"></a>
 # [6.0.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.0.0-ut6.10...v6.0.0) (2017-12-06)
 
