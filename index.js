@@ -42,7 +42,7 @@ var LibFactory = function(options) {
     var maskRegex = new RegExp(MASK_DATA.join('|'), 'i');
     return {
         extractErrorData: function(err) {
-            for (var key in err) {
+            for (let key of Object.keys(err)) {
                 err[key] = (typeof err[key] === 'object' ? this.maskData(err[key], {}) : err[key]);
             }
             return {
