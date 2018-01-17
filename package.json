@@ -1,8 +1,14 @@
 {
   "name": "ut-log",
-  "version": "6.1.0-rc-bahur.0",
+  "version": "6.1.0-rc-bahur.1",
   "pkg": {
-    "scripts": ["colorStream.js", "logRotateStream.js", "sentryStream.js", "udpStream.js", "logStash.js"]
+    "scripts": [
+      "colorStream.js",
+      "logRotateStream.js",
+      "sentryStream.js",
+      "udpStream.js",
+      "logStash.js"
+    ]
   },
   "dependencies": {
     "bunyan": "1.8.12",
