@@ -42,16 +42,17 @@ var LibFactory = function(options) {
     var maskRegex = new RegExp(MASK_DATA.join('|'), 'i');
     return {
         extractErrorData: function(err) {
-            for (let key of Object.keys(err)) {
-                err[key] = (typeof err[key] === 'object' ? this.maskData(err[key], {}) : err[key]);
+            var e = {};
+            for (let key of Object.getOwnPropertyNames(err)) {
+                e[key] = (typeof err[key] === 'object' ? this.maskData(err[key], {}) : err[key]);
             }
             return {
-                error: getErrorTree(err, new Set()),
+                error: getErrorTree(e, new Set()),
                 $meta: {
-                    opcode: err.type || err.opcode || 'error',
+                    opcode: e.type || e.opcode || 'error',
                     mtid: 'error'
                 },
-                jsException: err
+                jsException: e
             };
             function getErrorTree(error, visited) {
                 if (!error || visited.size >= MAX_ERROR_CAUSE_DEPTH) {
