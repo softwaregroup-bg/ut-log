@@ -43,7 +43,7 @@ var LibFactory = function(options) {
     return {
         extractErrorData: function(err) {
             var e = {};
-            for (let key of Object.keys(err)) {
+            for (let key of Object.getOwnPropertyNames(err)) {
                 e[key] = (typeof err[key] === 'object' ? this.maskData(err[key], {}) : err[key]);
             }
             return {
