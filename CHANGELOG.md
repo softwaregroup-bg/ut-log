@@ -1,3 +1,13 @@
+<a name="5.11.1"></a>
+## [5.11.1](https://github.com/softwaregroup-bg/ut-log/compare/v5.11.0...v5.11.1) (2018-02-02)
+
+
+### Bug Fixes
+
+* update dependency ([e0b7ccf](https://github.com/softwaregroup-bg/ut-log/commit/e0b7ccf))
+
+
+
 <a name="5.11.0"></a>
 # [5.11.0](https://github.com/softwaregroup-bg/ut-log/compare/v5.10.9...v5.11.0) (2017-09-29)
 
