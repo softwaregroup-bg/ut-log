@@ -323,9 +323,9 @@ function PrettyStream(opts) {
                 result = result || [];
                 if (error.remoteStack) {
                     result.push('-- remote stack --');
-                    result.push.apply(result, error.remoteStack);
+                    result.push.apply(result, ((error.remoteStack instanceof Array) ? error.remoteStack : [error.remoteStack]));
                 } else {
-                    result.push.apply(result, error.stack);
+                    result.push.apply(result, ((error.stack instanceof Array) ? error.stack : [error.stack]));
                 }
             }
             error = error.cause;
