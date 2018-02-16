@@ -3,3 +3,4 @@ docs
 test/*.log
 leveldb
 test/log/*
+node_modules
