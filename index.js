@@ -35,6 +35,7 @@ var MAX_ERROR_CAUSE_DEPTH = 5;
  * @author UT Route Team
  * @description Logging module
  */
+
 // helper methods
 var LibFactory = function(options) {
     var hideKeysConfig = Object.keys(options || {}).filter(key => options[key] === 'hide').map(key => '^' + key + '$');
@@ -42,7 +43,8 @@ var LibFactory = function(options) {
     var maskRegex = new RegExp(MASK_DATA.join('|'), 'i');
     return {
         extractErrorData: function(err) {
-            var e = {};
+            var e = new Error();
+            e.name = err.name;
             for (let key of Object.getOwnPropertyNames(err)) {
                 e[key] = (typeof err[key] === 'object' ? this.maskData(err[key], {}) : err[key]);
             }
