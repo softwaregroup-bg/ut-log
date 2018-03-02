@@ -1,6 +1,6 @@
 {
   "name": "ut-log",
-  "version": "6.1.0-rc-bahur.6",
+  "version": "6.1.0",
   "pkg": {
     "scripts": [
       "colorStream.js",

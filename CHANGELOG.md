@@ -1,3 +1,19 @@
+<a name="6.1.0"></a>
+# [6.1.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.0.1...v6.1.0) (2018-03-02)
+
+
+### Bug Fixes
+
+* add support for pkg ([d41257d](https://github.com/softwaregroup-bg/ut-log/commit/d41257d))
+* apply arg should be array always ([e83bc90](https://github.com/softwaregroup-bg/ut-log/commit/e83bc90))
+* dependencies ([9143180](https://github.com/softwaregroup-bg/ut-log/commit/9143180))
+* do not override by reference ([#27](https://github.com/softwaregroup-bg/ut-log/issues/27)) ([7c2410e](https://github.com/softwaregroup-bg/ut-log/commit/7c2410e))
+* sentry expects error to be instanceof Error ([c858170](https://github.com/softwaregroup-bg/ut-log/commit/c858170))
+* skip error methods ([#26](https://github.com/softwaregroup-bg/ut-log/issues/26)) ([c9f6871](https://github.com/softwaregroup-bg/ut-log/commit/c9f6871))
+* streamConfig ([#28](https://github.com/softwaregroup-bg/ut-log/issues/28)) ([aec70ce](https://github.com/softwaregroup-bg/ut-log/commit/aec70ce))
+
+
+
 <a name="6.0.1"></a>
 ## [6.0.1](https://github.com/softwaregroup-bg/ut-log/compare/v6.0.0...v6.0.1) (2017-12-11)
 
