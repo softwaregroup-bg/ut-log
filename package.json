@@ -14,7 +14,6 @@
     "bunyan": "1.8.12",
     "bunyan-logstash": "0.3.4",
     "bunyan-logstash-tcp": "1.0.0",
-    "lodash.assign": "4.2.0",
     "lodash.clonedeepwith": "4.5.0",
     "lodash.defaultsdeep": "4.6.0",
     "readable-stream": "2.3.3",
@@ -24,10 +23,10 @@
     "fs-plus": "3.0.2"
   },
   "peerDependencies": {
-    "ut-bus": "^6.0.0"
+    "ut-bus": "^6.2.0"
   },
   "devDependencies": {
-    "ut-tools": "^5.24.0"
+    "ut-tools": "^5.32.8"
   },
   "optionalDependencies": {
     "gelf-stream": "1.1.1",
@@ -43,6 +42,7 @@
     "release": "ut-release",
     "changelog": "ut-changelog",
     "check": "ut-check",
+    "precover": "ut-precover",
     "cover": "ut-cover",
     "lint-js": "ut-lint-js .",
     "postpublish": "ut-postpublish",
