@@ -1,3 +1,13 @@
+<a name="6.1.1"></a>
+## [6.1.1](https://github.com/softwaregroup-bg/ut-log/compare/v6.1.0...v6.1.1) (2018-04-17)
+
+
+### Bug Fixes
+
+* warning for not logging errors for error and fatal levels ([#33](https://github.com/softwaregroup-bg/ut-log/issues/33)) ([33ab557](https://github.com/softwaregroup-bg/ut-log/commit/33ab557))
+
+
+
 <a name="6.1.0"></a>
 # [6.1.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.0.1...v6.1.0) (2018-03-02)
 
