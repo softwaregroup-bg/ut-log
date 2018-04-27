@@ -26,7 +26,7 @@
     "ut-bus": "^6.2.0"
   },
   "devDependencies": {
-    "ut-tools": "^5.32.8"
+    "ut-tools": "^5.32.10"
   },
   "optionalDependencies": {
     "gelf-stream": "1.1.1",
