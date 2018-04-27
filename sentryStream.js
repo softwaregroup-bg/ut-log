@@ -40,7 +40,15 @@ util.inherits(SentryStream, stream.Writable);
 SentryStream.prototype._write = function(logMessage, encoding, done) {
     if (this.raven) {
         if (logMessage.jsException) {
-            this.raven.captureException(logMessage.jsException);
+            let fingerprint = ['{{ default }}'];
+            if (logMessage.jsException.type) {
+                fingerprint.push(logMessage.jsException.type);
+            }
+            this.raven.captureException(logMessage.jsException, {fingerprint}, function(sendErr, eventId) {
+                if (sendErr) {
+                    console.error('Failed to send captured exception to Sentry.', `eventId: ${eventId}`);
+                }
+            });
         } else {
             if (typeof logMessage === 'string') {
                 if (logMessage.indexOf('jsException') !== -1) { // error already sent through winston logger
