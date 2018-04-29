@@ -4,3 +4,4 @@ test/*.log
 leveldb
 test/log/*
 node_modules
+package-lock.json
