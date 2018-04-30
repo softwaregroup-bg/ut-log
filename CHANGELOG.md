@@ -1,3 +1,13 @@
+<a name="6.2.0"></a>
+# [6.2.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.1.1...v6.2.0) (2018-04-30)
+
+
+### Features
+
+* use error.type as a fingerprint token for sentry ([a409c10](https://github.com/softwaregroup-bg/ut-log/commit/a409c10))
+
+
+
 <a name="6.1.1"></a>
 ## [6.1.1](https://github.com/softwaregroup-bg/ut-log/compare/v6.1.0...v6.1.1) (2018-04-17)
 
