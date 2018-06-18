@@ -46,7 +46,7 @@ var LibFactory = function(options) {
             var e = new Error();
             e.name = err.name;
             for (let key of Object.getOwnPropertyNames(err)) {
-                Object.assign(e, this.maskData({[key]: err[key]}))
+                Object.assign(e, this.maskData({[key]: err[key]}, {}))
             }
             return {
                 error: getErrorTree(e, new Set()),
