@@ -1,7 +1,7 @@
 var bunyan = require('bunyan');
 var serverRequire = require;
 
-function fixStreams(streams, workDir, onError) {
+function fixStreams(streams, workDir) {
     if (!streams || !streams.length) {
         return [];
     }
@@ -28,7 +28,7 @@ function fixStreams(streams, workDir, onError) {
         } else if (typeof stream.stream === 'string') {
             createStream = serverRequire(stream.stream);
             stream.streamConfig.workDir = workDir;
-            stream.stream = createStream(stream.streamConfig, onError);
+            stream.stream = createStream(stream.streamConfig);
             delete stream.streamConfig;
         } else if (typeof stream.stream === 'function') {
             createStream = stream.stream;
