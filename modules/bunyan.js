@@ -1,7 +1,7 @@
 var bunyan = require('bunyan');
 var serverRequire = require;
 
-function fixStreams(streams, workDir) {
+function fixStreams(streams, workDir, onError) {
     if (!streams || !streams.length) {
         return [];
     }
@@ -28,7 +28,7 @@ function fixStreams(streams, workDir) {
         } else if (typeof stream.stream === 'string') {
             createStream = serverRequire(stream.stream);
             stream.streamConfig.workDir = workDir;
-            stream.stream = createStream(stream.streamConfig);
+            stream.stream = createStream(stream.streamConfig, onError);
             delete stream.streamConfig;
         } else if (typeof stream.stream === 'function') {
             createStream = stream.stream;
@@ -44,13 +44,13 @@ function fixStreams(streams, workDir) {
 // options: name, streams
 function Bunyan(options) {
     var lib = options.lib;
-    var streams = fixStreams(options.streams, options.workDir);
-    return function createLogger(params, config) {
-        params.streams = streams;
+    return function createLogger(params, config, onError) {
+        params.streams = fixStreams(options.streams, options.workDir, onError);
         params.level = options.level || 'trace';
         params.name = params.name || options.name;
         params.service = options.service;
         var log = bunyan.createLogger(params);
+        log.on('error', onError); // @TODO: handle stream error correctly
 
         function logHandler(level, data) {
             var logData = [];

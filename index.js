@@ -165,7 +165,12 @@ Logger.prototype.init = function LoggerInit(logger) {
 
 Logger.prototype.createLog = function createLog(level, params, config) {
     var levels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'];
-    var log = this.logger ? this.logger(params, config) : null;
+    var recreateOnError = () => setTimeout(() => (log = this.logger(params, config, recreateOnError)), 5000);
+    var log = this.logger
+        ? this.logger(params, config, recreateOnError)
+        : null
+    ;
+
     if (!log) {
         return {};
     }
