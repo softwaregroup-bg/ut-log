@@ -50,7 +50,7 @@ function Bunyan(options) {
         params.name = params.name || options.name;
         params.service = options.service;
         var log = bunyan.createLogger(params);
-        log.on('error', onError); // @TODO: handle stream error correctly
+        log.on('error', onError);
 
         function logHandler(level, data) {
             var logData = [];
