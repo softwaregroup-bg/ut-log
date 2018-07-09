@@ -51,6 +51,7 @@ function Bunyan(options) {
         params.name = params.name || options.name;
         params.service = options.service;
         var log = bunyan.createLogger(params);
+        log.on('error', () => {}); // @TODO: handle error correctly.
 
         function logHandler(level, data) {
             var logData = [];
