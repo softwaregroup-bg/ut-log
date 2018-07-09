@@ -44,13 +44,14 @@ function fixStreams(streams, workDir, onError) {
 // options: name, streams
 function Bunyan(options) {
     var lib = options.lib;
-    return function createLogger(params, config, onError) {
-        params.streams = fixStreams(options.streams, options.workDir, onError);
+    var streams = fixStreams(options.streams, options.workDir);
+    return function createLogger(params, config) {
+        params.streams = streams;
         params.level = options.level || 'trace';
         params.name = params.name || options.name;
         params.service = options.service;
         var log = bunyan.createLogger(params);
-        log.on('error', onError);
+        log.on('error', () => {}); // @TODO: handle error correctly.
 
         function logHandler(level, data) {
             var logData = [];
