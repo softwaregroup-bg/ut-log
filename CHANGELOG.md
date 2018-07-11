@@ -1,3 +1,14 @@
+<a name="6.2.1"></a>
+## [6.2.1](https://github.com/softwaregroup-bg/ut-log/compare/v6.2.0...v6.2.1) (2018-07-11)
+
+
+### Bug Fixes
+
+* additional obfuscation ([#35](https://github.com/softwaregroup-bg/ut-log/issues/35)) ([18d2600](https://github.com/softwaregroup-bg/ut-log/commit/18d2600))
+* connection error, log recreate ([#36](https://github.com/softwaregroup-bg/ut-log/issues/36)) ([c36e4c4](https://github.com/softwaregroup-bg/ut-log/commit/c36e4c4))
+
+
+
 <a name="6.2.0"></a>
 # [6.2.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.1.1...v6.2.0) (2018-04-30)
 
