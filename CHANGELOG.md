@@ -1,3 +1,13 @@
+<a name="6.2.3"></a>
+## [6.2.3](https://github.com/softwaregroup-bg/ut-log/compare/v6.2.2...v6.2.3) (2018-07-12)
+
+
+### Bug Fixes
+
+* update readme ([4516233](https://github.com/softwaregroup-bg/ut-log/commit/4516233))
+
+
+
 <a name="6.2.2"></a>
 ## [6.2.2](https://github.com/softwaregroup-bg/ut-log/compare/v6.2.0...v6.2.2) (2018-07-11)
 
