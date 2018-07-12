@@ -37,6 +37,7 @@ Once having the **log** instantiated it can be used to log data across all speci
     log.warn
     log.error
     log.fatal
+
 To log something, pass the data that needs to be log as an argument to some of the functions listed above. E.g:
 ```js
 log.info('log message');
