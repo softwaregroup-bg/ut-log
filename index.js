@@ -46,7 +46,7 @@ var LibFactory = function(options) {
             var e = new Error();
             e.name = err.name;
             for (let key of Object.getOwnPropertyNames(err)) {
-                e[key] = (typeof err[key] === 'object' ? this.maskData(err[key], {}) : err[key]);
+                Object.assign(e, this.maskData({[key]: err[key]}, {}));
             }
             return {
                 error: getErrorTree(e, new Set()),
@@ -166,6 +166,7 @@ Logger.prototype.init = function LoggerInit(logger) {
 Logger.prototype.createLog = function createLog(level, params, config) {
     var levels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'];
     var log = this.logger ? this.logger(params, config) : null;
+
     if (!log) {
         return {};
     }

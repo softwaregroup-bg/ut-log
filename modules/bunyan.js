@@ -51,6 +51,7 @@ function Bunyan(options) {
         params.name = params.name || options.name;
         params.service = options.service;
         var log = bunyan.createLogger(params);
+        log.on('error', () => {}); // @TODO: handle error correctly.
 
         function logHandler(level, data) {
             var logData = [];
@@ -70,7 +71,7 @@ function Bunyan(options) {
             if ((level === 'error' || level === 'fatal') && !(data[0] instanceof Error)) {
                 var err = new Error();
                 log.warn({
-                    logMessage: data[0],
+                    logMessage: lib.maskData(data[0], {}),
                     stack: err.stack.split('\n').splice(3).join('\n')
                 }, `A js exception must be logged for the levels 'error' and 'fatal'`);
             }

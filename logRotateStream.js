@@ -75,7 +75,7 @@ LogRotate.prototype._transform = function(data, encoding, callback) {
     var d2 = '';
     if (this.config.type && this.config.type === 'raw' && data) {
         if ((this.config.individualFormat === 'hex/ascii') && data.mtid === 'frame' && typeof (data.message) === 'string') {
-            d2 = bufferLog(Buffer.from(data.message, 'hex')) + '\n';
+            d2 = '\n' + bufferLog(Buffer.from(data.message, 'hex')) + '\n\n';
         }
         d = JSON.stringify(
             Object.assign({
