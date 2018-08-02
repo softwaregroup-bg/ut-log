@@ -1,3 +1,8 @@
+<a name="6.3.0"></a>
+# [6.3.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.3.0-rc-einstein.2...v6.3.0) (2018-08-02)
+
+
+
 <a name="6.2.0"></a>
 # [6.2.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.1.1...v6.2.0) (2018-04-30)
 

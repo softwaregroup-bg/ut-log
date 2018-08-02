@@ -1,6 +1,6 @@
 {
   "name": "ut-log",
-  "version": "6.3.0-rc-einstein.2",
+  "version": "6.3.0",
   "pkg": {
     "scripts": [
       "colorStream.js",
