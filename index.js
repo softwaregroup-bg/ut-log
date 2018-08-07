@@ -97,7 +97,7 @@ var LibFactory = function(options) {
             }
             var message;
             if (data[0].message && data[0].message.constructor.name === 'Buffer') {
-                message = data[0].message.toString('hex', 0).toUpperCase();
+                message = data[0].message.toString('hex').toUpperCase();
             }
             data[0] = this.maskData(data[0], context);
             if (message && 'message' in data[0]) {
