@@ -4,6 +4,7 @@
   "pkg": {
     "scripts": [
       "colorStream.js",
+      "fluentdStream.js",
       "logRotateStream.js",
       "sentryStream.js",
       "udpStream.js",
@@ -14,6 +15,7 @@
     "bunyan": "1.8.12",
     "bunyan-logstash": "0.3.4",
     "bunyan-logstash-tcp": "1.0.0",
+    "fluent-logger": "3.2.0",
     "lodash.clonedeepwith": "4.5.0",
     "lodash.defaultsdeep": "4.6.0",
     "readable-stream": "2.3.3",
