@@ -7,6 +7,7 @@ function fixStreams(streams, workDir, loggerOptions) {
     }
     return streams.reduce(function(prev, stream) {
         var createStream;
+        if (!stream || stream === 'false') return prev;
         var result = Object.assign({}, stream);
         if (stream.stream === 'process.stdout') {
             if (stream.streamConfig) {
