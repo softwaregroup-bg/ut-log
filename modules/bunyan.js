@@ -7,37 +7,38 @@ function fixStreams(streams, workDir, loggerOptions) {
     }
     return streams.reduce(function(prev, stream) {
         var createStream;
+        var result = Object.assign({}, stream);
         if (stream.stream === 'process.stdout') {
             if (stream.streamConfig) {
                 createStream = serverRequire('../colorStream');
-                stream.stream = createStream(stream.streamConfig);
-                stream.stream.pipe(process.stdout);
-                delete stream.streamConfig;
+                result.stream = createStream(stream.streamConfig);
+                result.stream.pipe(process.stdout);
+                delete result.streamConfig;
             } else {
-                stream.stream = process.stdout;
+                result.stream = process.stdout;
             }
         } else if (stream.stream === 'process.stderr') {
             if (stream.streamConfig) {
                 createStream = serverRequire('../colorStream');
-                stream.stream = createStream(stream.streamConfig);
-                stream.stream.pipe(process.stderr);
-                delete stream.streamConfig;
+                result.stream = createStream(stream.streamConfig);
+                result.stream.pipe(process.stderr);
+                delete result.streamConfig;
             } else {
-                stream.stream = process.stdout;
+                result.stream = process.stdout;
             }
         } else if (typeof stream.stream === 'string') {
             createStream = serverRequire(stream.stream);
-            stream.streamConfig.workDir = workDir;
-            stream.stream = createStream(stream.streamConfig, loggerOptions);
-            delete stream.streamConfig;
+            result.streamConfig.workDir = workDir;
+            result.stream = createStream(stream.streamConfig, loggerOptions);
+            delete result.streamConfig;
         } else if (typeof stream.stream === 'function') {
             createStream = stream.stream;
-            stream.stream = null;
-            stream.streamConfig.workDir = workDir;
-            stream.stream = createStream(stream.streamConfig, loggerOptions);
-            delete stream.streamConfig;
+            result.stream = null;
+            result.streamConfig.workDir = workDir;
+            result.stream = createStream(stream.streamConfig, loggerOptions);
+            delete result.streamConfig;
         }
-        stream.stream && prev.push(stream);
+        result.stream && prev.push(result);
         return prev;
     }, []);
 }
