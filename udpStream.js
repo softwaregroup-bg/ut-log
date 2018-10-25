@@ -7,7 +7,7 @@ function UdpStream(config) {
     config = config || {};
     stream.Writable.call(this, config);
     this.socket = udp.createSocket(config.type || 'udp4');
-    this.id = Buffer(16);
+    this.id = Buffer.alloc(16);
     uuid(null, this.id);
     this.socket.on('message', msg => {
         try {
@@ -27,7 +27,7 @@ util.inherits(UdpStream, stream.Writable);
 
 UdpStream.prototype._write = function(message, encoding, done) {
     if (typeof message === 'string') {
-        message = new Buffer(message, encoding);
+        message = Buffer.from(message, encoding);
     }
     if (this.max && message && message.length > this.max) {
         done();

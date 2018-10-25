@@ -34,12 +34,12 @@ var levelFromName = {
 };
 
 var colorFromLevel = {
-    10: 'grey',     // TRACE
-    20: 'blue',     // DEBUG
-    30: 'cyan',     // INFO
-    40: 'magenta',  // WARN
-    50: 'red',      // ERROR
-    60: 'inverse'  // FATAL
+    10: 'grey', // TRACE
+    20: 'blue', // DEBUG
+    30: 'cyan', // INFO
+    40: 'magenta', // WARN
+    50: 'red', // ERROR
+    60: 'inverse' // FATAL
 };
 
 var nameFromLevel = {};
