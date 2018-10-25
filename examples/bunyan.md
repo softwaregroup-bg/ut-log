@@ -1,3 +1,5 @@
+# Bunyan
+
 ``` js
 var Logger = require('ut-log');
 

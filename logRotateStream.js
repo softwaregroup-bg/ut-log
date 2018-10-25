@@ -62,8 +62,8 @@ function LogRotate(config) {
         stream.Transform.call(this);
     }
     this.pipe(logRotateStream({
-        path: path.resolve(this.logDir, config.path || 'ut5-%Y-%m-%d.log'),  // Write logs rotated by the day
-        symlink: path.resolve(this.logDir, config.symlink || 'ut5.log'),    // Maintain a symlink called ut5.log
+        path: path.resolve(this.logDir, config.path || 'ut5-%Y-%m-%d.log'), // Write logs rotated by the day
+        symlink: path.resolve(this.logDir, config.symlink || 'ut5.log'), // Maintain a symlink called ut5.log
         compress: config.compress || false
     }));
 }
