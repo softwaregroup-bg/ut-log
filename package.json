@@ -33,11 +33,8 @@
   },
   "optionalDependencies": {
     "gelf-stream": "1.1.1",
-    "level-writestream": "0.1.3",
-    "levelup": "2.0.0",
     "raven": "2.2.1",
-    "@sentry/node": "4.0.6",
-    "leveldown": "2.0.0",
+    "@sentry/node": "4.3.0",
     "winston": "2.4.0"
   },
   "description": "UT log module",
