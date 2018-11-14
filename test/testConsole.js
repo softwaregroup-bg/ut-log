@@ -1,6 +1,4 @@
 /* eslint no-process-exit:0 */
-var path = require('path');
-var leveldbStream = require('../leveldbStream')({workDir: path.join(__dirname, 'ut-log')});
 var sentryStream = require('../sentryStream')({
     dsn: 'http://a17d5fc9941b496faf2fbb043e42f246:b305a16bff714c1e9c1fc37dc90597b3@sentry:5002/2',
     patchGlobal: false,
@@ -25,10 +23,6 @@ var winston = new Log({
         stream: socketStream,
         type: 'raw'
     }, {
-        level: 'trace',
-        stream: leveldbStream,
-        type: 'raw'
-    }, {
         level: 'error',
         stream: sentryStream,
         type: 'raw'
@@ -45,10 +39,6 @@ var bunyan = new Log({
     streams: [{
         level: 'trace',
         stream: socketStream,
-        type: 'raw'
-    }, {
-        level: 'trace',
-        stream: leveldbStream,
         type: 'raw'
     }, {
         level: 'error',
