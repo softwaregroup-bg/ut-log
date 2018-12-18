@@ -319,6 +319,7 @@ function PrettyStream(opts) {
         var error = rec.error;
         var count = 5;
         while (error && count--) {
+            if (error.fileName) result.push('(' + error.fileName + ')');
             if (error.stack) {
                 result = result || [];
                 if (error.remoteStack) {
