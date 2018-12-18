@@ -73,6 +73,7 @@ var LibFactory = function(options) {
                     opcode: error.opcode,
                     code: error.code,
                     print: error.print,
+                    fileName: error.fileName,
                     stack: error.stack && error.stack.split('\n'),
                     remoteStack: error.stackInfo,
                     cause: cause && getErrorTree(cause, visited)
