@@ -11,9 +11,13 @@ function fixStreams(streams, workDir, loggerOptions) {
         var result = Object.assign({}, stream);
         if (stream.stream === 'process.stdout') {
             if (stream.streamConfig) {
-                createStream = serverRequire('../colorStream');
-                result.stream = createStream(stream.streamConfig);
-                result.stream.pipe(process.stdout);
+                if (typeof window !== 'undefined') {
+                    result.stream = require('../consoleStream')(stream.streamConfig);
+                } else {
+                    createStream = serverRequire('../colorStream');
+                    result.stream = createStream(stream.streamConfig);
+                    result.stream.pipe(process.stdout);
+                }
                 delete result.streamConfig;
             } else {
                 result.stream = process.stdout;
