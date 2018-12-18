@@ -1,6 +1,6 @@
 {
   "name": "ut-log",
-  "version": "6.4.0-rc-godfather.5",
+  "version": "6.4.0-rc-godfather.6",
   "pkg": {
     "scripts": [
       "colorStream.js",
