@@ -26,10 +26,10 @@
     "fs-plus": "3.0.2"
   },
   "peerDependencies": {
-    "ut-bus": "^6.2.0"
+    "ut-bus": "^6.7.0"
   },
   "devDependencies": {
-    "ut-tools": "^6.3.3"
+    "ut-tools": "^6.8.10"
   },
   "optionalDependencies": {
     "gelf-stream": "1.1.1",
