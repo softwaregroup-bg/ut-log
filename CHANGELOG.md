@@ -1,3 +1,28 @@
+# [6.4.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.3.0...v6.4.0) (2019-02-02)
+
+
+### Bug Fixes
+
+* do not mutate original stream.stream ([cec32c6](https://github.com/softwaregroup-bg/ut-log/commit/cec32c6))
+* improve fluentd support ([ffd02a5](https://github.com/softwaregroup-bg/ut-log/commit/ffd02a5))
+* push of undefined ([bf73cd6](https://github.com/softwaregroup-bg/ut-log/commit/bf73cd6))
+* remove leveldb ([1315266](https://github.com/softwaregroup-bg/ut-log/commit/1315266))
+* remove leveldb, which was never used ([e3835d5](https://github.com/softwaregroup-bg/ut-log/commit/e3835d5))
+* show filename if available ([f815b23](https://github.com/softwaregroup-bg/ut-log/commit/f815b23))
+* skip disabled streams ([4cf34ab](https://github.com/softwaregroup-bg/ut-log/commit/4cf34ab))
+* upgrade dependencies ([15754c2](https://github.com/softwaregroup-bg/ut-log/commit/15754c2))
+* upgrade ut-tools ([5ec72a4](https://github.com/softwaregroup-bg/ut-log/commit/5ec72a4))
+
+
+### Features
+
+* browser logging ([9d45849](https://github.com/softwaregroup-bg/ut-log/commit/9d45849))
+* pass logger options to streams ([aedb70d](https://github.com/softwaregroup-bg/ut-log/commit/aedb70d))
+* support fluentd ([ccbfe7d](https://github.com/softwaregroup-bg/ut-log/commit/ccbfe7d))
+* support new sentry module ([dc5480e](https://github.com/softwaregroup-bg/ut-log/commit/dc5480e))
+
+
+
 <a name="6.3.0"></a>
 # [6.3.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.3.0-rc-einstein.2...v6.3.0) (2018-08-02)
 
