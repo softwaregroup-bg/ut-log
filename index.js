@@ -51,7 +51,7 @@ var LibFactory = function(options) {
             return {
                 error: getErrorTree(e, new Set()),
                 $meta: {
-                    opcode: e.type || e.opcode || 'error',
+                    opcode: e.type || e.opcode || e.name || 'error',
                     mtid: 'error'
                 },
                 jsException: e
@@ -71,6 +71,7 @@ var LibFactory = function(options) {
                 return {
                     type: error.type,
                     opcode: error.opcode,
+                    method: error.method,
                     code: error.code,
                     print: error.print,
                     fileName: error.fileName,

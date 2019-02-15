@@ -172,7 +172,7 @@ function PrettyStream(opts) {
     }
 
     function extractMsg(rec) {
-        return stylize(rec.msg, 'cyan');
+        return stylize((rec.$meta && (rec.$meta.method || rec.$meta.opcode)) || rec.msg, 'cyan');
     }
 
     function extractReqDetail(rec) {
@@ -322,6 +322,10 @@ function PrettyStream(opts) {
             if (error.fileName) {
                 result = result || [];
                 result.push('(' + error.fileName + ')');
+            }
+            if (error.method) {
+                result = result || [];
+                result.push(error.method + ' => ');
             }
             if (error.stack) {
                 result = result || [];
