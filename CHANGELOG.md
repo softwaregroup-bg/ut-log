@@ -1,3 +1,17 @@
+# [6.5.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.4.0...v6.5.0) (2019-03-18)
+
+
+### Bug Fixes
+
+* update stream-file-archive ([1cddad7](https://github.com/softwaregroup-bg/ut-log/commit/1cddad7))
+
+
+### Features
+
+* improve error logging ([2527648](https://github.com/softwaregroup-bg/ut-log/commit/2527648))
+
+
+
 # [6.4.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.3.0...v6.4.0) (2019-02-02)
 
 
