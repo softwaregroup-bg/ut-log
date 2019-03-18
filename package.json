@@ -29,6 +29,7 @@
     "ut-bus": "^6.7.0"
   },
   "devDependencies": {
+    "tap": "^12.6.0",
     "ut-tools": "^6.8.10"
   },
   "optionalDependencies": {
