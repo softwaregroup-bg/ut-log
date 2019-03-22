@@ -1,3 +1,7 @@
+## [6.5.1](https://github.com/softwaregroup-bg/ut-log/compare/v6.5.0...v6.5.1) (2019-03-22)
+
+
+
 # [6.5.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.4.0...v6.5.0) (2019-03-18)
 
 
