@@ -112,7 +112,7 @@ var utLogConfig = {
         {
             level: 'error',
             stream: new SentryStream({
-                dsn : 'http://b62b47864e93466cbb16a2b4a1d749b1:05968d770cdf4f8f8f09985d95ea9911@sentry.softwaregroup-bg.com:49161/2',
+                dsn : 'http://b62b47864e93466cbb16a2b4a1d749b1:05968d770cdf4f8f8f09985d95ea9911@sentry.softwaregroup.com:49161/2',
                 patchGlobal: true,
                 logger: 'impl-test'
             }),
