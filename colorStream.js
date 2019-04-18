@@ -15,7 +15,11 @@ var colors = {
     'cyan': [36, 39],
     'green': [32, 39],
     'magenta': [35, 39],
+    'brightMagenta': [95, 39],
     'red': [31, 39],
+    'brightYellow': ['93;1', '39;22'],
+    'brightCyan': [96, 39],
+    'brightGreen': [92, 39],
     'yellow': [33, 39]
 };
 
@@ -53,20 +57,20 @@ Object.keys(levelFromName).forEach(function(name) {
 });
 
 function prettyJson(json) {
-    return '\x1B[37m' + (JSON.stringify(json) || '').replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, function(match) {
-        var style = '1';
+    return '\x1B[97m' + (JSON.stringify(json) || '').replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, function(match) {
+        var style = '97';
         if (/^"/.test(match)) {
             if (/:$/.test(match)) {
                 style = '32';
             } else {
-                style = '90';
+                style = '36';
             }
         } else if (/true|false/.test(match)) {
-            style = '34';
+            style = '97';
         } else if (/null/.test(match)) {
-            style = '35';
+            style = '95';
         }
-        return '\x1B[' + style + 'm' + match + '\x1B[37m';
+        return '\x1B[' + style + 'm' + match + '\x1B[97;22m';
     }) + '\x1B[0m';
 }
 
@@ -158,7 +162,7 @@ function PrettyStream(opts) {
 
     function extractMtid(rec) {
         if (rec.mtid) {
-            return ' ' + stylize(rec.mtid, 'magenta');
+            return ' ' + stylize(rec.mtid, 'brightYellow');
         }
         return '';
     }
@@ -172,7 +176,7 @@ function PrettyStream(opts) {
     }
 
     function extractMsg(rec) {
-        return stylize((rec.$meta && (rec.$meta.method || rec.$meta.opcode)) || rec.msg, 'cyan');
+        return stylize((rec.$meta && (rec.$meta.method || rec.$meta.opcode)) || rec.msg, 'brightYellow');
     }
 
     function extractReqDetail(rec) {
