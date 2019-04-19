@@ -70,7 +70,7 @@ function prettyJson(json) {
         } else if (/null/.test(match)) {
             style = '95';
         }
-        return '\x1B[' + style + 'm' + match + '\x1B[97;22m';
+        return '\x1B[' + style + 'm' + match + '\x1B[97m\x1B[22m';
     }) + '\x1B[0m';
 }
 
