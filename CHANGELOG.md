@@ -1,3 +1,12 @@
+## [6.5.3](https://github.com/softwaregroup-bg/ut-log/compare/v6.5.2...v6.5.3) (2019-04-19)
+
+
+### Bug Fixes
+
+* escape format ([9ed1768](https://github.com/softwaregroup-bg/ut-log/commit/9ed1768))
+
+
+
 ## [6.5.2](https://github.com/softwaregroup-bg/ut-log/compare/v6.5.1...v6.5.2) (2019-04-18)
 
 
