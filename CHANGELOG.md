@@ -1,3 +1,12 @@
+## [6.5.4](https://github.com/softwaregroup-bg/ut-log/compare/v6.5.3...v6.5.4) (2019-07-29)
+
+
+### Bug Fixes
+
+* lodash prototype pollution ([60b50f7](https://github.com/softwaregroup-bg/ut-log/commit/60b50f7))
+
+
+
 ## [6.5.3](https://github.com/softwaregroup-bg/ut-log/compare/v6.5.2...v6.5.3) (2019-04-19)
 
 
