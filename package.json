@@ -18,7 +18,7 @@
     "bunyan-logstash-tcp": "1.0.0",
     "fluent-logger": "3.2.1",
     "lodash.clonedeepwith": "4.5.0",
-    "lodash.defaultsdeep": "4.6.0",
+    "lodash.defaultsdeep": "4.6.1",
     "readable-stream": "2.3.3",
     "socket.io-client": "2.0.4",
     "stream-file-archive": "1.1.4",
