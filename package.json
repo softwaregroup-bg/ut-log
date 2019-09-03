@@ -16,17 +16,19 @@
     "bunyan": "1.8.12",
     "bunyan-logstash": "0.3.4",
     "bunyan-logstash-tcp": "1.0.0",
-    "fluent-logger": "3.2.1",
+    "fluent-logger": "3.3.1",
     "lodash.clonedeepwith": "4.5.0",
     "lodash.defaultsdeep": "4.6.1",
     "readable-stream": "2.3.3",
-    "socket.io-client": "2.0.4",
     "stream-file-archive": "1.1.4",
     "uuid": "3.3.2",
     "fs-plus": "3.0.2"
   },
   "peerDependencies": {
-    "ut-bus": "^6.7.0"
+    "raven": "^2.2.1",
+    "socket.io-client": "^2.2.0",
+    "ut-bus": "^7.4.2",
+    "winston": "^2.4.0"
   },
   "devDependencies": {
     "tap": "^12.6.0",
@@ -34,9 +36,7 @@
   },
   "optionalDependencies": {
     "gelf-stream": "1.1.1",
-    "raven": "2.2.1",
-    "@sentry/node": "^4.3.0",
-    "winston": "2.4.0"
+    "@sentry/node": "^4.3.0"
   },
   "description": "UT log module",
   "scripts": {
