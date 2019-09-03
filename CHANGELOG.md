@@ -1,3 +1,13 @@
+## [6.5.5](https://github.com/softwaregroup-bg/ut-log/compare/v6.5.4...v6.5.5) (2019-09-03)
+
+
+### Bug Fixes
+
+* ignore udp stream errors ([66dedc3](https://github.com/softwaregroup-bg/ut-log/commit/66dedc3))
+* move old deps to peerDeps ([27e1e01](https://github.com/softwaregroup-bg/ut-log/commit/27e1e01))
+
+
+
 ## [6.5.4](https://github.com/softwaregroup-bg/ut-log/compare/v6.5.3...v6.5.4) (2019-07-29)
 
 
