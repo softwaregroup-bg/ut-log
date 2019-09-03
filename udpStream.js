@@ -17,6 +17,7 @@ function UdpStream(config) {
             }
         } catch (e) {}
     });
+    this.on('error', () => {}); // ignore udp errors
     this.host = config.host;
     this.port = config.port;
     this.max = config.max;
