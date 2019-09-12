@@ -14,6 +14,7 @@ function FluentdStream(config) {
         reconnectInterval: 5000,
         ...config
     });
+    this.sender.on('error', console.error); // eslint-disable-line no-console
 }
 
 util.inherits(FluentdStream, stream.Writable);
@@ -26,7 +27,11 @@ FluentdStream.prototype._write = function(message, encoding, done) {
         message['@meta'] = message.$meta;
         delete message.$meta;
     }
-    this.sender.emit(message.context, message, fromDate(message.time), done);
+    try {
+        this.sender.emit(message.context, message, fromDate(message.time), done);
+    } catch (error) {
+        console.error(error); // eslint-disable-line no-console
+    }
 };
 
 FluentdStream.prototype.end = function(chunk, encoding, cb) {
