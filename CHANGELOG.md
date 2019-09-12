@@ -1,3 +1,12 @@
+## [6.5.6](https://github.com/softwaregroup-bg/ut-log/compare/v6.5.5...v6.5.6) (2019-09-12)
+
+
+### Bug Fixes
+
+* capture errors ([5a95d12](https://github.com/softwaregroup-bg/ut-log/commit/5a95d12))
+
+
+
 ## [6.5.5](https://github.com/softwaregroup-bg/ut-log/compare/v6.5.4...v6.5.5) (2019-09-03)
 
 
