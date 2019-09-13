@@ -110,7 +110,15 @@ var LibFactory = function(options) {
             var maskedKeys = [];
             var masked = _.cloneDeepWith(_.defaultsDeep(data, context), function(value, key) {
                 if (typeof key === 'string') {
-                    if (hideRegex.test(key)) {
+                    if (key === '$meta' && value) {
+                        return {
+                            ...value.mtid && {mtid: value.mtid},
+                            ...value.opcode && {opcode: value.opcode},
+                            ...value.method && {method: value.method},
+                            ...value.trace && {trace: value.trace},
+                            ...value.contId && {contId: value.contId}
+                        };
+                    } else if (hideRegex.test(key)) {
                         maskedKeys.push(key);
                         return '*****';
                     } else if (maskRegex.test(key)) {
