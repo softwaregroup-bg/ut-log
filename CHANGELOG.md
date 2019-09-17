@@ -1,3 +1,12 @@
+## [6.5.8](https://github.com/softwaregroup-bg/ut-log/compare/v6.5.7...v6.5.8) (2019-09-17)
+
+
+### Bug Fixes
+
+* do not log excess data ([7a63c72](https://github.com/softwaregroup-bg/ut-log/commit/7a63c72))
+
+
+
 ## [6.5.7](https://github.com/softwaregroup-bg/ut-log/compare/v6.5.6...v6.5.7) (2019-09-13)
 
 
