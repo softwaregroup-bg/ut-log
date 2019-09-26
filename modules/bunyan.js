@@ -56,6 +56,12 @@ function Bunyan(options) {
         params.level = options.level || 'trace';
         params.name = params.name || options.name;
         params.service = options.service;
+        params.impl = options.impl;
+        params.env = options.env;
+        if (typeof window === 'undefined') {
+            params.location = require('os').hostname();
+        }
+        Object.assign(params, options.udf);
         var log = bunyan.createLogger(params);
         log.on('error', () => {}); // @TODO: handle error correctly.
 
