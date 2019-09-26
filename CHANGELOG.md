@@ -1,3 +1,12 @@
+# [6.6.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.5.8...v6.6.0) (2019-09-26)
+
+
+### Features
+
+* add impl, env, location, udf ([c2761d4](https://github.com/softwaregroup-bg/ut-log/commit/c2761d4))
+
+
+
 ## [6.5.8](https://github.com/softwaregroup-bg/ut-log/compare/v6.5.7...v6.5.8) (2019-09-17)
 
 
