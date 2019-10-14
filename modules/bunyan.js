@@ -58,7 +58,8 @@ function Bunyan(options) {
         params.service = options.service;
         params.impl = options.impl;
         params.env = options.env;
-        if (typeof window === 'undefined') {
+        params.location = options.location;
+        if (typeof window === 'undefined' && !params.location) {
             params.location = require('os').hostname();
         }
         Object.assign(params, options.udf);
