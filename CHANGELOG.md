@@ -1,3 +1,12 @@
+## [6.6.1](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.0...v6.6.1) (2019-10-14)
+
+
+### Bug Fixes
+
+* set location from options ([b548297](https://github.com/softwaregroup-bg/ut-log/commit/b548297))
+
+
+
 # [6.6.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.5.8...v6.6.0) (2019-09-26)
 
 
