@@ -372,7 +372,7 @@ function PrettyStream(opts) {
         var details = [];
         var extras = {};
 
-        Object.keys(rec).sort(sortFn).forEach(function(key) {
+        for(key in Object.keys(rec).sort(sortFn)) {
             if (skip.indexOf(key) === -1) {
                 var value = rec[key];
                 var stringified = false;
@@ -396,7 +396,7 @@ function PrettyStream(opts) {
                     extras[key] = value;
                 }
             }
-        });
+        };
 
         return {
             details: details,
@@ -512,4 +512,6 @@ PrettyStream.prototype.end = function end() {
 
 module.exports = function(config) {
     return new PrettyStream(config);
+};
+fig);
 };
