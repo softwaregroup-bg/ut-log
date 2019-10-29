@@ -513,5 +513,3 @@ PrettyStream.prototype.end = function end() {
 module.exports = function(config) {
     return new PrettyStream(config);
 };
-fig);
-};
