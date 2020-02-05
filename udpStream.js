@@ -34,11 +34,11 @@ UdpStream.prototype._write = function(message, encoding, done) {
         done();
         return;
     }
-    let id = this.id.slice();
-    let send = (start, length, cb) => {
+    const id = this.id.slice();
+    const send = (start, length, cb) => {
         this.socket.send(Buffer.concat([id, message.slice(start, start + length)]), this.port, this.host, cb);
     };
-    let sendFrame = (start, length) => {
+    const sendFrame = (start, length) => {
         if (start + length >= message.length) {
             send(start, message.length - start, done);
         } else {

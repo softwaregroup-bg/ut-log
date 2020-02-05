@@ -22,21 +22,21 @@
     "readable-stream": "2.3.3",
     "stream-file-archive": "1.1.4",
     "uuid": "3.3.2",
-    "fs-plus": "3.0.2"
+    "fs-plus": "3.1.1"
   },
   "peerDependencies": {
     "raven": "^2.2.1",
     "socket.io-client": "^2.2.0",
-    "ut-bus": "^7.4.2",
-    "winston": "^2.4.0"
+    "ut-bus": "^7.11.3"
   },
   "devDependencies": {
+    "gelf-stream": "1.1.1",
     "tap": "^12.6.0",
-    "ut-tools": "^6.8.10"
+    "ut-tools": "^6.8.10",
+    "winston": "^2.4.0"
   },
   "optionalDependencies": {
-    "gelf-stream": "1.1.1",
-    "@sentry/node": "^4.3.0"
+    "@sentry/node": "^5.12.3"
   },
   "description": "UT log module",
   "scripts": {

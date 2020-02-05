@@ -85,7 +85,7 @@ function Bunyan(options) {
                 log.warn({
                     logMessage: lib.maskData(data[0], {}),
                     stack: err.stack.split('\n').splice(3).join('\n')
-                }, `A js exception must be logged for the levels 'error' and 'fatal'`);
+                }, 'A js exception must be logged for the levels \'error\' and \'fatal\'');
             }
             log[level].apply(log, logData);
         }

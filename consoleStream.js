@@ -9,12 +9,12 @@ const ERROR = 50;
 const FATAL = 60;
 
 const levelFromName = {
-    'trace': TRACE,
-    'debug': DEBUG,
-    'info': INFO,
-    'warn': WARN,
-    'error': ERROR,
-    'fatal': FATAL
+    trace: TRACE,
+    debug: DEBUG,
+    info: INFO,
+    warn: WARN,
+    error: ERROR,
+    fatal: FATAL
 };
 
 const nameFromLevel = {};

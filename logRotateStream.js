@@ -27,7 +27,7 @@ function bufferLog(buffer, width = 32, separator = '|'.charCodeAt(0)) {
     const nextHex = width + 3;
     const length = buffer.length;
     const lineCount = Math.floor((length - 1) / width) + 1;
-    let result = Buffer.alloc(lineCount * (width * 4 + 3), ' ');
+    const result = Buffer.alloc(lineCount * (width * 4 + 3), ' ');
     let ascii = -1;
     let hex = -width - 3;
     for (var i = 0; i < length; i += 1) {
@@ -39,7 +39,7 @@ function bufferLog(buffer, width = 32, separator = '|'.charCodeAt(0)) {
             ascii = ascii + nextAscii;
             result[ascii - 2] = separator;
         }
-        let v = buffer[i];
+        const v = buffer[i];
         result[ascii] = asciiMap[v];
         result[hex] = hexMap[v >> 4];
         result[hex + 1] = hexMap[v & 15];

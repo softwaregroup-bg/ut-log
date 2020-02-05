@@ -61,7 +61,7 @@ function Winston(options) {
                     var stream;
                     var raven;
                     for (var transport in transports) {
-                        if (transports.hasOwnProperty(transport)) {
+                        if (Object.prototype.hasOwnProperty.call(transports, transport)) {
                             if ((stream = transports[transport]._stream) && (raven = stream.raven)) {
                                 raven.captureError(data[0]);
                             }

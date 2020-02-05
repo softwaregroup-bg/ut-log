@@ -49,10 +49,11 @@ specified streams simultaneously (in this case only the NodeJS console through
 as a method). In our case, because we set 'info' as a minimum logging level,
 the 'log' object will be equipped with 4 methods:
 
-    log.info
-    log.warn
-    log.error
-    log.fatal
+- log.info
+- log.warn
+- log.error
+- log.fatal
+
 To log something, pass the data that needs to be log as an argument to some of
 the functions listed above. E.g:
 
@@ -76,7 +77,7 @@ Multiple streams example:
 var utLog = require('ut-log');
 var level = require('level');
 var path = require('path');
-// stream constuctors
+// stream constructors
 var SocketStream = require('ut-log/socketStream');
 var LevelDBStream = require('ut-log/leveldbStream');
 var SentryStream = require('ut-log/sentryStream');

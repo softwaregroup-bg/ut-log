@@ -45,7 +45,7 @@ var LibFactory = function(options) {
         extractErrorData: function(err) {
             var e = new Error();
             e.name = err.name;
-            for (let key of Object.getOwnPropertyNames(err)) {
+            for (const key of Object.getOwnPropertyNames(err)) {
                 Object.assign(e, this.maskData({[key]: err[key]}, {}));
             }
             return {
@@ -131,8 +131,8 @@ var LibFactory = function(options) {
                     }
                 }
             });
-            if (maskedKeys.length > 0 && !masked['maskedKeys']) {
-                masked['maskedKeys'] = maskedKeys;
+            if (maskedKeys.length > 0 && !masked.maskedKeys) {
+                masked.maskedKeys = maskedKeys;
             }
             return masked;
         }
