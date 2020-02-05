@@ -50,6 +50,11 @@ SentryStream.prototype._write = function(logMessage, encoding, done) {
     done();
 };
 
+SentryStream.prototype._destroy = function(error, callback) {
+    Sentry.close();
+    callback(error);
+};
+
 module.exports = function(config, loggerOptions) {
     return new SentryStream(config, loggerOptions);
 };

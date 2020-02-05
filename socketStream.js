@@ -11,7 +11,7 @@ function SocketStream(config) {
     this._namespace = config.namespace || 'log';
     this._eventName = config.eventName || 'log';
     this._protocol = config.protocol || 'http:';
-    this.socket = io(util.format('%s//%s:%s/%s', this._protocol, this._host, this._port, this._namespace));
+    this.socket = io(util.format('%s//%s:%s/%s', this._protocol, this._host, this._port, this._namespace), config.io);
 }
 
 util.inherits(SocketStream, stream.Writable);
@@ -24,6 +24,11 @@ SocketStream.prototype._write = function(logMessage, encoding, done) {
     } else {
         done();
     }
+};
+
+SocketStream.prototype._destroy = function(error, callback) {
+    this.socket.close();
+    callback(error);
 };
 
 module.exports = function(config) {
