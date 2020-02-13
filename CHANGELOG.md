@@ -1,3 +1,12 @@
+## [6.6.5](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.4...v6.6.5) (2020-02-13)
+
+
+### Bug Fixes
+
+* sentry close timeout ([73e8d2d](https://github.com/softwaregroup-bg/ut-log/commit/73e8d2d7b6c795c05869720f0aee5a5e664858cd))
+
+
+
 ## [6.6.4](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.3...v6.6.4) (2020-02-13)
 
 
