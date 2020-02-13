@@ -1,14 +1,14 @@
-var bunyan = require('bunyan');
-var serverRequire = require;
+const bunyan = require('bunyan');
+const serverRequire = require;
 
 function fixStreams(streams, workDir, loggerOptions) {
     if (!streams || !streams.length) {
         return [];
     }
     return streams.reduce(function(prev, stream) {
-        var createStream;
+        let createStream;
         if (!stream || stream === 'false') return prev;
-        var result = Object.assign({}, stream);
+        const result = Object.assign({}, stream);
         if (stream.stream === 'process.stdout') {
             if (stream.streamConfig) {
                 if (typeof window !== 'undefined') {
@@ -49,9 +49,9 @@ function fixStreams(streams, workDir, loggerOptions) {
 }
 // options: name, streams
 function Bunyan(options) {
-    var lib = options.lib;
-    var streams = fixStreams(options.streams, options.workDir, options);
-    return function createLogger(params, config) {
+    const lib = options.lib;
+    const streams = fixStreams(options.streams, options.workDir, options);
+    const result = function createLogger(params, config) {
         params.streams = streams;
         params.level = options.level || 'trace';
         params.name = params.name || options.name;
@@ -63,11 +63,11 @@ function Bunyan(options) {
             params.location = require('os').hostname();
         }
         Object.assign(params, options.udf);
-        var log = bunyan.createLogger(params);
+        const log = bunyan.createLogger(params);
         log.on('error', () => {}); // @TODO: handle error correctly.
 
         function logHandler(level, data) {
-            var logData = [];
+            const logData = [];
             if (data.length === 1) {
                 if (data[0] instanceof Error) {
                     logData.push(lib.extractErrorData(data[0]));
@@ -81,7 +81,7 @@ function Bunyan(options) {
             }
             lib.transformData(logData);
             if ((level === 'error' || level === 'fatal') && !(data[0] instanceof Error)) {
-                var err = new Error();
+                const err = new Error();
                 log.warn({
                     logMessage: lib.maskData(data[0], {}),
                     stack: err.stack.split('\n').splice(3).join('\n')
@@ -111,6 +111,15 @@ function Bunyan(options) {
             }
         };
     };
+    result.destroy = function() {
+        streams.forEach(stream =>
+            stream.stream &&
+            typeof stream.stream.end === 'function' &&
+            ![process.stdout, process.stdin, process.stderr].includes(stream.stream) &&
+            stream.stream.end(() => stream.stream.destroy()));
+    };
+
+    return result;
 }
 
 module.exports = Bunyan;

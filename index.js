@@ -1,9 +1,9 @@
-var _ = {
+const _ = {
     defaultsDeep: require('lodash.defaultsdeep'),
     cloneDeepWith: require('lodash.clonedeepwith')
 };
 /* eslint no-useless-escape: 0 */
-var HIDE_DATA = [
+const HIDE_DATA = [
     'password',
     '^otp$',
     '^pass$',
@@ -21,7 +21,7 @@ var HIDE_DATA = [
     '^jwt$',
     '^apiKey$'
 ];
-var MASK_DATA = [
+const MASK_DATA = [
     'accountNumber',
     'customerNumber',
     'customerNo',
@@ -29,7 +29,7 @@ var MASK_DATA = [
     'cookie',
     'utSessionId'
 ];
-var MAX_ERROR_CAUSE_DEPTH = 5;
+const MAX_ERROR_CAUSE_DEPTH = 5;
 /**
  * @module ut-log
  * @author UT Route Team
@@ -37,13 +37,13 @@ var MAX_ERROR_CAUSE_DEPTH = 5;
  */
 
 // helper methods
-var LibFactory = function(options) {
-    var hideKeysConfig = Object.keys(options || {}).filter(key => options[key] === 'hide').map(key => '^' + key + '$');
-    var hideRegex = new RegExp(HIDE_DATA.concat(hideKeysConfig).join('|'), 'i');
-    var maskRegex = new RegExp(MASK_DATA.join('|'), 'i');
+const LibFactory = function(options) {
+    const hideKeysConfig = Object.keys(options || {}).filter(key => options[key] === 'hide').map(key => '^' + key + '$');
+    const hideRegex = new RegExp(HIDE_DATA.concat(hideKeysConfig).join('|'), 'i');
+    const maskRegex = new RegExp(MASK_DATA.join('|'), 'i');
     return {
         extractErrorData: function(err) {
-            var e = new Error();
+            const e = new Error();
             e.name = err.name;
             for (const key of Object.getOwnPropertyNames(err)) {
                 Object.assign(e, this.maskData({[key]: err[key]}, {}));
@@ -60,7 +60,7 @@ var LibFactory = function(options) {
                 if (!error || visited.size >= MAX_ERROR_CAUSE_DEPTH) {
                     return;
                 }
-                var cause = error.cause;
+                let cause = error.cause;
                 if (visited.has(error)) {
                     cause = undefined; // make this step last
                 }
@@ -88,7 +88,7 @@ var LibFactory = function(options) {
             if (!data || data[0] == null || typeof data[0] !== 'object') {
                 return;
             }
-            var context = {};
+            const context = {};
             if (data[0].$meta) {
                 if (data[0].$meta.mtid != null) {
                     context.mtid = data[0].$meta.mtid;
@@ -97,7 +97,7 @@ var LibFactory = function(options) {
                     context.trace = data[0].$meta.trace;
                 }
             }
-            var message;
+            let message;
             if (data[0].message && data[0].message.constructor.name === 'Buffer') {
                 message = data[0].message.toString('hex', 0, Math.min(data[0].message.length, 1024)).toUpperCase();
             }
@@ -107,8 +107,8 @@ var LibFactory = function(options) {
             }
         },
         maskData: function(data, context) {
-            var maskedKeys = [];
-            var masked = _.cloneDeepWith(_.defaultsDeep(data, context), function(value, key) {
+            const maskedKeys = [];
+            const masked = _.cloneDeepWith(_.defaultsDeep(data, context), function(value, key) {
                 if (typeof key === 'string') {
                     if (key === '$meta' && value) {
                         return {
@@ -126,7 +126,7 @@ var LibFactory = function(options) {
                         return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
                     } else if ((['url', 'uri', 'href', 'path', 'search', 'query'].indexOf(key) > -1) && typeof value === 'string' && (/password|(^pass$)|(^token$)/i).test(value)) {
                         maskedKeys.push(key);
-                        var trimTo = value.indexOf('?') > -1 ? value.indexOf('?') : 4;
+                        const trimTo = value.indexOf('?') > -1 ? value.indexOf('?') : 4;
                         return value.substring(0, trimTo) + '*****';
                     }
                 }
@@ -174,8 +174,8 @@ Logger.prototype.init = function LoggerInit(logger) {
 };
 
 Logger.prototype.createLog = function createLog(level, params, config) {
-    var levels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'];
-    var log = this.logger ? this.logger(params, config) : null;
+    const levels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'];
+    const log = this.logger ? this.logger(params, config) : null;
 
     if (!log) {
         return {};
@@ -186,6 +186,10 @@ Logger.prototype.createLog = function createLog(level, params, config) {
             levels[level] = log[level].bind(log);
             return levels;
         }, {});
+};
+
+Logger.prototype.destroy = function() {
+    this.logger.destroy();
 };
 
 module.exports = Logger;

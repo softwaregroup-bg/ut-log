@@ -1,9 +1,9 @@
-var Stream = require('readable-stream').Stream;
-var util = require('util');
-var format = util.format;
-var http = require('http');
+const Stream = require('readable-stream').Stream;
+const util = require('util');
+const format = util.format;
+const http = require('http');
 
-var colors = {
+const colors = {
     bold: [1, 22],
     italic: [3, 23],
     underline: [4, 24],
@@ -23,12 +23,12 @@ var colors = {
     yellow: [33, 39]
 };
 
-var defaultOptions = {
+const defaultOptions = {
     mode: 'long', // short, long, dev
     useColor: true
 };
 
-var levelFromName = {
+const levelFromName = {
     trace: 10,
     debug: 20,
     info: 30,
@@ -37,7 +37,7 @@ var levelFromName = {
     fatal: 60
 };
 
-var colorFromLevel = {
+const colorFromLevel = {
     10: 'grey', // TRACE
     20: 'blue', // DEBUG
     30: 'cyan', // INFO
@@ -46,11 +46,11 @@ var colorFromLevel = {
     60: 'inverse' // FATAL
 };
 
-var nameFromLevel = {};
-var upperNameFromLevel = {};
-var upperPaddedNameFromLevel = {};
+const nameFromLevel = {};
+const upperNameFromLevel = {};
+const upperPaddedNameFromLevel = {};
 Object.keys(levelFromName).forEach(function(name) {
-    var lvl = levelFromName[name];
+    const lvl = levelFromName[name];
     nameFromLevel[lvl] = name;
     upperNameFromLevel[lvl] = name.toUpperCase();
     upperPaddedNameFromLevel[lvl] = (name.length === 4 ? ' ' : '') + name.toUpperCase();
@@ -58,7 +58,7 @@ Object.keys(levelFromName).forEach(function(name) {
 
 function prettyJson(json) {
     return '\x1B[97m' + (JSON.stringify(json) || '').replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, function(match) {
-        var style = '97';
+        let style = '97';
         if (/^"/.test(match)) {
             if (/:$/.test(match)) {
                 style = '32';
@@ -75,7 +75,7 @@ function prettyJson(json) {
 }
 
 function PrettyStream(opts) {
-    var options = {};
+    const options = {};
 
     if (opts) {
         Object.keys(opts).forEach(function(key) {
@@ -88,7 +88,7 @@ function PrettyStream(opts) {
         });
     }
 
-    var config = Object.create(defaultOptions, options);
+    const config = Object.create(defaultOptions, options);
 
     this.readable = true;
     this.writable = true;
@@ -108,7 +108,7 @@ function PrettyStream(opts) {
             color = 'white';
         }
 
-        var codes = colors[color];
+        const codes = colors[color];
         if (codes) {
             return '\x1B[' + codes[0] + 'm' + str +
                 '\x1B[' + codes[1] + 'm';
@@ -121,7 +121,7 @@ function PrettyStream(opts) {
     }
 
     function extractTime(rec) {
-        var time = (typeof rec.time === 'object') ? rec.time.toISOString() : rec.time;
+        const time = (typeof rec.time === 'object') ? rec.time.toISOString() : rec.time;
 
         if ((config.mode === 'short' || config.mode === 'dev') && time[10] === 'T') {
             return stylize(time.substr(11));
@@ -130,7 +130,7 @@ function PrettyStream(opts) {
     }
 
     function extractName(rec) {
-        var name = rec.name;
+        let name = rec.name;
 
         if (rec.component) {
             name += '/' + rec.component;
@@ -144,12 +144,12 @@ function PrettyStream(opts) {
     }
 
     function extractLevel(rec) {
-        var level = (upperPaddedNameFromLevel[rec.level] || 'LVL' + rec.level);
+        const level = (upperPaddedNameFromLevel[rec.level] || 'LVL' + rec.level);
         return stylize(level, colorFromLevel[rec.level]);
     }
 
     function extractSrc(rec) {
-        var src = '';
+        let src = '';
         if (rec.src && rec.src.file) {
             if (rec.src.func) {
                 src = format('(%s:%d in %s)', rec.src.file, rec.src.line, rec.src.func);
@@ -181,10 +181,10 @@ function PrettyStream(opts) {
 
     function extractReqDetail(rec) {
         if (rec.req && typeof (rec.req) === 'object') {
-            var req = rec.req;
-            var headers = req.headers;
+            const req = rec.req;
+            const headers = req.headers;
 
-            var str = format('%s %s HTTP/%s%s%s',
+            let str = format('%s %s HTTP/%s%s%s',
                 req.method,
                 req.url,
                 req.httpVersion || '1.1',
@@ -201,9 +201,9 @@ function PrettyStream(opts) {
                 str += '\n' + Object.keys(req.trailers).map(function(t) { return t + ': ' + req.trailers[t]; }).join('\n');
             }
 
-            var skip = ['headers', 'url', 'httpVersion', 'body', 'trailers', 'method', 'remoteAddress', 'remotePort'];
+            const skip = ['headers', 'url', 'httpVersion', 'body', 'trailers', 'method', 'remoteAddress', 'remotePort'];
 
-            var extras = {};
+            const extras = {};
 
             Object.keys(req).forEach(function(k) {
                 if (skip.indexOf(k) === -1) {
@@ -219,7 +219,7 @@ function PrettyStream(opts) {
     }
 
     function genericRes(res) {
-        var s = '';
+        let s = '';
 
         if (res.statusCode) {
             s += format('HTTP/1.1 %s %s\n', res.statusCode, http.STATUS_CODES[res.statusCode]);
@@ -228,7 +228,7 @@ function PrettyStream(opts) {
         if (res.header) {
             s += res.header.trimRight();
         } else if (res.headers) {
-            var headers = res.headers;
+            const headers = res.headers;
             s += Object.keys(headers).map(
                 function(h) {
                     return h + ': ' + headers[h];
@@ -242,9 +242,9 @@ function PrettyStream(opts) {
             s += '\n' + res.trailer;
         }
 
-        var skip = ['header', 'statusCode', 'headers', 'body', 'trailer'];
+        const skip = ['header', 'statusCode', 'headers', 'body', 'trailer'];
 
-        var extras = {};
+        const extras = {};
 
         Object.keys(res).forEach(function(k) {
             if (skip.indexOf(k) === -1) {
@@ -266,11 +266,11 @@ function PrettyStream(opts) {
 
     function extractClientReqDetail(rec) {
         if (rec.clientReq && typeof (rec.clientReq) === 'object') {
-            var clientReq = rec.clientReq;
+            const clientReq = rec.clientReq;
 
-            var headers = clientReq.headers;
-            var hostHeaderLine = '';
-            var s = '';
+            const headers = clientReq.headers;
+            let hostHeaderLine = '';
+            let s = '';
 
             if (clientReq.address) {
                 hostHeaderLine = 'Host: ' + clientReq.address;
@@ -295,9 +295,9 @@ function PrettyStream(opts) {
                 s += '\n\n' + (typeof (clientReq.body) === 'object' ? JSON.stringify(clientReq.body, null, 2) : clientReq.body);
             }
 
-            var skip = ['headers', 'url', 'httpVersion', 'body', 'trailers', 'method', 'remoteAddress', 'remotePort'];
+            const skip = ['headers', 'url', 'httpVersion', 'body', 'trailers', 'method', 'remoteAddress', 'remotePort'];
 
-            var extras = {};
+            const extras = {};
 
             Object.keys(clientReq).forEach(function(k) {
                 if (skip.indexOf(k) === -1) {
@@ -319,9 +319,9 @@ function PrettyStream(opts) {
     }
 
     function extractError(rec) {
-        var result;
-        var error = rec.error;
-        var count = 5;
+        let result;
+        let error = rec.error;
+        let count = 5;
         while (error && count--) {
             if (error.fileName) {
                 result = result || [];
@@ -347,14 +347,14 @@ function PrettyStream(opts) {
     }
 
     function extractCustomDetails(rec) {
-        var skip = ['name', 'hostname', 'pid', 'level', 'component', 'msg', 'time', 'v', 'src', 'error', 'clientReq',
+        const skip = ['name', 'hostname', 'pid', 'level', 'component', 'msg', 'time', 'v', 'src', 'error', 'clientReq',
             'clientRes', 'req', 'res', '$meta', 'mtid', 'jsException', 'service', 'impl', 'env', 'location'];
 
-        var sortedDetails = ['context', 'trace'];
-        var sortFn = function(a, b) {
-            var ia = sortedDetails.indexOf(a);
-            var ib = sortedDetails.indexOf(b);
-            var r;
+        const sortedDetails = ['context', 'trace'];
+        const sortFn = function(a, b) {
+            const ia = sortedDetails.indexOf(a);
+            const ib = sortedDetails.indexOf(b);
+            let r;
             if (ia < 0 && ib < 0) {
                 if (a < b) {
                     r = -1;
@@ -373,13 +373,13 @@ function PrettyStream(opts) {
             return r;
         };
 
-        var details = [];
-        var extras = {};
+        const details = [];
+        const extras = {};
 
         Object.keys(rec).sort(sortFn).forEach(function(key) {
             if (skip.indexOf(key) === -1) {
-                var value = rec[key];
-                var stringified = false;
+                let value = rec[key];
+                let stringified = false;
                 if (typeof value === 'undefined' || typeof value === 'function') {
                     value = '';
                 } else if (typeof value === 'symbol') {
@@ -420,23 +420,23 @@ function PrettyStream(opts) {
     }
 
     this.formatRecord = function formatRecord(rec) {
-        var details = [];
-        var extras = [];
+        let details = [];
+        let extras = [];
 
-        var time = extractTime(rec);
-        var level = extractLevel(rec);
-        var service = stylize(rec.service || '*', 'yellow');
-        var name = extractName(rec);
-        var host = extractHost(rec);
-        var src = extractSrc(rec);
-        var mtid = extractMtid(rec);
+        const time = extractTime(rec);
+        const level = extractLevel(rec);
+        const service = stylize(rec.service || '*', 'yellow');
+        const name = extractName(rec);
+        const host = extractHost(rec);
+        const src = extractSrc(rec);
+        const mtid = extractMtid(rec);
 
-        var msg = isSingleLineMsg(rec) ? extractMsg(rec) : '';
+        const msg = isSingleLineMsg(rec) ? extractMsg(rec) : '';
         if (!msg) {
             details.push(indent(extractMsg(rec)));
         }
 
-        var error = extractError(rec);
+        const error = extractError(rec);
         if (error) {
             details.push(stylize(error.join('\n    \x1B[31m'), 'red'));
         }

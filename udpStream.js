@@ -54,10 +54,8 @@ UdpStream.prototype._write = function(message, encoding, done) {
     sendFrame(0, this.mtu);
 };
 
-UdpStream.prototype.end = function(chunk, encoding, cb) {
-    stream.Writable.prototype.end.apply(this, [chunk, encoding, () => {
-        this.socket.close(cb);
-    }]);
+UdpStream.prototype._destroy = function(error, callback) {
+    this.socket.close(err => callback && callback(err || error));
 };
 
 module.exports = config => new UdpStream(config);

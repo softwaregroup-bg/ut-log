@@ -1,16 +1,16 @@
-var stream = require('readable-stream');
-var util = require('util');
-var logRotateStream = require('stream-file-archive');
-var path = require('path');
-var fs = require('fs');
-var utils = require('./utils');
+const stream = require('readable-stream');
+const util = require('util');
+const logRotateStream = require('stream-file-archive');
+const path = require('path');
+const fs = require('fs');
+const utils = require('./utils');
 const todayAsDateInit = () => {
-    var current;
-    var lastUpdated = Date.now() - 1;
+    let current;
+    let lastUpdated = Date.now() - 1;
 
     return () => {
         if (lastUpdated < Date.now()) {
-            var d = new Date();
+            const d = new Date();
             current = [d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate()].join('-');
             lastUpdated = Date.now() + 600000;
         }
@@ -30,7 +30,7 @@ function bufferLog(buffer, width = 32, separator = '|'.charCodeAt(0)) {
     const result = Buffer.alloc(lineCount * (width * 4 + 3), ' ');
     let ascii = -1;
     let hex = -width - 3;
-    for (var i = 0; i < length; i += 1) {
+    for (let i = 0; i < length; i += 1) {
         if (i % width === 0) {
             if (ascii > 0) {
                 result[ascii] = 10;
@@ -71,8 +71,8 @@ function LogRotate(config) {
 util.inherits(LogRotate, stream.Transform);
 
 LogRotate.prototype._transform = function(data, encoding, callback) {
-    var d = data;
-    var d2 = '';
+    let d = data;
+    let d2 = '';
     if (this.config.type && this.config.type === 'raw' && data) {
         if ((this.config.individualFormat === 'hex/ascii') && data.mtid === 'frame' && typeof (data.message) === 'string') {
             d2 = '\n' + bufferLog(Buffer.from(data.message, 'hex')) + '\n\n';
@@ -91,7 +91,7 @@ LogRotate.prototype._transform = function(data, encoding, callback) {
             }, data)
         ) + '\n';
         if (data && data.log) {
-            var logName = path.join(this.logDir, `${data.log}-${todayAsDate()}.log`);
+            const logName = path.join(this.logDir, `${data.log}-${todayAsDate()}.log`);
             fs.appendFile(logName, d + d2, () => callback(null, d));
         } else {
             callback(null, d);

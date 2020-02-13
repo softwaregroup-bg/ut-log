@@ -48,6 +48,7 @@ tap.test('logRotate', t => {
     loggers[2].info('test');
     loggers[3].info('test');
     loggers[4].info('test');
+    bunyan.destroy();
 
     t.end();
 });

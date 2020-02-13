@@ -34,10 +34,9 @@ FluentdStream.prototype._write = function(message, encoding, done) {
     }
 };
 
-FluentdStream.prototype.end = function(chunk, encoding, cb) {
-    stream.Writable.prototype.end.apply(this, [chunk, encoding, () => {
-        this.sender._disconnect();
-    }]);
+FluentdStream.prototype._destroy = function(error, callback) {
+    this.sender._disconnect();
+    callback && callback(error);
 };
 
 module.exports = config => new FluentdStream(config);

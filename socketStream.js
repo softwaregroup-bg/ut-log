@@ -1,6 +1,6 @@
-var io = require('socket.io-client');
-var stream = require('readable-stream');
-var util = require('util');
+const io = require('socket.io-client');
+const stream = require('readable-stream');
+const util = require('util');
 
 function SocketStream(config) {
     config = config || {};
@@ -27,8 +27,7 @@ SocketStream.prototype._write = function(logMessage, encoding, done) {
 };
 
 SocketStream.prototype._destroy = function(error, callback) {
-    this.socket.close();
-    callback(error);
+    this.socket.close(err => callback && callback(err || error));
 };
 
 module.exports = function(config) {

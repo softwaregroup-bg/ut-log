@@ -1,7 +1,7 @@
 /* eslint no-console:0 */
-var stream = require('readable-stream');
-var util = require('util');
-var raven = require('raven');
+const stream = require('readable-stream');
+const util = require('util');
+const raven = 1; // require('raven');
 
 // config.dsn (string) mandatory
 // config.patchGlobal (boolean) optional (dafault: false) - if global exceptions should be handled

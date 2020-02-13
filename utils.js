@@ -1,9 +1,9 @@
-var fs = require('fs-plus');
-var path = require('path');
+const fs = require('fs-plus');
+const path = require('path');
 
 module.exports = {
     createLogDir: function(workDir) {
-        var logDir = path.join(workDir, 'ut-log');
+        const logDir = path.join(workDir, 'ut-log');
         try {
             fs.accessSync(logDir, fs.R_OK | fs.W_OK);
         } catch (e) {

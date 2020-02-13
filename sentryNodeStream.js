@@ -1,7 +1,7 @@
 /* eslint no-console:0 */
-var stream = require('readable-stream');
-var util = require('util');
-var Sentry = require('@sentry/node');
+const stream = require('readable-stream');
+const util = require('util');
+const Sentry = require('@sentry/node');
 
 // config.dsn (string) mandatory
 // config.patchGlobal (boolean) optional (dafault: false) - if global exceptions should be handled

@@ -17,5 +17,6 @@ tap.test('bunyan', (t) => {
     t.ok(logFactory, 'Create log factory');
     const logger = logFactory.createLog('error', {name: 'test name', context: 'test context'});
     t.ok(logger, 'Create logger');
+    logFactory.destroy();
     t.end();
 });
