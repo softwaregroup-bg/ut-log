@@ -1,3 +1,12 @@
+## [6.6.4](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.3...v6.6.4) (2020-02-13)
+
+
+### Bug Fixes
+
+* enable closing streams ([8e54f39](https://github.com/softwaregroup-bg/ut-log/commit/8e54f3968a7401c6c0dfcf30ddfdc151fff9a434))
+
+
+
 ## [6.6.3](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.2...v6.6.3) (2020-02-05)
 
 
