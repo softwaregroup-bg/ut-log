@@ -39,7 +39,7 @@ SentryStream.prototype._write = function(logMessage, encoding, done) {
             scope.setTag('context', logMessage.context);
             scope.setTag('service', logMessage.service);
             logMessage.error && logMessage.error.type && scope.setTag('type', logMessage.error.type);
-            if (logMessage.jsException) {
+            if (logMessage.jsException && !logMessage.jsException.silent) {
                 scope.setTag('method', logMessage.jsException.method);
                 Sentry.captureException(logMessage.jsException);
             } else {
