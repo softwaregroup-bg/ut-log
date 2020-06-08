@@ -1,3 +1,12 @@
+## [6.6.6](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.5...v6.6.6) (2020-06-08)
+
+
+### Bug Fixes
+
+* skip silent errors when sending to sentry ([c38e6d6](https://github.com/softwaregroup-bg/ut-log/commit/c38e6d676e76b106b1fed08708353468a4b9183e))
+
+
+
 ## [6.6.5](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.4...v6.6.5) (2020-02-13)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "ut-log",
-  "version": "6.6.5",
+  "version": "6.6.6",
   "pkg": {
     "scripts": [
       "colorStream.js",
