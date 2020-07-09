@@ -1,3 +1,12 @@
+## [6.6.7](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.6...v6.6.7) (2020-07-09)
+
+
+### Bug Fixes
+
+* webpack skip winston ([ceb8446](https://github.com/softwaregroup-bg/ut-log/commit/ceb8446f5d6456adbdf99daf104073d65378cd73))
+
+
+
 ## [6.6.6](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.5...v6.6.6) (2020-06-08)
 
 
