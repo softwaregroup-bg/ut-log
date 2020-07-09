@@ -38,6 +38,9 @@
   "optionalDependencies": {
     "@sentry/node": "^5.12.3"
   },
+  "browser": {
+    "modules/winston": false
+  },
   "description": "UT log module",
   "scripts": {
     "lint": "ut-lint .",
