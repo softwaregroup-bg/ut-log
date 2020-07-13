@@ -13,7 +13,7 @@ function fixStreams(streams, workDir, loggerOptions) {
                 if (process.browser) {
                     result.stream = require('../consoleStream')(stream.streamConfig);
                 } else {
-                    createStream = require('../serverRequire')('../colorStream');
+                    createStream = require('./serverRequire')('../colorStream');
                     result.stream = createStream(stream.streamConfig);
                     result.stream.pipe(process.stdout);
                 }
@@ -23,7 +23,7 @@ function fixStreams(streams, workDir, loggerOptions) {
             }
         } else if (stream.stream === 'process.stderr') {
             if (stream.streamConfig) {
-                createStream = require('../serverRequire')('../colorStream');
+                createStream = require('./serverRequire')('../colorStream');
                 result.stream = createStream(stream.streamConfig);
                 result.stream.pipe(process.stderr);
                 delete result.streamConfig;
@@ -31,7 +31,7 @@ function fixStreams(streams, workDir, loggerOptions) {
                 result.stream = process.stdout;
             }
         } else if (typeof stream.stream === 'string') {
-            createStream = require('../serverRequire')(stream.stream);
+            createStream = require('./serverRequire')(stream.stream);
             result.streamConfig.workDir = workDir;
             result.stream = createStream(stream.streamConfig, loggerOptions);
             delete result.streamConfig;
