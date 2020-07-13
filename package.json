@@ -39,6 +39,7 @@
     "@sentry/node": "^5.12.3"
   },
   "browser": {
+    "./serverRequire": false,
     "modules/winston": false
   },
   "description": "UT log module",

@@ -1,5 +1,4 @@
 const bunyan = require('bunyan');
-const serverRequire = require;
 
 function fixStreams(streams, workDir, loggerOptions) {
     if (!streams || !streams.length) {
@@ -11,10 +10,10 @@ function fixStreams(streams, workDir, loggerOptions) {
         const result = Object.assign({}, stream);
         if (stream.stream === 'process.stdout') {
             if (stream.streamConfig) {
-                if (typeof window !== 'undefined') {
+                if (process.browser) {
                     result.stream = require('../consoleStream')(stream.streamConfig);
                 } else {
-                    createStream = serverRequire('../colorStream');
+                    createStream = require('../serverRequire')('../colorStream');
                     result.stream = createStream(stream.streamConfig);
                     result.stream.pipe(process.stdout);
                 }
@@ -24,7 +23,7 @@ function fixStreams(streams, workDir, loggerOptions) {
             }
         } else if (stream.stream === 'process.stderr') {
             if (stream.streamConfig) {
-                createStream = serverRequire('../colorStream');
+                createStream = require('../serverRequire')('../colorStream');
                 result.stream = createStream(stream.streamConfig);
                 result.stream.pipe(process.stderr);
                 delete result.streamConfig;
@@ -32,7 +31,7 @@ function fixStreams(streams, workDir, loggerOptions) {
                 result.stream = process.stdout;
             }
         } else if (typeof stream.stream === 'string') {
-            createStream = serverRequire(stream.stream);
+            createStream = require('../serverRequire')(stream.stream);
             result.streamConfig.workDir = workDir;
             result.stream = createStream(stream.streamConfig, loggerOptions);
             delete result.streamConfig;
