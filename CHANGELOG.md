@@ -1,3 +1,14 @@
+## [6.6.8](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.7...v6.6.8) (2020-07-13)
+
+
+### Bug Fixes
+
+* webpack ([d90070e](https://github.com/softwaregroup-bg/ut-log/commit/d90070e3eda02458e64feb80fb4cf9ffba6684d5))
+* webpack ([4d5d7ba](https://github.com/softwaregroup-bg/ut-log/commit/4d5d7baae85bce946a290869321cb77f55195be2))
+* webpack ([fe1b995](https://github.com/softwaregroup-bg/ut-log/commit/fe1b99534924044b6d76b94df6356884d3578d5e))
+
+
+
 ## [6.6.7](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.6...v6.6.7) (2020-07-09)
 
 
