@@ -348,7 +348,7 @@ function PrettyStream(opts) {
 
     function extractCustomDetails(rec) {
         const skip = ['name', 'hostname', 'pid', 'level', 'component', 'msg', 'time', 'v', 'src', 'error', 'clientReq',
-            'clientRes', 'req', 'res', '$meta', 'mtid', 'jsException', 'service', 'impl', 'env', 'location'];
+            'clientRes', 'req', 'res', '$meta', 'mtid', 'service', 'impl', 'env', 'location'];
 
         const sortedDetails = ['context', 'trace'];
         const sortFn = function(a, b) {
