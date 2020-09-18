@@ -1,3 +1,12 @@
+## [6.6.9](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.8...v6.6.9) (2020-09-18)
+
+
+### Bug Fixes
+
+* udp auto destroy ([ab6a77b](https://github.com/softwaregroup-bg/ut-log/commit/ab6a77b91e25efd3d0cec44366ef0371800c23dd))
+
+
+
 ## [6.6.8](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.7...v6.6.8) (2020-07-13)
 
 
