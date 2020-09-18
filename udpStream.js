@@ -5,7 +5,7 @@ const uuid = require('uuid/v4');
 
 function UdpStream(config) {
     config = config || {};
-    stream.Writable.call(this, config);
+    stream.Writable.call(this, {autoDestroy: true, ...config});
     this.socket = udp.createSocket(config.type || 'udp4');
     this.id = Buffer.alloc(16);
     uuid(null, this.id);
