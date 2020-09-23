@@ -111,11 +111,23 @@ function Bunyan(options) {
         };
     };
     result.destroy = function() {
-        streams.forEach(stream =>
-            stream.stream &&
-            typeof stream.stream.end === 'function' &&
-            ![process.stdout, process.stdin, process.stderr].includes(stream.stream) &&
-            stream.stream.end(() => stream.stream.destroy()));
+        streams.forEach(stream => {
+            if (stream.stream &&
+                typeof stream.stream.end === 'function' &&
+                ![process.stdout, process.stdin, process.stderr].includes(stream.stream)
+            ) {
+                let destroyed = false;
+                const destroyTimeout = setTimeout(() => {
+                    destroyed = true;
+                    !destroyed && stream.stream.destroy();
+                }, 5000);
+                stream.stream.end(() => {
+                    clearTimeout(destroyTimeout);
+                    destroyed = true;
+                    !destroyed && stream.stream.destroy();
+                });
+            }
+        });
     };
 
     return result;
