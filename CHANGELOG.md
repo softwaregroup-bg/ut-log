@@ -1,3 +1,13 @@
+## [6.6.10](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.9...v6.6.10) (2020-09-23)
+
+
+### Bug Fixes
+
+* check destroyed properly ([fe42c34](https://github.com/softwaregroup-bg/ut-log/commit/fe42c3442b855191fc13a88349424232e5368107))
+* stream destroy timeout ([16eb00d](https://github.com/softwaregroup-bg/ut-log/commit/16eb00d092208b2c07fb4e3d09aea969cfb2ff60))
+
+
+
 ## [6.6.9](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.8...v6.6.9) (2020-09-18)
 
 
