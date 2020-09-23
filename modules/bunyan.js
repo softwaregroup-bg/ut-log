@@ -118,13 +118,17 @@ function Bunyan(options) {
             ) {
                 let destroyed = false;
                 const destroyTimeout = setTimeout(() => {
-                    destroyed = true;
-                    !destroyed && stream.stream.destroy();
+                    if (!destroyed) {
+                        destroyed = true;
+                        !destroyed && stream.stream.destroy();
+                    }
                 }, 5000);
                 stream.stream.end(() => {
-                    clearTimeout(destroyTimeout);
-                    destroyed = true;
-                    !destroyed && stream.stream.destroy();
+                    if (!destroyed) {
+                        destroyed = true;
+                        clearTimeout(destroyTimeout);
+                        stream.stream.destroy();
+                    }
                 });
             }
         });
