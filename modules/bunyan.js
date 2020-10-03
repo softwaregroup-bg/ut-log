@@ -120,7 +120,7 @@ function Bunyan(options) {
                 const destroyTimeout = setTimeout(() => {
                     if (!destroyed) {
                         destroyed = true;
-                        !destroyed && stream.stream.destroy();
+                        stream.stream.destroy();
                     }
                 }, 5000);
                 stream.stream.end(() => {
