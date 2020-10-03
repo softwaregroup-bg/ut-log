@@ -1,3 +1,13 @@
+## [6.6.11](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.10...v6.6.11) (2020-10-03)
+
+
+### Bug Fixes
+
+* check if destroy is function ([9607d1b](https://github.com/softwaregroup-bg/ut-log/commit/9607d1b81edc1801920a2b0bc4fa3aff6c4d9dcd))
+* remove unneeded condition ([c0662d4](https://github.com/softwaregroup-bg/ut-log/commit/c0662d49799bf161cc8cfb20915a3590161cd685))
+
+
+
 ## [6.6.10](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.9...v6.6.10) (2020-09-23)
 
 
