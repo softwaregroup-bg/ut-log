@@ -19,7 +19,9 @@ const HIDE_DATA = [
     '^hashParams$',
     '^sessionId$',
     '^jwt$',
-    '^apiKey$'
+    '^apiKey$',
+    'cbc',
+    'hmac'
 ];
 const MASK_DATA = [
     'accountNumber',
@@ -37,10 +39,13 @@ const MAX_ERROR_CAUSE_DEPTH = 5;
  */
 
 // helper methods
-const LibFactory = function(options) {
-    const hideKeysConfig = Object.keys(options || {}).filter(key => options[key] === 'hide').map(key => '^' + key + '$');
-    const hideRegex = new RegExp(HIDE_DATA.concat(hideKeysConfig).join('|'), 'i');
-    const maskRegex = new RegExp(MASK_DATA.join('|'), 'i');
+const LibFactory = function(options = {}) {
+    const transformData = {hide: [], mask: []};
+    Object.entries(options).forEach(([key, transform]) => transformData[transform] && transformData[transform].push('^' + key + '$'));
+
+    const hideRegex = new RegExp(HIDE_DATA.concat(transformData.hide).join('|'), 'i');
+    const maskRegex = new RegExp(MASK_DATA.concat(transformData.mask).join('|'), 'i');
+
     return {
         extractErrorData: function(err) {
             const e = new Error();
