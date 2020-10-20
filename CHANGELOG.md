@@ -1,3 +1,32 @@
+## [6.6.11](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.10...v6.6.11) (2020-10-03)
+
+
+### Bug Fixes
+
+* check if destroy is function ([9607d1b](https://github.com/softwaregroup-bg/ut-log/commit/9607d1b81edc1801920a2b0bc4fa3aff6c4d9dcd))
+* remove unneeded condition ([c0662d4](https://github.com/softwaregroup-bg/ut-log/commit/c0662d49799bf161cc8cfb20915a3590161cd685))
+
+
+
+## [6.6.10](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.9...v6.6.10) (2020-09-23)
+
+
+### Bug Fixes
+
+* check destroyed properly ([fe42c34](https://github.com/softwaregroup-bg/ut-log/commit/fe42c3442b855191fc13a88349424232e5368107))
+* stream destroy timeout ([16eb00d](https://github.com/softwaregroup-bg/ut-log/commit/16eb00d092208b2c07fb4e3d09aea969cfb2ff60))
+
+
+
+## [6.6.9](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.8...v6.6.9) (2020-09-18)
+
+
+### Bug Fixes
+
+* udp auto destroy ([ab6a77b](https://github.com/softwaregroup-bg/ut-log/commit/ab6a77b91e25efd3d0cec44366ef0371800c23dd))
+
+
+
 ## [6.6.8](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.7...v6.6.8) (2020-07-13)
 
 
