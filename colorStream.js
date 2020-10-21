@@ -171,12 +171,12 @@ function PrettyStream(opts) {
         return rec.hostname || '<no-hostname>';
     }
 
-    function isSingleLineMsg(rec) {
-        return rec.msg.indexOf('\n') === -1;
+    function isSingleLineMsg(text) {
+        return text.indexOf('\n') === -1;
     }
 
-    function extractMsg(rec) {
-        return stylize((rec.$meta && (rec.$meta.method || rec.$meta.opcode)) || rec.msg, 'brightYellow');
+    function extractMsg(text) {
+        return stylize(text, 'brightYellow');
     }
 
     function extractReqDetail(rec) {
@@ -430,10 +430,10 @@ function PrettyStream(opts) {
         const host = extractHost(rec);
         const src = extractSrc(rec);
         const mtid = extractMtid(rec);
-
-        const msg = isSingleLineMsg(rec) ? extractMsg(rec) : '';
+        const text = (rec.$meta && (rec.$meta.method || rec.$meta.opcode)) || rec.msg;
+        const msg = isSingleLineMsg(text) ? extractMsg(text) : '';
         if (!msg) {
-            details.push(indent(extractMsg(rec)));
+            details.push(indent(extractMsg(text)));
         }
 
         const error = extractError(rec);
