@@ -1,3 +1,12 @@
+# [6.7.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.12...v6.7.0) (2020-10-21)
+
+
+### Features
+
+* possibility to provide masked keys from config. Hide cbc and hmac by default ([#43](https://github.com/softwaregroup-bg/ut-log/issues/43)) ([5ec3414](https://github.com/softwaregroup-bg/ut-log/commit/5ec34142c89ce64eb20752db56427e35e639f93b))
+
+
+
 ## [6.6.12](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.11...v6.6.12) (2020-10-21)
 
 
