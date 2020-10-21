@@ -1,3 +1,12 @@
+## [6.6.12](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.11...v6.6.12) (2020-10-21)
+
+
+### Bug Fixes
+
+* multiline error formatting ([991d1ea](https://github.com/softwaregroup-bg/ut-log/commit/991d1ea1706c496a32653954291715165d6567db))
+
+
+
 ## [6.6.11](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.10...v6.6.11) (2020-10-03)
 
 
