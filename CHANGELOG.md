@@ -1,3 +1,12 @@
+## [6.7.1](https://github.com/softwaregroup-bg/ut-log/compare/v6.7.0...v6.7.1) (2020-11-04)
+
+
+### Bug Fixes
+
+* sentry timeout ([26d492a](https://github.com/softwaregroup-bg/ut-log/commit/26d492af6f29f3b12e0198324baa5dd6e3e57a08))
+
+
+
 # [6.7.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.6.12...v6.7.0) (2020-10-21)
 
 
