@@ -51,9 +51,16 @@ SentryStream.prototype._write = function(logMessage, encoding, done) {
 };
 
 SentryStream.prototype._destroy = function(error, callback) {
-    Sentry.close(1000)
-        .then(() => callback(error))
-        .catch(callback);
+    const destroy = result => {
+        try {
+            Sentry.getCurrentHub().getClient()._getBackend().getTransport().client.destroy();
+        } finally {
+            callback(result);
+        }
+    };
+    Sentry.close(3000)
+        .then(() => destroy(error))
+        .catch(destroy);
 };
 
 module.exports = function(config, loggerOptions) {
