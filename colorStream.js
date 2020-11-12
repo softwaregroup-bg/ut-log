@@ -16,7 +16,7 @@ const colors = {
     green: [32, 39],
     magenta: [35, 39],
     brightMagenta: [95, 39],
-    red: [31, 39],
+    red: [91, 39],
     brightYellow: ['93;1', '39;22'],
     brightCyan: [96, 39],
     brightGreen: [92, 39],
@@ -438,7 +438,7 @@ function PrettyStream(opts) {
 
         const error = extractError(rec);
         if (error) {
-            details.push(stylize(error.join('\n    \x1B[31m'), 'red'));
+            details.push(stylize(error.join('\n    \x1B[91m'), 'red'));
         }
 
         if (rec.req) {
