@@ -1,3 +1,12 @@
+# [6.8.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.7.2...v6.8.0) (2020-11-12)
+
+
+### Features
+
+* improve error logging ([89114d8](https://github.com/softwaregroup-bg/ut-log/commit/89114d8cab1b563e5b57dad85aee1c85f963e0c8))
+
+
+
 ## [6.7.2](https://github.com/softwaregroup-bg/ut-log/compare/v6.7.1...v6.7.2) (2020-11-12)
 
 
