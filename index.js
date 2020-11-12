@@ -80,6 +80,8 @@ const LibFactory = function(options = {}) {
                     code: error.code,
                     print: error.print,
                     fileName: error.fileName,
+                    req: error.req,
+                    res: error.res,
                     stack: error.stack && error.stack.split('\n'),
                     remoteStack: error.stackInfo,
                     cause: cause && getErrorTree(cause, visited)

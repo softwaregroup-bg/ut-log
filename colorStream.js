@@ -222,7 +222,7 @@ function PrettyStream(opts) {
         let s = '';
 
         if (res.statusCode) {
-            s += format('HTTP/1.1 %s %s\n', res.statusCode, http.STATUS_CODES[res.statusCode]);
+            s += format('HTTP/%s %s %s\n', res.httpVersion || '1.1', res.statusCode, http.STATUS_CODES[res.statusCode]);
         }
 
         if (res.header) {
@@ -408,10 +408,10 @@ function PrettyStream(opts) {
         };
     }
 
-    function applyDetails(results, details, extras) {
+    function applyDetails(results, details, extras, color) {
         if (results) {
             results.details.forEach(function(d) {
-                details.push(indent(d));
+                details.push(color ? stylize(indent(d), color) : indent(d));
             });
             Object.keys(results.extras).forEach(function(k) {
                 extras.push(stylize(k, 'green') + '=' + results.extras[k]);
@@ -439,6 +439,8 @@ function PrettyStream(opts) {
         const error = extractError(rec);
         if (error) {
             details.push(stylize(error.join('\n    \x1B[91m'), 'red'));
+            if (rec.error.req) applyDetails(extractReqDetail(rec.error), details, extras, 'red');
+            if (rec.error.res) applyDetails(extractResDetail(rec.error), details, extras, 'red');
         }
 
         if (rec.req) {
