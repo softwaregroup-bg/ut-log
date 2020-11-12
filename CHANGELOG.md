@@ -1,3 +1,12 @@
+## [6.7.2](https://github.com/softwaregroup-bg/ut-log/compare/v6.7.1...v6.7.2) (2020-11-12)
+
+
+### Bug Fixes
+
+* improve red color ([3531c57](https://github.com/softwaregroup-bg/ut-log/commit/3531c57f790e2a7c4d1a650c4b0e1422c9ad5586))
+
+
+
 ## [6.7.1](https://github.com/softwaregroup-bg/ut-log/compare/v6.7.0...v6.7.1) (2020-11-04)
 
 
