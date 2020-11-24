@@ -1,3 +1,12 @@
+# [6.9.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.8.0...v6.9.0) (2020-11-24)
+
+
+### Features
+
+* add maxFieldLength and maxArrayLength configuration to utLog ([#44](https://github.com/softwaregroup-bg/ut-log/issues/44)) ([3eb7aaf](https://github.com/softwaregroup-bg/ut-log/commit/3eb7aaf6e7e0efe0cf9e7e8004a1f888fc5960f0))
+
+
+
 # [6.8.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.7.2...v6.8.0) (2020-11-12)
 
 
