@@ -116,16 +116,6 @@ const LibFactory = function({transformData = {}, maxFieldLength = 0} = {}) {
         maskData: function(data, context) {
             const maskedKeys = [];
             const masked = _.cloneDeepWith(_.defaultsDeep(data, context), function(value, key) {
-                if (maxFieldLength && value && value.length && value.length > maxFieldLength) {
-                    if (typeof value === 'string') {
-                        return value.slice(0, maxFieldLength) + '...';
-                    } if (Array.isArray(value)) {
-                        return value.slice(0, maxFieldLength).concat('...');
-                    } if (Buffer.isBuffer(value)) {
-                        return Buffer.concat([value.slice(0, maxFieldLength), Buffer.alloc(3)]);
-                    }
-                    return '...';
-                }
                 if (typeof key === 'string') {
                     if (key === '$meta' && value) {
                         return {
@@ -146,6 +136,16 @@ const LibFactory = function({transformData = {}, maxFieldLength = 0} = {}) {
                         const trimTo = value.indexOf('?') > -1 ? value.indexOf('?') : 4;
                         return value.substring(0, trimTo) + '*****';
                     }
+                }
+                if (maxFieldLength && value && value.length && value.length > maxFieldLength) {
+                    if (typeof value === 'string') {
+                        return value.slice(0, maxFieldLength) + '...';
+                    } if (Array.isArray(value)) {
+                        return value.slice(0, maxFieldLength).concat('...');
+                    } if (Buffer.isBuffer(value)) {
+                        return Buffer.concat([value.slice(0, maxFieldLength), Buffer.alloc(3)]);
+                    }
+                    return '...';
                 }
             });
             if (maskedKeys.length > 0 && !masked.maskedKeys) {
