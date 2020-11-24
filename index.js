@@ -39,12 +39,12 @@ const MAX_ERROR_CAUSE_DEPTH = 5;
  */
 
 // helper methods
-const LibFactory = function(options = {}) {
-    const transformData = {hide: [], mask: []};
-    Object.entries(options).forEach(([key, transform]) => transformData[transform] && transformData[transform].push('^' + key + '$'));
+const LibFactory = function({transformData = {}, maxFieldLength = 0, maxArrayLength = 0} = {}) {
+    const obfuscate = {hide: [], mask: []};
+    Object.entries(transformData).forEach(([key, transform]) => obfuscate[transform] && obfuscate[transform].push('^' + key + '$'));
 
-    const hideRegex = new RegExp(HIDE_DATA.concat(transformData.hide).join('|'), 'i');
-    const maskRegex = new RegExp(MASK_DATA.concat(transformData.mask).join('|'), 'i');
+    const hideRegex = new RegExp(HIDE_DATA.concat(obfuscate.hide).join('|'), 'i');
+    const maskRegex = new RegExp(MASK_DATA.concat(obfuscate.mask).join('|'), 'i');
 
     return {
         extractErrorData: function(err) {
@@ -137,6 +137,13 @@ const LibFactory = function(options = {}) {
                         return value.substring(0, trimTo) + '*****';
                     }
                 }
+                if (value && value.length) {
+                    if (maxFieldLength && value.length > maxFieldLength) {
+                        if (typeof value === 'string') return value.slice(0, maxFieldLength).concat('...');
+                        if (Buffer.isBuffer(value)) return Buffer.concat([value.slice(0, maxFieldLength), Buffer.from('deadbeef', 'hex')]);
+                    }
+                    if (maxArrayLength && Array.isArray(value) && value.length > maxArrayLength) return value.slice(0, maxArrayLength).concat('...');
+                }
             });
             if (maskedKeys.length > 0 && !masked.maskedKeys) {
                 masked.maskedKeys = maskedKeys;
@@ -168,7 +175,7 @@ const LibFactory = function(options = {}) {
  * For more info: [Bunyan streams]{@link https://github.com/trentm/node-bunyan#user-content-streams}
  **/
 function Logger(options) {
-    options.lib = LibFactory(options && options.transformData);
+    options.lib = LibFactory(options);
     if (options.type === 'winston') {
         this.init(require('./modules/winston')(options));
     } else { // require bunyan by default
