@@ -39,7 +39,7 @@ const MAX_ERROR_CAUSE_DEPTH = 5;
  */
 
 // helper methods
-const LibFactory = function({transformData = {}, maxFieldLength = 0} = {}) {
+const LibFactory = function({transformData = {}, maxFieldLength = 0, maxArrayLength = 0} = {}) {
     const obfuscate = {hide: [], mask: []};
     Object.entries(transformData).forEach(([key, transform]) => obfuscate[transform] && obfuscate[transform].push('^' + key + '$'));
 
@@ -137,15 +137,12 @@ const LibFactory = function({transformData = {}, maxFieldLength = 0} = {}) {
                         return value.substring(0, trimTo) + '*****';
                     }
                 }
-                if (maxFieldLength && value && value.length && value.length > maxFieldLength) {
-                    if (typeof value === 'string') {
-                        return value.slice(0, maxFieldLength) + '...';
-                    } if (Array.isArray(value)) {
-                        return value.slice(0, maxFieldLength).concat('...');
-                    } if (Buffer.isBuffer(value)) {
-                        return Buffer.concat([value.slice(0, maxFieldLength), Buffer.alloc(3)]);
+                if (value && value.length) {
+                    if (maxFieldLength && value.length > maxFieldLength) {
+                        if (typeof value === 'string') return value.slice(0, maxFieldLength).concat('...');
+                        if (Buffer.isBuffer(value)) return Buffer.concat([value.slice(0, maxFieldLength), Buffer.from('deadbeef', 'hex')]);
                     }
-                    return '...';
+                    if (maxArrayLength && Array.isArray(value) && value.length > maxArrayLength) return value.slice(0, maxArrayLength).concat('...');
                 }
             });
             if (maskedKeys.length > 0 && !masked.maskedKeys) {
