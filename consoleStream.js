@@ -104,7 +104,7 @@ class ConsoleFormattedStream {
         logArgs.push(this.css.mtid);
         logArgs.push(rec.mtid || '');
         logArgs.push(msgCss);
-        logArgs.push(rec.msg);
+        logArgs.push((rec.$meta && (rec.$meta.method || rec.$meta.opcode)) || rec.msg);
         if (details) {
             logArgs.push(srcCss);
             logArgs.push(details);
@@ -115,9 +115,7 @@ class ConsoleFormattedStream {
         }
 
         consoleMethod.apply(console, logArgs);
-        if (rec.err && rec.err.stack) {
-            consoleMethod.call(console, '%c%s,', levelCss, rec.err.stack);
-        }
+        if (rec.error && rec.error.stack) console.error(rec.error); // eslint-disable-line
         if (rec.obj) {
             consoleMethod.call(console, rec.obj);
         }
