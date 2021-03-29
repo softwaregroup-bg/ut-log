@@ -1,3 +1,12 @@
+## [6.9.1](https://github.com/softwaregroup-bg/ut-log/compare/v6.9.0...v6.9.1) (2021-03-29)
+
+
+### Bug Fixes
+
+* improve browser console logging ([2db81fd](https://github.com/softwaregroup-bg/ut-log/commit/2db81fd1eef8208dc2b19c2814c2ecb8fe322ac1))
+
+
+
 # [6.9.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.8.0...v6.9.0) (2020-11-24)
 
 
