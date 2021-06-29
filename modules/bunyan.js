@@ -50,6 +50,7 @@ function fixStreams(streams, workDir, loggerOptions) {
 function Bunyan(options) {
     const lib = options.lib;
     const streams = fixStreams(options.streams, options.workDir, options);
+    let streamsDestroyed = false;
     const result = function createLogger(params, config) {
         params.streams = streams;
         params.level = options.level || 'trace';
@@ -86,6 +87,11 @@ function Bunyan(options) {
                     stack: err.stack.split('\n').splice(3).join('\n')
                 }, 'A js exception must be logged for the levels \'error\' and \'fatal\'');
             }
+            if (streamsDestroyed) {
+                // eslint-disable-next-line no-console
+                console.error('Error logging', JSON.stringify(logData));
+                throw new Error('Trying to log through a destroyed logger');
+            }
             log[level].apply(log, logData);
         }
 
@@ -111,6 +117,7 @@ function Bunyan(options) {
         };
     };
     result.destroy = function() {
+        streamsDestroyed = true;
         streams.forEach(stream => {
             if (stream.stream &&
                 typeof stream.stream.end === 'function' &&
