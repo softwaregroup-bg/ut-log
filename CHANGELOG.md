@@ -1,3 +1,12 @@
+# [6.10.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.9.1...v6.10.0) (2021-06-29)
+
+
+### Features
+
+* report invalid logging [UTCORE-121] ([0e7cd9e](https://github.com/softwaregroup-bg/ut-log/commit/0e7cd9efa9a2931486e16a66cc568976b00df260))
+
+
+
 ## [6.9.1](https://github.com/softwaregroup-bg/ut-log/compare/v6.9.0...v6.9.1) (2021-03-29)
 
 
