@@ -90,7 +90,7 @@ function Bunyan(options) {
             if (streamsDestroyed) {
                 // eslint-disable-next-line no-console
                 console.error('Error logging', JSON.stringify(logData));
-                throw new Error('Trying to log through a destroyed logger');
+                throw new Error('Trying to log through a destroyed logger ' + params.name);
             }
             log[level].apply(log, logData);
         }
