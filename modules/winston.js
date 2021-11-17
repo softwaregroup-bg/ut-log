@@ -45,7 +45,7 @@ function Winston(options) {
         transports = fixStreams(options.streams);
     }
 
-    const result = function createLogger(params) {
+    const result = function createLogger(params, config) {
         const log = container.add(params.name || options.name, transports);
         log.setLevels(levels);
         log.rewriters.push(function(level, msg, meta) {
@@ -67,7 +67,7 @@ function Winston(options) {
                             }
                         }
                     }
-                    logData.push(lib.extractErrorData(data[0]));
+                    logData.push(lib.extractErrorData(data[0]), config);
                 } else {
                     lib.transformData(logData);
                 }
