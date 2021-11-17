@@ -1,3 +1,12 @@
+## [6.10.2](https://github.com/softwaregroup-bg/ut-log/compare/v6.10.1...v6.10.2) (2021-11-17)
+
+
+### Bug Fixes
+
+* port level masking ([f9056a8](https://github.com/softwaregroup-bg/ut-log/commit/f9056a8257e551ebfaca4099659af1e7d178a1c1))
+
+
+
 ## [6.10.1](https://github.com/softwaregroup-bg/ut-log/compare/v6.10.0...v6.10.1) (2021-06-30)
 
 
