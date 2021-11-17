@@ -47,11 +47,11 @@ const LibFactory = function({transformData = {}, maxFieldLength = 0, maxArrayLen
     const maskRegex = new RegExp(MASK_DATA.concat(obfuscate.mask).join('|'), 'i');
 
     return {
-        extractErrorData: function(err) {
+        extractErrorData: function(err, options) {
             const e = new Error();
             e.name = err.name;
             for (const key of Object.getOwnPropertyNames(err)) {
-                Object.assign(e, this.maskData({[key]: err[key]}, {}));
+                Object.assign(e, this.maskData({[key]: err[key]}, {}, options));
             }
             return {
                 error: getErrorTree(e, new Set()),
@@ -91,7 +91,7 @@ const LibFactory = function({transformData = {}, maxFieldLength = 0, maxArrayLen
         capitalize: function(str) {
             return (str && str[0].toUpperCase() + str.slice(1)) || null;
         },
-        transformData: function transformData(data) {
+        transformData: function transformData(data, options) {
             if (!data || data[0] == null || typeof data[0] !== 'object') {
                 return;
             }
@@ -108,12 +108,12 @@ const LibFactory = function({transformData = {}, maxFieldLength = 0, maxArrayLen
             if (data[0].message && data[0].message.constructor.name === 'Buffer') {
                 message = data[0].message.toString('hex', 0, Math.min(data[0].message.length, 1024)).toUpperCase();
             }
-            data[0] = this.maskData(data[0], context);
+            data[0] = this.maskData(data[0], context, options);
             if (message && 'message' in data[0]) {
                 data[0].message = message;
             }
         },
-        maskData: function(data, context) {
+        maskData: function(data, context, {transform = {}} = {}) {
             const maskedKeys = [];
             const masked = _.cloneDeepWith(_.defaultsDeep(data, context), function(value, key) {
                 if (typeof key === 'string') {
@@ -125,10 +125,10 @@ const LibFactory = function({transformData = {}, maxFieldLength = 0, maxArrayLen
                             ...value.trace && {trace: value.trace},
                             ...value.contId && {contId: value.contId}
                         };
-                    } else if (hideRegex.test(key)) {
+                    } else if (hideRegex.test(key) || transform[key] === 'hide') {
                         maskedKeys.push(key);
                         return '*****';
-                    } else if (maskRegex.test(key)) {
+                    } else if (maskRegex.test(key) || transform[key] === 'mask') {
                         maskedKeys.push(key);
                         return '*****' + ((typeof value === 'string') ? value.slice(-4) : '');
                     } else if ((['url', 'uri', 'href', 'path', 'search', 'query'].indexOf(key) > -1) && typeof value === 'string' && (/password|(^pass$)|(^token$)/i).test(value)) {

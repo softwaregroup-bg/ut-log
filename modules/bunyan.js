@@ -70,7 +70,7 @@ function Bunyan(options) {
             const logData = [];
             if (data.length === 1) {
                 if (data[0] instanceof Error) {
-                    logData.push(lib.extractErrorData(data[0]));
+                    logData.push(lib.extractErrorData(data[0]), config);
                     logData.push(data[0].message);
                 } else {
                     logData.push(data[0]);
@@ -79,11 +79,11 @@ function Bunyan(options) {
                 logData.push(data[1]);
                 logData.push(data[0]);
             }
-            lib.transformData(logData);
+            lib.transformData(logData, config);
             if ((level === 'error' || level === 'fatal') && !(data[0] instanceof Error)) {
                 const err = new Error();
                 log.warn({
-                    logMessage: lib.maskData(data[0], {}),
+                    logMessage: lib.maskData(data[0], {}, config),
                     stack: err.stack.split('\n').splice(3).join('\n')
                 }, 'A js exception must be logged for the levels \'error\' and \'fatal\'');
             }
