@@ -51,7 +51,7 @@ const LibFactory = function({transformData = {}, maxFieldLength = 0, maxArrayLen
             const e = new Error();
             e.name = err.name;
             for (const key of Object.getOwnPropertyNames(err)) {
-                Object.assign(e, this.maskData({[key]: err[key]}, {}), options);
+                Object.assign(e, this.maskData({[key]: err[key]}, {}, options));
             }
             return {
                 error: getErrorTree(e, new Set()),

@@ -69,7 +69,7 @@ function Winston(options) {
                     }
                     logData.push(lib.extractErrorData(data[0]), config);
                 } else {
-                    lib.transformData(logData);
+                    lib.transformData(logData, config);
                 }
                 try { // stringify if object literal
                     logData.push(JSON.stringify(data[0], null, 2));
