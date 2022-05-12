@@ -1,4 +1,4 @@
-const fs = require('fs-plus');
+const fs = require('fs');
 const path = require('path');
 
 module.exports = {
@@ -9,7 +9,7 @@ module.exports = {
         } catch (e) {
             if (e.code === 'ENOENT') {
                 try {
-                    fs.makeTreeSync(logDir);
+                    fs.mkdirSync(logDir, {recursive: true});
                 } catch (e) {
                     if (e.code !== 'EEXIST') {
                         throw e;
