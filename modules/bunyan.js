@@ -108,8 +108,8 @@ function Bunyan(options) {
             warn: function() {
                 logHandler('warn', arguments);
             },
-            error: function() {
-                logHandler('error', arguments);
+            error: function(e) {
+                logHandler(e?.fatal ? 'fatal' : 'error', arguments);
             },
             fatal: function() {
                 logHandler('fatal', arguments);
