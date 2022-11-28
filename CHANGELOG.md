@@ -1,3 +1,12 @@
+## [6.10.5](https://github.com/softwaregroup-bg/ut-log/compare/v6.10.4...v6.10.5) (2022-11-28)
+
+
+### Bug Fixes
+
+* possibility to set fatal level in the error itself ([#47](https://github.com/softwaregroup-bg/ut-log/issues/47)) ([62ac8e1](https://github.com/softwaregroup-bg/ut-log/commit/62ac8e1285746495a2286781e7fa7973e95cfea1))
+
+
+
 ## [6.10.4](https://github.com/softwaregroup-bg/ut-log/compare/v6.10.3...v6.10.4) (2022-05-12)
 
 
