@@ -1,3 +1,9 @@
 {
-    "debug.node.autoAttach": "on"
+    "debug.node.autoAttach": "on",
+    "cSpell.words": [
+        "clonedeepwith",
+        "defaultsdeep",
+        "fluentd",
+        "gelf"
+    ]
 }

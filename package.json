@@ -31,7 +31,7 @@
     "raven": "^2.6.4",
     "gelf-stream": "^1.1.1",
     "tap": "^16.0.0",
-    "ut-tools": "^6.40.4",
+    "ut-tools": "^6.41.5",
     "winston": "^2.4.0"
   },
   "optionalDependencies": {
