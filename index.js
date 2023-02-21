@@ -1,3 +1,5 @@
+const table = require('ut-function.console-table');
+
 const _ = {
     defaultsDeep: require('lodash.defaultsdeep'),
     cloneDeepWith: require('lodash.clonedeepwith')
@@ -199,7 +201,7 @@ Logger.prototype.createLog = function createLog(level, params, config) {
         .reduce(function(levels, level) {
             levels[level] = log[level].bind(log);
             return levels;
-        }, {});
+        }, {table});
 };
 
 Logger.prototype.destroy = function() {
