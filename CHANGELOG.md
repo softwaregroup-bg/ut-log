@@ -1,3 +1,12 @@
+# [6.11.0](https://github.com/softwaregroup-bg/ut-log/compare/v6.10.5...v6.11.0) (2023-02-21)
+
+
+### Features
+
+* log.table ([9da813d](https://github.com/softwaregroup-bg/ut-log/commit/9da813db1748d75a76a6ae87a7ec23e1bdf3d1a7))
+
+
+
 ## [6.10.5](https://github.com/softwaregroup-bg/ut-log/compare/v6.10.4...v6.10.5) (2022-11-28)
 
 
