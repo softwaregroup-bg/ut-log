@@ -1,3 +1,12 @@
+## [6.11.2](https://github.com/softwaregroup-bg/ut-log/compare/v6.11.1...v6.11.2) (2023-02-22)
+
+
+### Bug Fixes
+
+* maxBufferLength configuration ([#48](https://github.com/softwaregroup-bg/ut-log/issues/48)) ([af995b8](https://github.com/softwaregroup-bg/ut-log/commit/af995b83af302565c53b47aacc0b3c4137b9c2ee))
+
+
+
 ## [6.11.1](https://github.com/softwaregroup-bg/ut-log/compare/v6.11.0...v6.11.1) (2023-02-21)
 
 
