@@ -41,7 +41,12 @@ const MAX_ERROR_CAUSE_DEPTH = 5;
  */
 
 // helper methods
-const LibFactory = function({transformData = {}, maxFieldLength = 0, maxArrayLength = 0} = {}) {
+const LibFactory = function({
+    transformData = {},
+    maxFieldLength = 0,
+    maxArrayLength = 0,
+    maxBufferLength = 1024
+} = {}) {
     const obfuscate = {hide: [], mask: []};
     Object.entries(transformData).forEach(([key, transform]) => obfuscate[transform] && obfuscate[transform].push('^' + key + '$'));
 
@@ -108,7 +113,7 @@ const LibFactory = function({transformData = {}, maxFieldLength = 0, maxArrayLen
             }
             let message;
             if (data[0].message && data[0].message.constructor.name === 'Buffer') {
-                message = data[0].message.toString('hex', 0, Math.min(data[0].message.length, 1024)).toUpperCase();
+                message = data[0].message.toString('hex', 0, Math.min(data[0].message.length, maxBufferLength)).toUpperCase();
             }
             data[0] = this.maskData(data[0], context, options);
             if (message && 'message' in data[0]) {
