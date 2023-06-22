@@ -179,6 +179,14 @@ function PrettyStream(opts) {
         return stylize(text, 'brightYellow');
     }
 
+    function formatExtra(value) {
+        if (typeof value === 'object') {
+            return JSON.stringify(value);
+        } else {
+            return value;
+        }
+    }
+
     function extractReqDetail(rec) {
         if (rec.req && typeof (rec.req) === 'object') {
             const req = rec.req;
@@ -207,7 +215,7 @@ function PrettyStream(opts) {
 
             Object.keys(req).forEach(function(k) {
                 if (skip.indexOf(k) === -1) {
-                    extras['req.' + k] = req[k];
+                    extras['req.' + k] = formatExtra(req[k]);
                 }
             });
 
@@ -248,7 +256,7 @@ function PrettyStream(opts) {
 
         Object.keys(res).forEach(function(k) {
             if (skip.indexOf(k) === -1) {
-                extras['res.' + k] = res[k];
+                extras['res.' + k] = formatExtra(res[k]);
             }
         });
 
@@ -301,7 +309,7 @@ function PrettyStream(opts) {
 
             Object.keys(clientReq).forEach(function(k) {
                 if (skip.indexOf(k) === -1) {
-                    extras['client_req.' + k] = clientReq[k];
+                    extras['client_req.' + k] = formatExtra(clientReq[k]);
                 }
             });
 
