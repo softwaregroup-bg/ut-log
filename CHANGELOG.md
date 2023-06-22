@@ -1,3 +1,12 @@
+## [6.11.3](https://github.com/softwaregroup-bg/ut-log/compare/v6.11.2...v6.11.3) (2023-06-22)
+
+
+### Bug Fixes
+
+* properly format object extras ([#49](https://github.com/softwaregroup-bg/ut-log/issues/49)) ([a866c79](https://github.com/softwaregroup-bg/ut-log/commit/a866c79f7e90673af32842b5ec5105407ccf9997))
+
+
+
 ## [6.11.2](https://github.com/softwaregroup-bg/ut-log/compare/v6.11.1...v6.11.2) (2023-02-22)
 
 
