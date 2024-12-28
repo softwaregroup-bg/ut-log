@@ -1,13 +1,13 @@
 const udp = require('dgram');
 const stream = require('readable-stream');
 const util = require('util');
-const uuid = require('uuid/v4');
+const { v4: uuid } = require('uuid');
 
 function UdpStream(config) {
     config = config || {};
     stream.Writable.call(this, config);
     this.socket = udp.createSocket(config.type || 'udp4');
-    this.id = Buffer(16);
+    this.id = Buffer.alloc(16);
     uuid(null, this.id);
     this.socket.on('message', msg => {
         try {
