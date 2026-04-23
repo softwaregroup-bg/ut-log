@@ -20,7 +20,7 @@
     "readable-stream": "2.3.3",
     "stream-file-archive": "1.1.4",
     "ut-function.console-table": "^1.1.1",
-    "uuid": "8.3.2"
+    "uuid": "14.0.0"
   },
   "peerDependencies": {
     "ut-bus": "^7.11.3"
